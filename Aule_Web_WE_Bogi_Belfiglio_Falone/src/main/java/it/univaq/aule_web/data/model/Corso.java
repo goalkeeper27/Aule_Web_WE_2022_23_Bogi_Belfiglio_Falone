@@ -13,12 +13,12 @@ import it.univaq.aule_web.data.DataItem;
 public interface Corso extends DataItem<Integer>{
     String getNome();
     String getCorsoDiLaurea();
-    String getTipo_laurea();
+    TipoLaurea getTipo_laurea();
     int getAnno_di_frequentazione();
     
-    void setTipo_laurea(String tipo_laurea);
-    void setCorsoDiLaurea();
+    void setTipo_laurea(TipoLaurea tipo_laurea);
+    void setCorsoDiLaurea(String corso_di_laurea);
     void setNome(String nome);
-    void setAnno_di_frequentazione();
+    void setAnno_di_frequentazione(int anno_di_frequentazione);
     
 }
