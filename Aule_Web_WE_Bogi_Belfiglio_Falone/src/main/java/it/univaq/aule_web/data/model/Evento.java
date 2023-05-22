@@ -28,7 +28,7 @@ public interface Evento extends DataItem<Integer> {
      
      void setNome(String nome);
      void setDescrizione(String descrizione);
-     void SetTipologia(Tipologia tipologia);
+     void setTipologia(Tipologia tipologia);
      void setData_evento(LocalDate data);
      void setOra_inizio(LocalTime orario);
      void setOra_fine(LocalTime orario);

@@ -20,17 +20,17 @@ import java.time.LocalTime;
  */
 public class EventoImpl extends DataItemImpl<Integer> implements Evento{
     
-    String nome;
-    String descrizione;
-    Tipologia tipologia;
-    LocalDate data_evento;
-    LocalTime ora_inizio;
-    LocalTime ora_fine;
-    Ricorrenza ricorrenza;
-    LocalDate data_fine_ricorrenza;
-    Corso corso;
-    Aula aula;
-    Responsabile responsabile;
+    private String nome;
+    private String descrizione;
+    private Tipologia tipologia;
+    private LocalDate data_evento;
+    private LocalTime ora_inizio;
+    private LocalTime ora_fine;
+    private Ricorrenza ricorrenza;
+    private LocalDate data_fine_ricorrenza;
+    private Corso corso;
+    private Aula aula;
+    private Responsabile responsabile;
     
     public EventoImpl(){
         super();
@@ -50,57 +50,57 @@ public class EventoImpl extends DataItemImpl<Integer> implements Evento{
 
     @Override
     public String getNome() {
-        return nome;
+        return this.nome;
     }
 
     @Override
     public String getDescrizione() {
-        return descrizione;
+        return this.descrizione;
     }
 
     @Override
     public Tipologia getTipologia() {
-        return tipologia;
+        return this.tipologia;
     }
 
     @Override
     public LocalDate getData_evento() {
-        return data_evento;
+        return this.data_evento;
     }
 
     @Override
     public LocalTime getOra_inizio() {
-        return ora_inizio;
+        return this.ora_inizio;
     }
 
     @Override
     public LocalTime getOra_fine() {
-        return ora_fine;
+        return this.ora_fine;
     }
 
     @Override
     public Ricorrenza getRicorrenza() {
-        return ricorrenza;
+        return this.ricorrenza;
     }
 
     @Override
     public LocalDate getData_fine_ricorrenza() {
-        return data_fine_ricorrenza;
+        return this.data_fine_ricorrenza;
     }
 
     @Override
     public Corso getCorso() {
-        return corso;
+        return this.corso;
     }
 
     @Override
     public Aula getAula() {
-       return aula;
+       return this.aula;
     }
 
     @Override
     public Responsabile getResponsabile() {
-       return responsabile;
+       return this.responsabile;
     }
 
     @Override
@@ -114,7 +114,7 @@ public class EventoImpl extends DataItemImpl<Integer> implements Evento{
     }
 
     @Override
-    public void SetTipologia(Tipologia tipologia) {
+    public void setTipologia(Tipologia tipologia) {
         this.tipologia = tipologia;
     }
 

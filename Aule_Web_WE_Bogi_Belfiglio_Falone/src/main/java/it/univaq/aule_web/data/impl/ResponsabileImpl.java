@@ -12,10 +12,10 @@ import it.univaq.aule_web.data.model.Responsabile;
  * @author franc
  */
 public class ResponsabileImpl extends DataItemImpl<Integer> implements Responsabile{
-    String nome;
-    String cognome;
-    String codice_fiscale;
-    String email;
+    private String nome;
+    private String cognome;
+    private String codice_fiscale;
+    private String email;
     
     public ResponsabileImpl(){
         super();
@@ -27,22 +27,22 @@ public class ResponsabileImpl extends DataItemImpl<Integer> implements Responsab
 
     @Override
     public String getNome() {
-       return nome;
+       return this.nome;
     }
 
     @Override
     public String getCognome() {
-              return cognome;
+        return this.cognome;
     }
 
     @Override
     public String getCodice_fiscale() {
-        return codice_fiscale;
+        return this.codice_fiscale;
     }
 
     @Override
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     @Override

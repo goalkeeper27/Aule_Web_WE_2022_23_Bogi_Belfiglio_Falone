@@ -14,7 +14,7 @@ import java.time.LocalDate;
  * @author franc
  */
 public class EventoRicorrenteImpl extends DataItemImpl<Integer> implements EventoRicorrente{
-    LocalDate data_evento;
+    private LocalDate data_evento;
     public EventoRicorrenteImpl(){
         super();
         data_evento = null;

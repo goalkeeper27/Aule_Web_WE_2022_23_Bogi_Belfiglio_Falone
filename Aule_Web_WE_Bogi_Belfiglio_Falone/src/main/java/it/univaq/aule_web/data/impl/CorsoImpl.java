@@ -13,10 +13,10 @@ import it.univaq.aule_web.data.model.TipoLaurea;
  * @author franc
  */
 public class CorsoImpl extends DataItemImpl<Integer> implements Corso{
-    String nome;
-    TipoLaurea tipo_laurea;
-    String corso_di_laurea;
-    int anno_di_frequentazione;
+    private String nome;
+    private TipoLaurea tipo_laurea;
+    private String corso_di_laurea;
+    private int anno_di_frequentazione;
     
     public CorsoImpl(){
         super();
@@ -29,22 +29,22 @@ public class CorsoImpl extends DataItemImpl<Integer> implements Corso{
     
     @Override
     public String getNome(){
-         return nome;
+         return this.nome;
      }
 
     @Override
     public String getCorsoDiLaurea() {
-        return corso_di_laurea;
+        return this.corso_di_laurea;
     }
 
     @Override
     public TipoLaurea getTipo_laurea() {
-        return tipo_laurea;
+        return this.tipo_laurea;
     }
 
     @Override
     public int getAnno_di_frequentazione() {
-        return anno_di_frequentazione;
+        return this.anno_di_frequentazione;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class CorsoImpl extends DataItemImpl<Integer> implements Corso{
 
     @Override
     public void setNome(String nome) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.nome = nome;
     }
 
     @Override
