@@ -6,6 +6,7 @@ package it.univaq.project.aule_web.data.dao;
 
 import it.univaq.aule_web.data.model.Attrezzatura;
 import it.univaq.aule_web.data.model.Aula;
+import it.univaq.aule_web.framework.data.DataException;
 import java.util.List;
 
 /**
@@ -16,7 +17,9 @@ public interface AttrezzaturaDAO {
     
     Attrezzatura createAttrezzatura();
     
-    List<Attrezzatura> getAttrezzatureByAula(Aula aula);
+    Attrezzatura getAttrezzatura(int key) throws DataException;
+    
+    List<Attrezzatura> getAttrezzatureByAula(Aula aula) throws DataException;
     
     
     
