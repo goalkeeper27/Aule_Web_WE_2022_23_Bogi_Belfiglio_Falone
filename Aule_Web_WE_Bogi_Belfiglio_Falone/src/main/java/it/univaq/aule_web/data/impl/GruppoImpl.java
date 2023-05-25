@@ -9,7 +9,7 @@ import it.univaq.aule_web.data.model.Gruppo;
 
 /**
  *
- * @author stefa
+ * @author Stefano Belfiglio
  */
 public class GruppoImpl extends DataItemImpl<Integer> implements Gruppo{
     

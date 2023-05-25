@@ -16,30 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `gruppo`
+-- Table structure for table `associazione_aula_gruppo`
 --
 
-DROP TABLE IF EXISTS `gruppo`;
+DROP TABLE IF EXISTS `associazione_aula_gruppo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `gruppo` (
+CREATE TABLE `associazione_aula_gruppo` (
   `ID` int NOT NULL AUTO_INCREMENT,
-  `nome` varchar(30) NOT NULL,
-  `descrizione` varchar(60) NOT NULL,
-  `ID_tipo_gruppo` int DEFAULT NULL,
+  `ID_aula` int NOT NULL,
+  `ID_gruppo` int NOT NULL,
   PRIMARY KEY (`ID`),
-  KEY `ID_tipo_gruppo` (`ID_tipo_gruppo`),
-  CONSTRAINT `gruppo_ibfk_1` FOREIGN KEY (`ID_tipo_gruppo`) REFERENCES `tipo_gruppo` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE
+  KEY `ID_aula` (`ID_aula`),
+  KEY `ID_gruppo` (`ID_gruppo`),
+  CONSTRAINT `associazione_aula_gruppo_ibfk_1` FOREIGN KEY (`ID_aula`) REFERENCES `aula` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `associazione_aula_gruppo_ibfk_2` FOREIGN KEY (`ID_gruppo`) REFERENCES `gruppo` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `gruppo`
+-- Dumping data for table `associazione_aula_gruppo`
 --
 
-LOCK TABLES `gruppo` WRITE;
-/*!40000 ALTER TABLE `gruppo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `gruppo` ENABLE KEYS */;
+LOCK TABLES `associazione_aula_gruppo` WRITE;
+/*!40000 ALTER TABLE `associazione_aula_gruppo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `associazione_aula_gruppo` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-22 15:33:23
+-- Dump completed on 2023-05-25 17:27:06

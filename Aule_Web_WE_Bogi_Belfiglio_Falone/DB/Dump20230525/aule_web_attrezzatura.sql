@@ -16,29 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `evento_ricorrente`
+-- Table structure for table `attrezzatura`
 --
 
-DROP TABLE IF EXISTS `evento_ricorrente`;
+DROP TABLE IF EXISTS `attrezzatura`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `evento_ricorrente` (
+CREATE TABLE `attrezzatura` (
   `ID` int NOT NULL AUTO_INCREMENT,
-  `data_evento` date NOT NULL,
-  `ID_evento` int NOT NULL,
+  `nome` varchar(30) NOT NULL,
+  `numero_di_serie` varchar(40) NOT NULL,
+  `ID_aula` int DEFAULT NULL,
   PRIMARY KEY (`ID`),
-  KEY `ID_evento` (`ID_evento`),
-  CONSTRAINT `evento_ricorrente_ibfk_1` FOREIGN KEY (`ID_evento`) REFERENCES `evento` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `ID_aula` (`ID_aula`),
+  CONSTRAINT `attrezzatura_ibfk_1` FOREIGN KEY (`ID_aula`) REFERENCES `aula` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `evento_ricorrente`
+-- Dumping data for table `attrezzatura`
 --
 
-LOCK TABLES `evento_ricorrente` WRITE;
-/*!40000 ALTER TABLE `evento_ricorrente` DISABLE KEYS */;
-/*!40000 ALTER TABLE `evento_ricorrente` ENABLE KEYS */;
+LOCK TABLES `attrezzatura` WRITE;
+/*!40000 ALTER TABLE `attrezzatura` DISABLE KEYS */;
+/*!40000 ALTER TABLE `attrezzatura` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-22 15:33:23
+-- Dump completed on 2023-05-25 17:27:06
