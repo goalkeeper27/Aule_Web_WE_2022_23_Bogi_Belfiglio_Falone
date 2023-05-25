@@ -4,10 +4,20 @@
  */
 package it.univaq.project.aule_web.data.dao;
 
+import it.univaq.aule_web.data.model.Attrezzatura;
+import it.univaq.aule_web.data.model.Aula;
+import java.util.List;
+
 /**
  *
  * @author Alberto Bogi
  */
 public interface AttrezzaturaDAO {
+    
+    Attrezzatura createAttrezzatura();
+    
+    List<Attrezzatura> getAttrezzatureByAula(Aula aula);
+    
+    
     
 }

@@ -83,5 +83,10 @@ public class AttrezzaturaProxy extends AttrezzaturaImpl implements DataItemProxy
     public void setModified(boolean dirty) {
         this.modified = dirty;
     }
+    
+    public void setAulaKey(int key){
+        this.aulaKey = key;
+        super.setAula(null);
+    }
 
 }

@@ -10,7 +10,7 @@ import it.univaq.aule_web.data.model.Responsabile;
 
 /**
  *
- * @author stefa
+ * @author Stefano Belfiglio
  */
 public class AulaImpl extends DataItemImpl<Integer> implements Aula {
     

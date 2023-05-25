@@ -20,13 +20,11 @@ public class GruppoProxy extends GruppoImpl implements DataItemProxy {
     private boolean modified;
     protected DataLayer dataLayer;
 
-    private int tipoGruppoKey;
 
     protected GruppoProxy(DataLayer d) {
         super();
         this.modified = false;
         this.dataLayer = d;
-        this.tipoGruppoKey = 0;
     }
 
     

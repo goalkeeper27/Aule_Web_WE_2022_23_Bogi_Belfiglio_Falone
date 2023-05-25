@@ -13,6 +13,13 @@ import it.univaq.aule_web.framework.data.DataException;
  */
 public interface CorsoDAO {
     
+    public Corso createCorso();
+    
     public Corso getCorso(int key)throws DataException;
+    
+    public Corso getCorsoByName(String nome) throws DataException;
+    
+    public Corso getCorsoByPartialName(String nome) throws DataException;
+    
     
 }

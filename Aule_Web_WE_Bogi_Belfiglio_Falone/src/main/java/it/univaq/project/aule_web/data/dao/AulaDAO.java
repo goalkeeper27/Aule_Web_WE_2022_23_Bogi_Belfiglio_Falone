@@ -6,6 +6,7 @@ package it.univaq.project.aule_web.data.dao;
 
 import it.univaq.aule_web.data.model.Aula;
 import it.univaq.aule_web.framework.data.DataException;
+import java.util.List;
 
 /**
  *
@@ -13,6 +14,15 @@ import it.univaq.aule_web.framework.data.DataException;
  */
 public interface AulaDAO {
     
-    Aula getAula(int key) throws DataException;
+    public Aula createAula();
+    
+    public Aula getAula(int key) throws DataException;
+    
+    public List<Aula> getAuleByIds(List<Integer> keys) throws DataException;
+    
+    void storeAula(Aula aula)throws DataException;
+    
+    void deleteAula(Aula aula) throws DataException;
+    
     
 }

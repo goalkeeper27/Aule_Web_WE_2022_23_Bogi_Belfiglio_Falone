@@ -122,5 +122,10 @@ public class AulaProxy extends AulaImpl implements DataItemProxy {
     public void setModified(boolean dirty) {
         this.modified = dirty;
     }
+    
+    public void setResponsabileKey(int key){
+        this.responsabileKey = key;
+        super.setResponsabile(null);
+    }
 
 }

@@ -4,10 +4,17 @@
  */
 package it.univaq.project.aule_web.data.dao;
 
+import it.univaq.aule_web.data.model.Amministratore;
+import it.univaq.aule_web.framework.data.DataException;
+
 /**
  *
  * @author Alberto Bogi
  */
 public interface AmministratoreDAO {
+    
+    Amministratore getAmministratoreByUsernameAndPassword(String username, String password) throws DataException;
+    
+    Amministratore createAministratore();
     
 }
