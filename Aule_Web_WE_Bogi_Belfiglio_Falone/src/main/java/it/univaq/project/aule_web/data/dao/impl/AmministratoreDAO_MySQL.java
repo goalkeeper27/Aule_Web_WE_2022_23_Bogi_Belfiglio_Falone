@@ -15,7 +15,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @author stefa
+ * @author Stefano Belfiglio
  */
 public class AmministratoreDAO_MySQL extends DAO implements AmministratoreDAO {
     
@@ -29,7 +29,7 @@ public class AmministratoreDAO_MySQL extends DAO implements AmministratoreDAO {
     public void init() throws DataException{
         try{
             super.init();
-            sAmministratoreByUsernameAndPassword = connection.prepareStatement("SELECT * FROM amministratore WHERE username = ? AND password = ?");
+            sAmministratoreByUsernameAndPassword = this.connection.prepareStatement("SELECT * FROM amministratore WHERE username = ? AND password = ?");
         }catch (SQLException ex) {
             throw new DataException("Error initializing aule_web data layer", ex);
         }

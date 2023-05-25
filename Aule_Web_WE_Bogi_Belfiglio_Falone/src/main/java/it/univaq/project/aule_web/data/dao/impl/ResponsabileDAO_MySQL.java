@@ -28,7 +28,7 @@ public class ResponsabileDAO_MySQL extends DAO implements ResponsabileDAO{
     public void init() throws DataException{
         try{
             super.init();
-            sResponsabileByID = connection.prepareStatement("SELECT * FROM responsabile WHERE ID=?");
+            sResponsabileByID = this.connection.prepareStatement("SELECT * FROM responsabile WHERE ID=?");
         } catch (SQLException ex) {
             throw new DataException("Error initializing newspaper data layer", ex);
         }

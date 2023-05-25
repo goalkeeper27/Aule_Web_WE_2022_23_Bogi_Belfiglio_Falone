@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  *
- * @author stefa
+ * @author Stefano Belfiglio
  */
 public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO{
     
@@ -33,7 +33,7 @@ public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO{
     public void init() throws DataException{
         try{
             super.init();
-            sAttrezzaturaByAula = connection.prepareStatement("SELECT ID AS AttrezzaturaID FROM attrezzatura WHERE ID_aula=?");
+            sAttrezzaturaByAula = this.connection.prepareStatement("SELECT ID AS AttrezzaturaID FROM attrezzatura WHERE ID_aula=?");
         } catch (SQLException ex) {
             throw new DataException("Error initializing aule_web data layer", ex);
         }
