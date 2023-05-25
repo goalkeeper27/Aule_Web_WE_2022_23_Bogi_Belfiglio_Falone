@@ -4,26 +4,26 @@
  */
 package it.univaq.aule_web.data.impl;
 
-import it.univaq.aule_web.data.DataItemImpl;
+import it.univaq.aule_web.framework.data.DataItemImpl;
 import it.univaq.aule_web.data.model.Corso;
-import it.univaq.aule_web.data.model.TipoLaurea;
+import it.univaq.aule_web.data.model.enumerable.TipoLaurea;
 
 /**
  *
- * @author franc
+ * @author Francesco Falone
  */
 public class CorsoImpl extends DataItemImpl<Integer> implements Corso{
     private String nome;
-    private TipoLaurea tipo_laurea;
-    private String corso_di_laurea;
-    private int anno_di_frequentazione;
+    private TipoLaurea tipoLaurea;
+    private String corsoDiLaurea;
+    private int annoDiFrequentazione;
     
     public CorsoImpl(){
         super();
         nome = "";
-        corso_di_laurea = "";
-        anno_di_frequentazione = 3;
-        tipo_laurea = null;
+        corsoDiLaurea = "";
+        annoDiFrequentazione = 0;
+        tipoLaurea = null;
     }
      
     
@@ -34,27 +34,27 @@ public class CorsoImpl extends DataItemImpl<Integer> implements Corso{
 
     @Override
     public String getCorsoDiLaurea() {
-        return this.corso_di_laurea;
+        return this.corsoDiLaurea;
     }
 
     @Override
-    public TipoLaurea getTipo_laurea() {
-        return this.tipo_laurea;
+    public TipoLaurea getTipoLaurea() {
+        return this.tipoLaurea;
     }
 
     @Override
-    public int getAnno_di_frequentazione() {
-        return this.anno_di_frequentazione;
+    public int getAnnoDiFrequentazione() {
+        return this.annoDiFrequentazione;
     }
 
     @Override
-    public void setTipo_laurea(TipoLaurea tipo_laurea) {
-        this.tipo_laurea = tipo_laurea;
+    public void setTipoLaurea(TipoLaurea tipoLaurea) {
+        this.tipoLaurea = tipoLaurea;
     }
 
     @Override
-    public void setCorsoDiLaurea(String corso_di_laurea) {
-        this.corso_di_laurea = corso_di_laurea;
+    public void setCorsoDiLaurea(String corsoDiLaurea) {
+        this.corsoDiLaurea = corsoDiLaurea;
         
     }
 
@@ -64,8 +64,8 @@ public class CorsoImpl extends DataItemImpl<Integer> implements Corso{
     }
 
     @Override
-    public void setAnno_di_frequentazione(int anno_di_frequentazione) {
-        this.anno_di_frequentazione = anno_di_frequentazione;
+    public void setAnnoDiFrequentazione(int annoDiFrequentazione) {
+        this.annoDiFrequentazione = annoDiFrequentazione;
     }
 
    

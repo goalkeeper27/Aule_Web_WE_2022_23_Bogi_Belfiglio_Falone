@@ -4,30 +4,30 @@
  */
 package it.univaq.aule_web.data.impl;
 
-import it.univaq.aule_web.data.DataItemImpl;
+import it.univaq.aule_web.framework.data.DataItemImpl;
 import it.univaq.aule_web.data.model.Aula;
 import it.univaq.aule_web.data.model.Corso;
 import it.univaq.aule_web.data.model.Evento;
 import it.univaq.aule_web.data.model.Responsabile;
-import it.univaq.aule_web.data.model.Ricorrenza;
-import it.univaq.aule_web.data.model.Tipologia;
+import it.univaq.aule_web.data.model.enumerable.Ricorrenza;
+import it.univaq.aule_web.data.model.enumerable.Tipologia;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
  *
- * @author franc
+ * @author Francesco Falone
  */
 public class EventoImpl extends DataItemImpl<Integer> implements Evento{
     
     private String nome;
     private String descrizione;
     private Tipologia tipologia;
-    private LocalDate data_evento;
-    private LocalTime ora_inizio;
-    private LocalTime ora_fine;
+    private LocalDate dataEvento;
+    private LocalTime oraInizio;
+    private LocalTime oraFine;
     private Ricorrenza ricorrenza;
-    private LocalDate data_fine_ricorrenza;
+    private LocalDate dataFineRicorrenza;
     private Corso corso;
     private Aula aula;
     private Responsabile responsabile;
@@ -37,11 +37,11 @@ public class EventoImpl extends DataItemImpl<Integer> implements Evento{
         nome = "";
         descrizione = "";
         tipologia = null;
-        data_evento = null;
-        ora_fine = null;
-        ora_inizio = null;
+        dataEvento = null;
+        oraFine = null;
+        oraInizio = null;
         ricorrenza = null;
-        data_fine_ricorrenza = null;
+        dataFineRicorrenza = null;
         corso = null;
         aula = null;
         responsabile = null;
@@ -64,18 +64,18 @@ public class EventoImpl extends DataItemImpl<Integer> implements Evento{
     }
 
     @Override
-    public LocalDate getData_evento() {
-        return this.data_evento;
+    public LocalDate getDataEvento() {
+        return this.dataEvento;
     }
 
     @Override
-    public LocalTime getOra_inizio() {
-        return this.ora_inizio;
+    public LocalTime getOraInizio() {
+        return this.oraInizio;
     }
 
     @Override
-    public LocalTime getOra_fine() {
-        return this.ora_fine;
+    public LocalTime getOraFine() {
+        return this.oraFine;
     }
 
     @Override
@@ -84,8 +84,8 @@ public class EventoImpl extends DataItemImpl<Integer> implements Evento{
     }
 
     @Override
-    public LocalDate getData_fine_ricorrenza() {
-        return this.data_fine_ricorrenza;
+    public LocalDate getDataFineRicorrenza() {
+        return this.dataFineRicorrenza;
     }
 
     @Override
@@ -119,18 +119,18 @@ public class EventoImpl extends DataItemImpl<Integer> implements Evento{
     }
 
     @Override
-    public void setData_evento(LocalDate data) {
-        this.data_evento = data;
+    public void setDataEvento(LocalDate data) {
+        this.dataEvento = data;
     }
 
     @Override
-    public void setOra_inizio(LocalTime orario) {
-        this.ora_inizio = orario;
+    public void setOraInizio(LocalTime orario) {
+        this.oraInizio = orario;
     }
 
     @Override
-    public void setOra_fine(LocalTime orario) {
-        this.ora_fine = orario;
+    public void setOraFine(LocalTime orario) {
+        this.oraFine = orario;
     }
 
     @Override
@@ -139,8 +139,8 @@ public class EventoImpl extends DataItemImpl<Integer> implements Evento{
     }
 
     @Override
-    public void setData_fine_ricorrenza(LocalDate data) {
-        this.data_fine_ricorrenza = data;
+    public void setDataFineRicorrenza(LocalDate data) {
+        this.dataFineRicorrenza = data;
     }
 
     @Override

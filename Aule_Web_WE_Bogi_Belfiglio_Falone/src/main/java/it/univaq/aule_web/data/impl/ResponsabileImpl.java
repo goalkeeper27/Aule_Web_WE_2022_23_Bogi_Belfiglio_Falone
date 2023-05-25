@@ -4,7 +4,7 @@
  */
 package it.univaq.aule_web.data.impl;
 
-import it.univaq.aule_web.data.DataItemImpl;
+import it.univaq.aule_web.framework.data.DataItemImpl;
 import it.univaq.aule_web.data.model.Responsabile;
 
 /**
@@ -12,16 +12,17 @@ import it.univaq.aule_web.data.model.Responsabile;
  * @author franc
  */
 public class ResponsabileImpl extends DataItemImpl<Integer> implements Responsabile{
+    
     private String nome;
     private String cognome;
-    private String codice_fiscale;
+    private String codiceFiscale;
     private String email;
     
     public ResponsabileImpl(){
         super();
         nome = "";
         cognome = "";
-        codice_fiscale = "";
+        codiceFiscale = "";
         email = "";
     }
 
@@ -36,8 +37,8 @@ public class ResponsabileImpl extends DataItemImpl<Integer> implements Responsab
     }
 
     @Override
-    public String getCodice_fiscale() {
-        return this.codice_fiscale;
+    public String getCodiceFiscale() {
+        return this.codiceFiscale;
     }
 
     @Override
@@ -56,8 +57,8 @@ public class ResponsabileImpl extends DataItemImpl<Integer> implements Responsab
     }
 
     @Override
-    public void setCodice_fiscale(String cf) {
-       this.codice_fiscale = cf;
+    public void setCodiceFiscale(String cf) {
+       this.codiceFiscale = cf;
     }
 
     @Override

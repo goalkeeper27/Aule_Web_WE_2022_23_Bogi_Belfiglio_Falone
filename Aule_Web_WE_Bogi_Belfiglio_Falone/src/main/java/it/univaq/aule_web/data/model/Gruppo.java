@@ -4,17 +4,17 @@
  */
 package it.univaq.aule_web.data.model;
 
-import it.univaq.aule_web.data.DataItem;
+import it.univaq.aule_web.framework.data.DataItem;
 
 /**
  *
- * @author stefa
+ * @author Stefano Belfiglio
  */
 public interface Gruppo extends DataItem<Integer> {
     
-    TipoGruppo getTipoGruppo();
+    String getTipoGruppo();
     
-    void setTipoGruppo(TipoGruppo tipoGruppo);
+    void setTipoGruppo(String tipoGruppo);
     
     String getNome();
     

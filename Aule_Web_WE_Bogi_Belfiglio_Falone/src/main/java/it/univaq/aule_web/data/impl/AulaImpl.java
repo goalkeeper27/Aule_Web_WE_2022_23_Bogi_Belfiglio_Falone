@@ -4,7 +4,7 @@
  */
 package it.univaq.aule_web.data.impl;
 
-import it.univaq.aule_web.data.DataItemImpl;
+import it.univaq.aule_web.framework.data.DataItemImpl;
 import it.univaq.aule_web.data.model.Aula;
 import it.univaq.aule_web.data.model.Responsabile;
 

@@ -4,9 +4,8 @@
  */
 package it.univaq.aule_web.data.impl;
 
-import it.univaq.aule_web.data.DataItemImpl;
+import it.univaq.aule_web.framework.data.DataItemImpl;
 import it.univaq.aule_web.data.model.Gruppo;
-import it.univaq.aule_web.data.model.TipoGruppo;
 
 /**
  *
@@ -14,7 +13,7 @@ import it.univaq.aule_web.data.model.TipoGruppo;
  */
 public class GruppoImpl extends DataItemImpl<Integer> implements Gruppo{
     
-    private TipoGruppo tipoGruppo;
+    private String tipoGruppo;
     private String nome;
     private String descrizione;
     
@@ -25,12 +24,12 @@ public class GruppoImpl extends DataItemImpl<Integer> implements Gruppo{
     }
 
     @Override
-    public TipoGruppo getTipoGruppo() {
+    public String getTipoGruppo() {
         return this.tipoGruppo;
     }
 
     @Override
-    public void setTipoGruppo(TipoGruppo tipoGruppo) {
+    public void setTipoGruppo(String tipoGruppo) {
         this.tipoGruppo = tipoGruppo;
     }
 

@@ -4,22 +4,28 @@
  */
 package it.univaq.aule_web.data.model;
 
-import it.univaq.aule_web.data.DataItem;
+import it.univaq.aule_web.framework.data.DataItem;
 
 /**
  *
- * @author franc
+ * @author Francesco Falone
  */
 public interface Responsabile extends DataItem<Integer> {
+    
     String getNome();
+    
     String getCognome();
-    String getCodice_fiscale();
+    
+    String getCodiceFiscale();
+    
     String getEmail();
     
-    
-    
+   
     void setNome(String nome);
+    
     void setCognome(String cognome);
-    void setCodice_fiscale(String cf);
+    
+    void setCodiceFiscale(String cf);
+    
     void setEmail(String email);
 }

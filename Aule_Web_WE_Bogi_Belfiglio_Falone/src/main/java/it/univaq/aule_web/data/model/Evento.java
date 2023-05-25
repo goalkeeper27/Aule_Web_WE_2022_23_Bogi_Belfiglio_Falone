@@ -4,38 +4,60 @@
  */
 package it.univaq.aule_web.data.model;
 
-import it.univaq.aule_web.data.DataItem;
+import it.univaq.aule_web.data.model.enumerable.Tipologia;
+import it.univaq.aule_web.data.model.enumerable.Ricorrenza;
+import it.univaq.aule_web.framework.data.DataItem;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
 /**
  *
- * @author franc
+ * @author Francesco Falone
  */
 public interface Evento extends DataItem<Integer> {
      String getNome();
+     
      String getDescrizione();
+     
      Tipologia getTipologia();
-     LocalDate getData_evento();
-     LocalTime getOra_inizio();
-     LocalTime getOra_fine();
+     
+     LocalDate getDataEvento();
+     
+     LocalTime getOraInizio();
+     
+     LocalTime getOraFine();
+     
      Ricorrenza getRicorrenza();
-     LocalDate getData_fine_ricorrenza();
+     
+     LocalDate getDataFineRicorrenza();
+     
      Corso getCorso();
+     
      Aula getAula();
+     
      Responsabile getResponsabile();
      
      void setNome(String nome);
+     
      void setDescrizione(String descrizione);
+     
      void setTipologia(Tipologia tipologia);
-     void setData_evento(LocalDate data);
-     void setOra_inizio(LocalTime orario);
-     void setOra_fine(LocalTime orario);
+     
+     void setDataEvento(LocalDate data);
+     
+     void setOraInizio(LocalTime orario);
+     
+     void setOraFine(LocalTime orario);
+     
      void setRicorrenza(Ricorrenza ricorrenza);
-     void setData_fine_ricorrenza(LocalDate data);
+     
+     void setDataFineRicorrenza(LocalDate data);
+     
      void setCorso(Corso corso);
+     
      void setResponsabile(Responsabile responsabile);
+     
      void setAula(Aula aula);
      
      

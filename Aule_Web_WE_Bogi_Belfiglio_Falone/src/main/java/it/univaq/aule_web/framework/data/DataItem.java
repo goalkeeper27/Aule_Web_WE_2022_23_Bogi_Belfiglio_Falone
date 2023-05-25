@@ -2,14 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package it.univaq.aule_web.data.model;
+package it.univaq.aule_web.framework.data;
 
 /**
  *
- * @author franc
+ * @author stefa
  */
-public enum TipoLaurea {
-    TRIENNALE,
-    MAGISTRALE
-    
+public interface DataItem<KT> {
+
+    KT getKey();
+
+    long getVersion();
+
+    void setKey(KT key);
+
+    void setVersion(long version);
+
 }
+

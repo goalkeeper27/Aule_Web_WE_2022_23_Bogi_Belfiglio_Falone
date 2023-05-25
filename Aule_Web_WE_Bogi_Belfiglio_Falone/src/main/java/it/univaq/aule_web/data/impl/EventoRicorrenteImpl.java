@@ -4,29 +4,44 @@
  */
 package it.univaq.aule_web.data.impl;
 
-import it.univaq.aule_web.data.DataItemImpl;
+import it.univaq.aule_web.framework.data.DataItemImpl;
 import it.univaq.aule_web.data.model.Evento;
 import it.univaq.aule_web.data.model.EventoRicorrente;
 import java.time.LocalDate;
 
 /**
  *
- * @author franc
+ * @author Francesco Falone
  */
 public class EventoRicorrenteImpl extends DataItemImpl<Integer> implements EventoRicorrente{
-    private LocalDate data_evento;
+    
+    private LocalDate dataEvento;
+    private Evento evento;
+    
     public EventoRicorrenteImpl(){
         super();
-        data_evento = null;
+        dataEvento = null;
+        evento = null;
     }
 
     @Override
-    public LocalDate getData_evento() {
-        return data_evento;
+    public LocalDate getDataEvento() {
+        return dataEvento;
     }
 
     @Override
-    public void setData_evento(LocalDate data) {
-       this.data_evento = data;
+    public void setDataEvento(LocalDate data) {
+       this.dataEvento = data;
     }
+    
+    @Override
+    public Evento getEvento() {
+        return evento;
+    }
+
+    @Override
+    public void setEvento(Evento evento) {
+       this.evento = evento;
+    }
+
 }

@@ -4,21 +4,29 @@
  */
 package it.univaq.aule_web.data.model;
 
-import it.univaq.aule_web.data.DataItem;
+import it.univaq.aule_web.data.model.enumerable.TipoLaurea;
+import it.univaq.aule_web.framework.data.DataItem;
 
 /**
  *
- * @author franc
+ * @author Francesco Falone
  */
 public interface Corso extends DataItem<Integer>{
-    String getNome();
-    String getCorsoDiLaurea();
-    TipoLaurea getTipo_laurea();
-    int getAnno_di_frequentazione();
     
-    void setTipo_laurea(TipoLaurea tipo_laurea);
-    void setCorsoDiLaurea(String corso_di_laurea);
+    String getNome();
+    
+    String getCorsoDiLaurea();
+    
+    TipoLaurea getTipoLaurea();
+    
+    int getAnnoDiFrequentazione();
+    
+    void setTipoLaurea(TipoLaurea tipoLaurea);
+    
+    void setCorsoDiLaurea(String corsoDiLaurea);
+    
     void setNome(String nome);
-    void setAnno_di_frequentazione(int anno_di_frequentazione);
+    
+    void setAnnoDiFrequentazione(int annoDiFrequentazione);
     
 }

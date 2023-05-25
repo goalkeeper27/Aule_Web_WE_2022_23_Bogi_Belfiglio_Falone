@@ -2,21 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package it.univaq.aule_web.data;
+package it.univaq.aule_web.data.model.enumerable;
 
 /**
  *
- * @author stefa
+ * @author franc
  */
-public interface DataItem<KT> {
-
-    KT getKey();
-
-    long getVersion();
-
-    void setKey(KT key);
-
-    void setVersion(long version);
-
+public enum Ricorrenza {
+    GIORNALIERO,
+    SETTIMANALE,
+    MENSILE
+    
+    
+    
 }
-
