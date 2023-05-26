@@ -49,7 +49,8 @@ public class GruppoDAO_MySQL  extends DAO implements GruppoDAO{
         try {
             gruppoByTipoAndNome.close();
             iGruppo.close();
-            
+            uGruppo.close();
+            dGruppo.close();
             
         } catch (SQLException ex) {
             
