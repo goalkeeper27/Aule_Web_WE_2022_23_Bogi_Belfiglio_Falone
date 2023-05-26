@@ -173,17 +173,17 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
                     uAula.setNull(9, java.sql.Types.INTEGER);
                 }
 
-                long current_version = aula.getVersion();
-                long next_version = current_version + 1;
+                 long versioneCorrente = aula.getVersion();
+                long versioneSuccessiva = versioneCorrente + 1;
 
-                uAula.setLong(10, next_version);
+                uAula.setLong(10, versioneSuccessiva);
                 uAula.setInt(11, aula.getKey());
-                uAula.setLong(12, current_version);
+                uAula.setLong(12, versioneCorrente);
 
                 if (uAula.executeUpdate() == 0) {
                     throw new OptimisticLockException(aula);
                 } else {
-                    aula.setVersion(next_version);
+                    aula.setVersion( versioneSuccessiva);
                 }
             } else { //insert
                 iAula.setString(1, aula.getNome());
@@ -251,8 +251,9 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
     @Override
     public void deleteAula(Aula aula) throws DataException {
         try {
-            dAula.setInt(1, aula.getKey());
-            dAula.execute();
+            if (aula.getKey() != null && aula.getKey() > 0) {
+                dAula.setInt(1, aula.getKey());
+                dAula.execute();}
         } catch (SQLException ex) {
             Logger.getLogger(AulaDAO_MySQL.class.getName()).log(Level.SEVERE, null, ex);
         }
