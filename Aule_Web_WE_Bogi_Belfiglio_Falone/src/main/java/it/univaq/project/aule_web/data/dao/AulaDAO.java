@@ -18,7 +18,7 @@ public interface AulaDAO {
     
     public Aula getAula(int key) throws DataException;
     
-    public List<Aula> getAuleByIds(List<Integer> keys) throws DataException;
+    public List<Aula> getAuleByIds(Aula aula) throws DataException;
     
     void storeAula(Aula aula)throws DataException;
     
