@@ -28,7 +28,7 @@ import javax.persistence.OptimisticLockException;
  */
 public class AulaDAO_MySQL extends DAO implements AulaDAO {
 
-    private PreparedStatement sAulaByID, sAuleByIDs;
+    private PreparedStatement sAulaByID, sAuleByIDs, sAulaByNomeAndPosizione;
     private PreparedStatement iAula;
     private PreparedStatement uAula;
     private PreparedStatement dAula;
@@ -44,6 +44,7 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
 
             sAulaByID = connection.prepareStatement("SELECT * FROM aula WHERE ID=?");
             // sAuleByIDs =  connection.prepareStatement("SELECT ID FROM aula");
+            sAulaByNomeAndPosizione = connection.prepareStatement("SELECT * FROM aula WHERE nome=?, luogo=?,edificio=?,piano =?");
             iAula = connection.prepareStatement("INSERT INTO gruppo (nome,luogo,edificio,piano,capienza,numero_prese_elettriche,numero_prese_di_rete,note_generiche,ID_responsabile) VALUES(?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             uAula = connection.prepareStatement("UPDATE gruppo SET nome=?,luogo=?,edificio=?,piano=?,capienza=?,numero_prese_elettriche=?,numero_prese_di_rete=?,note_generiche = ?,ID_responsabile =?, versione=? WHERE ID=? and versione=?");
             dAula = connection.prepareStatement("DELETE FROM gruppo WHERE ID=?");
@@ -107,6 +108,25 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
             }
         } catch (SQLException ex) {
             throw new DataException("Impossibile caricare Aula da ID", ex);
+        }
+        return aula;
+    }
+    
+    @Override
+    public Aula getAulaByNomeAndPosizione(String nome, String luogo, String edificio, int piano) throws DataException {
+        Aula aula = null;
+       try {
+            sAulaByNomeAndPosizione.setString(1, nome);
+            sAulaByNomeAndPosizione.setString(2, luogo);
+            sAulaByNomeAndPosizione.setString(3, edificio);
+            sAulaByNomeAndPosizione.setInt(4, piano);
+            try (ResultSet rs =   sAulaByNomeAndPosizione.executeQuery()) {
+                if (rs.next()) {
+                   aula = createAula(rs);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Impossibile caricare Aula dal nome e dalla posizione digitati", ex);
         }
         return aula;
     }
@@ -239,17 +259,8 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
 
     }
     
-    
-////////////////////////////////////////////////////////////////////////////////////
-/*******************
- * 
- * METODI DA IMPLEMENTARE
- * 
- */
+ 
 
-    @Override
-    public Aula getAulaByNomeAndPosizione(String nome, String luogo, String edificio, int piano) throws DataException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 
 }
