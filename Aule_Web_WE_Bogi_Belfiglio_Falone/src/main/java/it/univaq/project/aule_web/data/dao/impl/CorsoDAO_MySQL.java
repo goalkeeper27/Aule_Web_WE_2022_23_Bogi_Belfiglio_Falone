@@ -37,7 +37,7 @@ public class CorsoDAO_MySQL extends DAO implements CorsoDAO {
             this.sCorsoByID = this.connection.prepareStatement("SELECT * FROM Corso WHERE ID = ?");
             this.sCorsoByName = this.connection.prepareStatement("SELECT * FROM Corso WHERE nome = ?");
             this.sCorsoByPartialName = this.connection.prepareStatement("SELECT * from Corso C WHERE substring(C.nome,1,?) = ?");
-            
+
             this.iCorso = this.connection.prepareStatement("INSERT INTO Corso(nome, corso_di_laurea, tipo_laurea, anno_di_frequentazione) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             this.uCorso = this.connection.prepareStatement("UPDATE Corso SET nome = ?, corso_di_laurea = ?, tipo_laurea = ?, anno_di_frequentazione = ?, versione = ? WHERE versione = ? AND ID = ?");
             this.dCorso = this.connection.prepareStatement("DELETE FROM Corso WHERE ID = ?");
@@ -47,7 +47,7 @@ public class CorsoDAO_MySQL extends DAO implements CorsoDAO {
         }
 
     }
-    
+
     @Override
     public void destroy() throws DataException {
         //anche chiudere i PreparedStamenent � una buona pratica...
@@ -99,18 +99,18 @@ public class CorsoDAO_MySQL extends DAO implements CorsoDAO {
     public Corso getCorso(int key) throws DataException {
         Corso corso = null;
         try {
-                sCorsoByID.setInt(1, key);
-                try (ResultSet rs = sCorsoByID.executeQuery()) {
-                    if (rs.next()) {
-                        corso = createCorso(rs);
-                        //e lo mettiamo anche nella cache
-                        //and put it also in the cache
-                        //dataLayer.getCache().add(Article.class, a);
-                    }
+            sCorsoByID.setInt(1, key);
+            try ( ResultSet rs = sCorsoByID.executeQuery()) {
+                if (rs.next()) {
+                    corso = createCorso(rs);
+                    //e lo mettiamo anche nella cache
+                    //and put it also in the cache
+                    //dataLayer.getCache().add(Article.class, a);
                 }
-            } catch (SQLException ex) {
-                throw new DataException("Impossibile caricate il corso dall' attributo ID", ex);
             }
+        } catch (SQLException ex) {
+            throw new DataException("Impossibile caricate il corso dall' attributo ID", ex);
+        }
         return corso;
     }
 
@@ -118,41 +118,41 @@ public class CorsoDAO_MySQL extends DAO implements CorsoDAO {
     public Corso getCorsoByName(String nome) throws DataException {
         Corso corso = null;
         try {
-                sCorsoByName.setString(1, nome);
-                try (ResultSet rs = sCorsoByName.executeQuery()) {
-                    if (rs.next()) {
-                        corso = createCorso(rs);
-                        //e lo mettiamo anche nella cache
-                        //and put it also in the cache
-                        //dataLayer.getCache().add(Article.class, a);
-                    }
+            sCorsoByName.setString(1, nome);
+            try ( ResultSet rs = sCorsoByName.executeQuery()) {
+                if (rs.next()) {
+                    corso = createCorso(rs);
+                    //e lo mettiamo anche nella cache
+                    //and put it also in the cache
+                    //dataLayer.getCache().add(Article.class, a);
                 }
-            } catch (SQLException ex) {
-                throw new DataException("Impossibile caricare il corso dal nome digitato", ex);
             }
+        } catch (SQLException ex) {
+            throw new DataException("Impossibile caricare il corso dal nome digitato", ex);
+        }
         return corso;
-        
+
     }
 
     @Override
     public Corso getCorsoByPartialName(String nomeParziale) throws DataException {
         Corso corso = null;
         try {
-                sCorsoByPartialName.setString(1, nomeParziale);
-                try (ResultSet rs = sCorsoByPartialName.executeQuery()) {
-                    if (rs.next()) {
-                        corso = createCorso(rs);
-                        //e lo mettiamo anche nella cache
-                        //and put it also in the cache
-                        //dataLayer.getCache().add(Article.class, a);
-                    }
+            sCorsoByPartialName.setString(1, nomeParziale);
+            try ( ResultSet rs = sCorsoByPartialName.executeQuery()) {
+                if (rs.next()) {
+                    corso = createCorso(rs);
+                    //e lo mettiamo anche nella cache
+                    //and put it also in the cache
+                    //dataLayer.getCache().add(Article.class, a);
                 }
-            } catch (SQLException ex) {
-                throw new DataException("Impossibile caricare il corso dal nome parziale digitato", ex);
             }
+        } catch (SQLException ex) {
+            throw new DataException("Impossibile caricare il corso dal nome parziale digitato", ex);
+        }
         return corso;
     }
-    
+
     @Override
     public void storeCorso(Corso corso) throws DataException {
         try {
@@ -165,23 +165,23 @@ public class CorsoDAO_MySQL extends DAO implements CorsoDAO {
                 }
                 uCorso.setString(1, corso.getNome());
                 uCorso.setString(2, corso.getCorsoDiLaurea());
-                
-                switch(corso.getTipoLaurea().toString()){
+
+                switch (corso.getTipoLaurea().toString()) {
                     case "MAGISTRALE":
                         uCorso.setString(3, "MAGISTRALE");
                         break;
-                    
+
                     case "TRIENNALE":
                         uCorso.setString(3, "TRIENNALE");
                         break;
-                        
+
                     case "CICLO_UNICO":
                         uCorso.setString(3, "CICLO_UNICO");
                         break;
                 }
-                
+
                 uCorso.setInt(4, corso.getAnnoDiFrequentazione());
-                
+
                 //può accadere che due persone accedano al DB e prendano lo stesso articolo, quindi due thread concorrenti che 
                 //prendono l'articolo, ma i due thread non si riferiscono allo stesso oggetto
                 //se io ho due accessi concorrenti non condividono la stessa cache e quindi non risolvo il problema della
@@ -213,28 +213,28 @@ public class CorsoDAO_MySQL extends DAO implements CorsoDAO {
             } else { //insert
                 iCorso.setString(1, corso.getNome());
                 iCorso.setString(2, corso.getCorsoDiLaurea());
-                switch(corso.getTipoLaurea().toString()){
+                switch (corso.getTipoLaurea().toString()) {
                     case "MAGISTRALE":
                         iCorso.setString(3, "MAGISTRALE");
                         break;
-                    
+
                     case "TRIENNALE":
                         iCorso.setString(3, "TRIENNALE");
                         break;
-                        
+
                     case "CICLO_UNICO":
                         iCorso.setString(3, "CICLO_UNICO");
                         break;
                 }
                 iCorso.setInt(4, corso.getAnnoDiFrequentazione());
-               
+
                 if (iCorso.executeUpdate() == 1) {
                     //per leggere la chiave generata dal database
                     //per il record appena inserito, usiamo il metodo
                     //getGeneratedKeys sullo statement.
                     //to read the generated record key from the database
                     //we use the getGeneratedKeys method on the same statement
-                    try (ResultSet keys = iCorso.getGeneratedKeys()) {
+                    try ( ResultSet keys = iCorso.getGeneratedKeys()) {
                         //il valore restituito è un ResultSet con un record
                         //per ciascuna chiave generata (uno solo nel nostro caso)
                         //the returned value is a ResultSet with a distinct record for
@@ -276,20 +276,19 @@ public class CorsoDAO_MySQL extends DAO implements CorsoDAO {
             throw new DataException("Unable to store article", ex);
         }
     }
-    
+
     @Override
-    public void deleteCorso(Corso corso)throws DataException{
-        try{
-            if(corso.getKey() != null && corso.getKey() > 0){
-                dCorso.setInt(1,corso.getKey());
-                if(dCorso.executeUpdate() == 0){
-                    throw new OptimisticLockException(corso);
-                }
+    public void deleteCorso(Corso corso) throws DataException {
+        try {
+            if (corso.getKey() != null && corso.getKey() > 0) {
+                dCorso.setInt(1, corso.getKey());
+                dCorso.execute();
+
             }
-            
-        }catch(SQLException | OptimisticLockException ex){
+        } catch (SQLException ex) {
             throw new DataException("Errore nell'eliminazione del corso", ex);
         }
-    }
 
+    }
+    
 }

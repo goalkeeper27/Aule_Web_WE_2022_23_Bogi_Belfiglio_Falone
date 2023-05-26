@@ -20,32 +20,34 @@ import java.util.List;
  *
  * @author Stefano Belfiglio
  */
-public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO{
-    
+public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO {
+
     private PreparedStatement sAttrezzaturaByAula;
     private PreparedStatement sAttrezzaturaByID;
 
     public AttrezzaturaDAO_MySQL(DataLayer d) {
         super(d);
     }
-    
+
     @Override
-    public void init() throws DataException{
-        try{
+    public void init() throws DataException {
+        try {
             super.init();
-            sAttrezzaturaByAula = this.connection.prepareStatement("SELECT ID AS AttrezzaturaID FROM attrezzatura WHERE ID_aula=?");
+            sAttrezzaturaByAula = this.connection.prepareStatement("SELECT * FROM attrezzatura WHERE ID_aula=?");
+            sAttrezzaturaByID = this.connection.prepareStatement("SELECT * FROM attrezzatura WHERE ID = ?");
         } catch (SQLException ex) {
-            throw new DataException("Error initializing aule_web data layer", ex);
+            throw new DataException("Errore nell'inizializzazione del data layer", ex);
         }
     }
-    
+
     @Override
     public void destroy() throws DataException {
 
         try {
-           sAttrezzaturaByAula.close();
+            sAttrezzaturaByAula.close();
+            sAttrezzaturaByID.close();
         } catch (SQLException ex) {
-            throw new DataException("Error closing PreparedStatement");
+            throw new DataException("Errore nella chiusura degli statement");
         }
         super.destroy();
     }
@@ -54,54 +56,57 @@ public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO{
     public Attrezzatura createAttrezzatura() {
         return new AttrezzaturaProxy(getDataLayer());
     }
-    
-    private AttrezzaturaProxy createAttrezzatura(ResultSet rs) throws DataException{
-        AttrezzaturaProxy a = (AttrezzaturaProxy) createAttrezzatura();
-        try{
-            a.setKey(rs.getInt("ID"));
-            a.setAulaKey(rs.getInt("ID_aula"));
-            a.setNome(rs.getString("nome"));
-            a.setNumeroDiSerie(rs.getInt("numero_di_serie"));
+
+    private AttrezzaturaProxy createAttrezzatura(ResultSet rs) throws DataException {
+        AttrezzaturaProxy attrezzatura = (AttrezzaturaProxy) createAttrezzatura();
+        try {
+            attrezzatura.setKey(rs.getInt("ID"));
+            attrezzatura.setAulaKey(rs.getInt("ID_aula"));
+            attrezzatura.setNome(rs.getString("nome"));
+            attrezzatura.setNumeroDiSerie(rs.getInt("numero_di_serie"));
         } catch (SQLException ex) {
-            throw new DataException("Unable to create responsabile object form ResultSet", ex);
+            throw new DataException("Impossibile creare l'oggetto Attrezzatura", ex);
         }
-        return a;
+        return attrezzatura;
     }
-    
+
     @Override
-    public Attrezzatura getAttrezzatura(int attrezzatura_key) throws DataException {
-        Attrezzatura a = null;
-        try{
-            sAttrezzaturaByID.setInt(1, attrezzatura_key);
-            
-            try (ResultSet rs = sAttrezzaturaByID.executeQuery()) {
-                if (rs.next()) a = createAttrezzatura(rs);   
+    public Attrezzatura getAttrezzatura(int key) throws DataException {
+        Attrezzatura attrezzatura = null;
+        try {
+            sAttrezzaturaByID.setInt(1, key);
+
+            try ( ResultSet rs = sAttrezzaturaByID.executeQuery()) {
+                if (rs.next()) {
+                    attrezzatura = createAttrezzatura(rs);
+                }
             }
-        }catch (SQLException ex) {
-            throw new DataException("Unable to load attrezzatura by ID", ex);
+        } catch (SQLException ex) {
+            throw new DataException("Impossibile caricare Attrezzatura da ID", ex);
         }
-        return a;
+        return attrezzatura;
     }
 
     @Override
     public List<Attrezzatura> getAttrezzatureByAula(Aula aula) throws DataException {
         List<Attrezzatura> result = new ArrayList();
-        
-        try{
-            sAttrezzaturaByAula.setInt(1, aula.getKey());
-            
-            try (ResultSet rs = sAttrezzaturaByID.executeQuery()) {
-                if (rs.next()) result.add((Attrezzatura) getAttrezzatura(rs.getInt("ID")));  
+
+        try {
+            if (aula.getKey() != null && aula.getKey() > 0) {
+                sAttrezzaturaByAula.setInt(1, aula.getKey());
+            } else {
+                throw new DataException("Aula non identificata. Impossibile trovare l'attrezzatura");
             }
-        }catch (SQLException ex) {
-            throw new DataException("Unable to load attrezzatura by ID", ex);
+
+            try ( ResultSet rs = sAttrezzaturaByID.executeQuery()) {
+                if (rs.next()) {
+                    result.add((Attrezzatura) this.getAttrezzatura(rs.getInt("ID")));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Impossibile caricare la lista di attrezzature", ex);
         }
         return result;
     }
 
-
-
-
-    
-    
 }

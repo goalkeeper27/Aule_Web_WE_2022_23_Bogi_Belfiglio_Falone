@@ -20,14 +20,15 @@ import javax.persistence.OptimisticLockException;
 
 /**
  *
- * @author franc
+ * @author Francesco Falone
  */
 public class GruppoDAO_MySQL  extends DAO implements GruppoDAO{
     
-     private PreparedStatement gruppoByTipoAndNome;
+     private PreparedStatement sGruppoByTipoAndNome;
      private PreparedStatement iGruppo;
      private PreparedStatement uGruppo;
      private PreparedStatement dGruppo;
+     
     public GruppoDAO_MySQL(DataLayer d) {
         super(d);
     }
@@ -36,9 +37,9 @@ public class GruppoDAO_MySQL  extends DAO implements GruppoDAO{
         try {
             super.init();
             
-            gruppoByTipoAndNome = connection.prepareStatement("SELECT * FROM Gruppo WHERE tipo = ? AND nome=?;");
+            sGruppoByTipoAndNome = connection.prepareStatement("SELECT * FROM Gruppo WHERE tipo = ? AND nome=?;");
             iGruppo = connection.prepareStatement("INSERT INTO gruppo (nome,tipo,descrizione) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS);
-            uGruppo = connection.prepareStatement("UPDATE gruppo SET nome=?,tipo=?,descrizione=? versione=? WHERE ID=? and versione=?");
+            uGruppo = connection.prepareStatement("UPDATE gruppo SET nome=?,tipo=?,descrizione=?, versione=? WHERE ID=? AND versione=?");
             dGruppo = connection.prepareStatement("DELETE FROM gruppo WHERE ID=?");
         } catch (SQLException ex) {
             throw new DataException("Errore durante l'inizializzazione del data layer", ex);
@@ -47,55 +48,52 @@ public class GruppoDAO_MySQL  extends DAO implements GruppoDAO{
 
     public void destroy() throws DataException {
         try {
-            gruppoByTipoAndNome.close();
+            sGruppoByTipoAndNome.close();
             iGruppo.close();
-            
-            
+            uGruppo.close();
+            dGruppo.close();
+          
         } catch (SQLException ex) {
             
         }
         super.destroy();
     }
 
-    
-       
-    
-    
-    
-    
     @Override
     public Gruppo createGruppo() {
        return new GruppoProxy(getDataLayer());
     }
     
-    //helper
+    
     private GruppoProxy createGruppo(ResultSet rs) throws DataException {
         GruppoProxy g = (GruppoProxy) createGruppo();
         try {
             g.setKey(rs.getInt("ID"));
             g.setNome(rs.getString("nome"));
+            g.setTipoGruppo(rs.getString("tipo"));
             g.setDescrizione(rs.getString("descrizione"));
             g.setVersion(rs.getLong("versione"));
         } catch (SQLException ex) {
-            throw new DataException("Unable to create gruppo object form ResultSet", ex);
+            throw new DataException("Errore creazione oggetto Gruppo", ex);
         }
         return g;
     }
 
     @Override
     public Gruppo getGruppoByTipoAndNome(String tipo, String nome) throws DataException {
+       Gruppo gruppo = null;
        try {
-            gruppoByTipoAndNome.setString(1, tipo);
-            gruppoByTipoAndNome.setString(2, nome);
-            try (ResultSet rs = gruppoByTipoAndNome.executeQuery()) {
+            sGruppoByTipoAndNome.setString(1, tipo);
+            sGruppoByTipoAndNome.setString(2, nome);
+            try (ResultSet rs = sGruppoByTipoAndNome.executeQuery()) {
                 if (rs.next()) {
-                    return createGruppo(rs);
+                    gruppo = createGruppo(rs);
                 }
             }
         } catch (SQLException ex) {
-            throw new DataException("Impossibile caricare Gruppo By Tipo e Nome", ex);
+            throw new DataException("Impossibile caricare Gruppo dal tipo e nome digitati", ex);
         }
-        return null;
+        return gruppo;
     }
 
     @Override
@@ -112,17 +110,17 @@ public class GruppoDAO_MySQL  extends DAO implements GruppoDAO{
                 uGruppo.setString(3, gruppo.getDescrizione());
             
                
-                long current_version = gruppo.getVersion();
-                long next_version = current_version + 1;
+                long versioneCorrente = gruppo.getVersion();
+                long versioneSuccessiva = versioneCorrente + 1;
 
-                uGruppo.setLong(4, next_version);
+                uGruppo.setLong(4, versioneSuccessiva);
                 uGruppo.setInt(5, gruppo.getKey());
-                uGruppo.setLong(6, current_version);
+                uGruppo.setLong(6, versioneCorrente);
 
                 if (uGruppo.executeUpdate() == 0) {
                     throw new OptimisticLockException(gruppo);
                 } else {
-                    gruppo.setVersion(next_version);
+                    gruppo.setVersion(versioneSuccessiva);
                 }
             } else { //insert
                 iGruppo.setString(1, gruppo.getNome());
@@ -151,18 +149,17 @@ public class GruppoDAO_MySQL  extends DAO implements GruppoDAO{
                             gruppo.setKey(key);
                             //inseriamo il nuovo oggetto nella cache
                             //add the new object to the cache
-                            
+                            //cache se vogliamo inserirla
                         }
                     }
                 }
             }
 
-
             if (gruppo instanceof DataItemProxy) {
                 ((DataItemProxy) gruppo).setModified(false);
             }
         } catch (SQLException | OptimisticLockException ex) {
-            throw new DataException("Unable to store article", ex);
+            throw new DataException("Impossibile caricare Gruppo", ex);
         }
     }
 
@@ -170,10 +167,12 @@ public class GruppoDAO_MySQL  extends DAO implements GruppoDAO{
     @Override
     public void deleteGruppo(Gruppo gruppo) throws DataException {
          try {
-             dGruppo.setInt(1, gruppo.getKey());
-             dGruppo.execute();
+             if (gruppo.getKey() != null && gruppo.getKey() > 0) {
+                dGruppo.setInt(1, gruppo.getKey());
+                dGruppo.execute();
+            }
          } catch (SQLException ex) {
-             Logger.getLogger(GruppoDAO_MySQL.class.getName()).log(Level.SEVERE, null, ex);
+             throw new DataException("Errore nell'eliminazione del gruppo", ex);
          }
         
     }

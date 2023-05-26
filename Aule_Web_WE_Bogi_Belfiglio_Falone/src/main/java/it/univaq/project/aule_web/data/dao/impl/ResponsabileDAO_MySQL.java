@@ -30,7 +30,7 @@ public class ResponsabileDAO_MySQL extends DAO implements ResponsabileDAO{
             super.init();
             sResponsabileByID = this.connection.prepareStatement("SELECT * FROM responsabile WHERE ID=?");
         } catch (SQLException ex) {
-            throw new DataException("Error initializing newspaper data layer", ex);
+            throw new DataException("Errore nell'inizializzazione del data layer", ex);
         }
     }
     
@@ -42,23 +42,23 @@ public class ResponsabileDAO_MySQL extends DAO implements ResponsabileDAO{
             sResponsabileByID.close();
 
         } catch (SQLException ex) {
-            throw new DataException("Error closing PrepareStatement");
+            throw new DataException("Errore nella chiusura degli statement");
         }
         super.destroy();
     }
 
     @Override
     public Responsabile getResponsabile(int responsabile_key) throws DataException {
-        Responsabile r = null;
+        Responsabile responsabile = null;
         try{
             sResponsabileByID.setInt(1, responsabile_key);
             try (ResultSet rs = sResponsabileByID.executeQuery()) {
-                    if (rs.next()) r = createResponsabile(rs);   
+                    if (rs.next()) responsabile = createResponsabile(rs);   
                 }
         } catch (SQLException ex) {
-                throw new DataException("Unable to load article by ID", ex);
+                throw new DataException("Impossibile caricare il responsabile da ID", ex);
             }
-        return r;
+        return responsabile;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class ResponsabileDAO_MySQL extends DAO implements ResponsabileDAO{
             r.setEmail(rs.getString("email"));
             r.setVersion(rs.getLong("versione"));
         } catch (SQLException ex) {
-            throw new DataException("Unable to create responsabile object form ResultSet", ex);
+            throw new DataException("Impossibile creare l'oggetto Responsabile dal ResultSet", ex);
         }
         return r;
         
