@@ -94,4 +94,13 @@ public class AmministratoreDAO_MySQL extends DAO implements AmministratoreDAO {
         return amministratore;
 
     }
+
+    
+///////////////////////////////////////////////////////////////////////
+ //     METODI DA IMPLEMENTARE
+//////////////////////////////////////////////////////////////////////
+    @Override
+    public Amministratore getAmministratoreByID(int key) throws DataException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

@@ -13,9 +13,17 @@ import it.univaq.aule_web.framework.data.DataException;
  */
 public interface ResponsabileDAO {
     
-    Responsabile getResponsabile(int key) throws DataException;
+    public Responsabile getResponsabile(int key) throws DataException;
     
-    Responsabile createResponsabile();
+    public Responsabile getResponsabileByEmail(String email)throws DataException;
+    
+    public Responsabile createResponsabile();
+    
+    public void storeResponsabile(Responsabile responsabile)throws DataException;
+    
+    public void deleteResponsabile(Responsabile responsabile)throws DataException;
+    
+    
     
     
     

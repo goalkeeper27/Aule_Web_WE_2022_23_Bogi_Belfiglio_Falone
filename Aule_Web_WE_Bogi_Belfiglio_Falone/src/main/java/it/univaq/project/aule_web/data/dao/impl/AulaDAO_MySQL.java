@@ -24,25 +24,26 @@ import javax.persistence.OptimisticLockException;
 
 /**
  *
- * @author franc
+ * @author Francesco Falone
  */
-public class AulaDAO_MySQL extends DAO implements AulaDAO{
-      private PreparedStatement  sAula,sAuleByIds;
-      private PreparedStatement iAula;
-      private PreparedStatement uAula;
-      private PreparedStatement dAula;
+public class AulaDAO_MySQL extends DAO implements AulaDAO {
+
+    private PreparedStatement sAulaByID, sAuleByIDs;
+    private PreparedStatement iAula;
+    private PreparedStatement uAula;
+    private PreparedStatement dAula;
 
     public AulaDAO_MySQL(DataLayer d) {
         super(d);
     }
-    
-     public void init() throws DataException {
+
+    public void init() throws DataException {
 
         try {
             super.init();
-            
-            sAula = connection.prepareStatement("SELECT * FROM aula WHERE ID=?");
-            sAuleByIds =  connection.prepareStatement("SELECT ID FROM aula");
+
+            sAulaByID = connection.prepareStatement("SELECT * FROM aula WHERE ID=?");
+            // sAuleByIDs =  connection.prepareStatement("SELECT ID FROM aula");
             iAula = connection.prepareStatement("INSERT INTO gruppo (nome,luogo,edificio,piano,capienza,numero_prese_elettriche,numero_prese_di_rete,note_generiche,ID_responsabile) VALUES(?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             uAula = connection.prepareStatement("UPDATE gruppo SET nome=?,luogo=?,edificio=?,piano=?,capienza=?,numero_prese_elettriche=?,numero_prese_di_rete=?,note_generiche = ?,ID_responsabile =?, versione=? WHERE ID=? and versione=?");
             dAula = connection.prepareStatement("DELETE FROM gruppo WHERE ID=?");
@@ -50,27 +51,26 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO{
             throw new DataException("Errore durante l'inizializzazione del data layer", ex);
         }
     }
-     
+
     public void destroy() throws DataException {
         try {
-            sAula.close();
-            sAuleByIds.close();
+            sAulaByID.close();
+            // sAuleByIDs.close();
             iAula.close();
             uAula.close();
             dAula.close();
-            
-            
+
         } catch (SQLException ex) {
-            
+
         }
         super.destroy();
     }
 
     @Override
     public Aula createAula() {
-       return new AulaProxy(getDataLayer());
+        return new AulaProxy(getDataLayer());
     }
-    
+
     //helper
     private AulaProxy createAula(ResultSet rs) throws DataException {
         AulaProxy a = (AulaProxy) createAula();
@@ -84,37 +84,41 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO{
             a.setNumeroPreseElettriche(rs.getInt("numero_prese_elettriche"));
             a.setNumeroPreseDiRete(rs.getInt("numero_prese_di_rete"));
             a.setNoteGeneriche(rs.getString("note_generiche"));
-            a.setResponsabileKey(rs.getInt("responsabileID"));
+            a.setResponsabileKey(rs.getInt("ID_responsabile"));
             a.setVersion(rs.getLong("versione"));
         } catch (SQLException ex) {
-            throw new DataException("Unable to create gruppo object form ResultSet", ex);
+            throw new DataException("Impossibile creare oggetto Aula", ex);
         }
         return a;
     }
+
     @Override
-   
+
     public Aula getAula(int key) throws DataException {
-          try {
-              
-             sAula.setInt(1, key);
-            
-             try (ResultSet rs = sAula.executeQuery()) {
+        Aula aula = null;
+        try {
+
+            sAulaByID.setInt(1, key);
+
+            try ( ResultSet rs = sAulaByID.executeQuery()) {
                 if (rs.next()) {
-                    return createAula(rs);
+                    aula = createAula(rs);
                 }
             }
         } catch (SQLException ex) {
-            throw new DataException("Impossibile caricare Gruppo By Tipo e Nome", ex);
+            throw new DataException("Impossibile caricare Aula da ID", ex);
         }
-        return null;
-}
+        return aula;
+    }
+
+    /*
     @Override
-    public List<Aula> getAuleByIds(Aula aula) throws DataException {
+    public List<Aula> getAuleByIDs(Aula aula) throws DataException {
         List<Aula> result = new ArrayList();
 
         try {
-            sAuleByIds.setInt(1, aula.getKey());
-            try (ResultSet rs = sAuleByIds.executeQuery()) {
+            sAuleByIDs.setInt(1, aula.getKey());
+            try (ResultSet rs = sAuleByIDs.executeQuery()) {
                 while (rs.next()) {
                     
                     result.add((Aula) getAula(rs.getInt("aulaID")));
@@ -125,8 +129,8 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO{
         }
         return result;
     }
-
-   @Override
+     */
+    @Override
     public void storeAula(Aula aula) throws DataException {
         try {
             if (aula.getKey() != null && aula.getKey() > 0) { //update
@@ -148,7 +152,6 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO{
                 } else {
                     uAula.setNull(9, java.sql.Types.INTEGER);
                 }
-            
 
                 long current_version = aula.getVersion();
                 long next_version = current_version + 1;
@@ -182,7 +185,7 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO{
                     //getGeneratedKeys sullo statement.
                     //to read the generated record key from the database
                     //we use the getGeneratedKeys method on the same statement
-                    try (ResultSet keys = iAula.getGeneratedKeys()) {
+                    try ( ResultSet keys = iAula.getGeneratedKeys()) {
                         //il valore restituito è un ResultSet con un record
                         //per ciascuna chiave generata (uno solo nel nostro caso)
                         //the returned value is a ResultSet with a distinct record for
@@ -198,7 +201,7 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO{
                             aula.setKey(key);
                             //inseriamo il nuovo oggetto nella cache
                             //add the new object to the cache
-                           // dataLayer.getCache().add(Aula.class, aula);
+                            // dataLayer.getCache().add(Aula.class, aula);
                         }
                     }
                 }
@@ -227,17 +230,26 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO{
 
     @Override
     public void deleteAula(Aula aula) throws DataException {
-         try {
-             dAula.setInt(1, aula.getKey());
-             dAula.execute();
-         } catch (SQLException ex) {
-             Logger.getLogger(AulaDAO_MySQL.class.getName()).log(Level.SEVERE, null, ex);
-         }
-        
+        try {
+            dAula.setInt(1, aula.getKey());
+            dAula.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(AulaDAO_MySQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    
+////////////////////////////////////////////////////////////////////////////////////
+/*******************
+ * 
+ * METODI DA IMPLEMENTARE
+ * 
+ */
+
+    @Override
+    public Aula getAulaByNomeAndPosizione(String nome, String luogo, String edificio, int piano) throws DataException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-   
-
-   
-    
 }

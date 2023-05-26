@@ -81,5 +81,26 @@ public class ResponsabileDAO_MySQL extends DAO implements ResponsabileDAO{
         return r;
         
     }
+
+ ///////////////////////////////////////////////////////////////////////////////
+    
+    /*************************************
+     * METODI DA IMPLEMENTARE
+     * 
+     */
+    @Override
+    public void storeResponsabile(Responsabile responsabile) throws DataException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void deleteResponsabile(Responsabile responsabile) throws DataException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Responsabile getResponsabileByEmail(String email) throws DataException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }
