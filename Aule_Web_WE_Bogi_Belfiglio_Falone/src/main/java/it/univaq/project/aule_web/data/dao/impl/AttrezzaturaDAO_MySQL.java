@@ -8,6 +8,7 @@ import it.univaq.aule_web.data.model.Attrezzatura;
 import it.univaq.aule_web.data.model.Aula;
 import it.univaq.aule_web.framework.data.DAO;
 import it.univaq.aule_web.framework.data.DataException;
+import it.univaq.aule_web.framework.data.DataItemProxy;
 import it.univaq.aule_web.framework.data.DataLayer;
 import it.univaq.project.aule_web.data.dao.AttrezzaturaDAO;
 import java.sql.PreparedStatement;
@@ -15,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.OptimisticLockException;
 
 /**
  *
@@ -24,6 +26,7 @@ public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO {
 
     private PreparedStatement sAttrezzaturaByAula;
     private PreparedStatement sAttrezzaturaByID;
+    private PreparedStatement iAttrezzatura, dAttrezzaturaByID, uAttrezzatura;
 
     public AttrezzaturaDAO_MySQL(DataLayer d) {
         super(d);
@@ -33,8 +36,13 @@ public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO {
     public void init() throws DataException {
         try {
             super.init();
+
             sAttrezzaturaByAula = this.connection.prepareStatement("SELECT * FROM attrezzatura WHERE ID_aula=?");
-            sAttrezzaturaByID = this.connection.prepareStatement("SELECT * FROM attrezzatura WHERE ID = ?");
+            sAttrezzaturaByID = this.connection.prepareStatement("SELECT * FROM attrezzatura WHERE ID=?");
+            iAttrezzatura = this.connection.prepareStatement("INSERT INTO attrezzatura (nome,numero_di_serie,ID_aula) VALUES(?,?,?)");
+            uAttrezzatura = this.connection.prepareStatement("UPDATE attrezzatura SET nome=?,numero_di_serie=?,ID_aula=?, versione=? WHERE ID=? AND versione=?");
+            dAttrezzaturaByID = this.connection.prepareStatement("DELETE FROM attrezzatura WHERE ID = ?");
+
         } catch (SQLException ex) {
             throw new DataException("Errore nell'inizializzazione del data layer", ex);
         }
@@ -44,8 +52,13 @@ public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO {
     public void destroy() throws DataException {
 
         try {
-            sAttrezzaturaByAula.close();
-            sAttrezzaturaByID.close();
+
+           sAttrezzaturaByAula.close();
+           sAttrezzaturaByID.close();
+           iAttrezzatura.close();
+           uAttrezzatura.close();
+           dAttrezzaturaByID.close();
+
         } catch (SQLException ex) {
             throw new DataException("Errore nella chiusura degli statement");
         }
@@ -97,16 +110,85 @@ public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO {
             } else {
                 throw new DataException("Aula non identificata. Impossibile trovare l'attrezzatura");
             }
-
-            try ( ResultSet rs = sAttrezzaturaByID.executeQuery()) {
-                if (rs.next()) {
+        
+        try (ResultSet rs = sAttrezzaturaByAula.executeQuery()) {
+                if (rs.next()){
                     result.add((Attrezzatura) this.getAttrezzatura(rs.getInt("ID")));
-                }
+                }  
+
             }
+
         } catch (SQLException ex) {
             throw new DataException("Impossibile caricare la lista di attrezzature", ex);
         }
         return result;
+    }
+
+    @Override
+    public void storeAttrezzatura(Attrezzatura attrezzatura) throws DataException {
+        try{
+            if(attrezzatura.getKey() != null && attrezzatura.getKey() > 0){
+                if (attrezzatura instanceof DataItemProxy && !((DataItemProxy) attrezzatura).isModified()) {
+                    return;
+                }
+                uAttrezzatura.setString(1,attrezzatura.getNome());
+                uAttrezzatura.setInt(2, attrezzatura.getNumeroDiSerie());
+                
+                if(attrezzatura.getAula() != null){
+                    uAttrezzatura.setInt(3, attrezzatura.getAula().getKey());
+                }else{
+                    uAttrezzatura.setNull(3,java.sql.Types.INTEGER);
+                }
+                
+                long current_version = attrezzatura.getVersion();
+                long next_version = current_version + 1;
+                
+                uAttrezzatura.setLong(4, next_version);
+                uAttrezzatura.setInt(5, attrezzatura.getKey());
+                uAttrezzatura.setLong(6, current_version);
+                
+                if (uAttrezzatura.executeUpdate() == 0) {
+                    throw new OptimisticLockException(attrezzatura);
+                } else {
+                    attrezzatura.setVersion(next_version);
+                }
+                
+                }else{
+                    iAttrezzatura.setString(1, attrezzatura.getNome());
+                    iAttrezzatura.setInt(2, attrezzatura.getNumeroDiSerie());
+                    
+                        if(attrezzatura.getAula() != null){
+                            iAttrezzatura.setInt(3, attrezzatura.getAula().getKey());
+                        }else{
+                            iAttrezzatura.setNull(3,java.sql.Types.INTEGER);
+                        }
+                        if(iAttrezzatura.executeUpdate() == 1){
+                            try(ResultSet keys = iAttrezzatura.getGeneratedKeys()){
+                                if(keys.next()){
+                                    int key = keys.getInt(1);
+                                    attrezzatura.setKey(key);
+                                }
+                            }
+                        }     
+                }
+            if(attrezzatura instanceof DataItemProxy){
+                ((DataItemProxy) attrezzatura).setModified(false);
+            }
+            
+        }catch (SQLException | OptimisticLockException ex) {
+            throw new DataException("Non è stato possibile memorizzare l'attrezzatura", ex);
+        }
+    }
+
+    @Override
+    public void deleteAttrezzaturaByID(Attrezzatura attrezzatura) throws DataException {
+        try{
+            dAttrezzaturaByID.setInt(1, attrezzatura.getKey());
+            dAttrezzaturaByID.execute();
+            attrezzatura = null;
+        }catch (SQLException ex) {
+            throw new DataException("Non è stato possibile eliminare l'attrezzatura", ex);
+        }
     }
 
 }

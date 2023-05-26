@@ -5,6 +5,7 @@
 package it.univaq.project.aule_web.data.dao;
 
 import it.univaq.aule_web.data.model.Amministratore;
+import it.univaq.aule_web.data.model.Attrezzatura;
 import it.univaq.aule_web.framework.data.DataException;
 
 /**
@@ -13,10 +14,10 @@ import it.univaq.aule_web.framework.data.DataException;
  */
 public interface AmministratoreDAO {
     
-    public Amministratore getAmministratoreByID(int key)throws DataException;
+    Amministratore createAmministratore();
+
+    Amministratore getAmministratoreByID(int key)throws DataException;
     
-    public Amministratore getAmministratoreByUsernameAndPassword(String username, String password) throws DataException;
-    
-    public Amministratore createAmministratore();
+    Amministratore getAmministratoreByUsernameAndPassword(String username, String password) throws DataException;
     
 }
