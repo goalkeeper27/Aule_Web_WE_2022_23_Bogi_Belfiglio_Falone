@@ -13,8 +13,8 @@ import it.univaq.aule_web.framework.data.DataException;
  */
 public interface AmministratoreDAO {
     
-    Amministratore getAmministratoreByUsernameAndPassword(String username, String password) throws DataException;
+    public Amministratore getAmministratoreByUsernameAndPassword(String username, String password) throws DataException;
     
-    Amministratore createAministratore();
+    public Amministratore createAmministratore();
     
 }
