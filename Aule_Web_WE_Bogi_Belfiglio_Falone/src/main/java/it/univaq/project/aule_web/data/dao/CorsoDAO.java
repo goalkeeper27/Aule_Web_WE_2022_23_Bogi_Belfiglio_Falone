@@ -21,5 +21,9 @@ public interface CorsoDAO {
     
     public Corso getCorsoByPartialName(String nome) throws DataException;
     
+    public void storeCorso(Corso corso)throws DataException;
+    
+    public void deleteCorso(Corso corso)throws DataException;
+    
     
 }

@@ -6,7 +6,7 @@ package it.univaq.aule_web.data.model.enumerable;
 
 /**
  *
- * @author franc
+ * @author Francesco Falone
  */
 public enum TipoLaurea {
     TRIENNALE,
