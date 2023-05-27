@@ -21,7 +21,7 @@ public interface ResponsabileDAO {
     
     public void storeResponsabile(Responsabile responsabile)throws DataException;
     
-    public void deleteResponsabile(Responsabile responsabile)throws DataException;
+    public void deleteResponsabileByEmail(Responsabile responsabile)throws DataException;
     
     
     

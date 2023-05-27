@@ -22,7 +22,7 @@ import java.sql.SQLException;
  */
 public class AmministratoreDAO_MySQL extends DAO implements AmministratoreDAO {
 
-    private PreparedStatement sAmministratoreByUsernameAndPassword;
+    private PreparedStatement sAmministratoreByUsernameAndPassword, sAmministratoreByID;
 
     public AmministratoreDAO_MySQL(DataLayer d) {
         super(d);
@@ -33,6 +33,7 @@ public class AmministratoreDAO_MySQL extends DAO implements AmministratoreDAO {
         try {
             super.init();
             sAmministratoreByUsernameAndPassword = this.connection.prepareStatement("SELECT * FROM amministratore WHERE username = ? AND password = ?");
+            sAmministratoreByID = this.connection.prepareStatement("SELECT * FROM amministratore WHERE ID=?");
         } catch (SQLException ex) {
             throw new DataException("Errore nell'inizializzazione del data layer", ex);
         }
@@ -43,6 +44,7 @@ public class AmministratoreDAO_MySQL extends DAO implements AmministratoreDAO {
 
         try {
             sAmministratoreByUsernameAndPassword.close();
+            sAmministratoreByID.close();
         } catch (SQLException ex) {
             throw new DataException("Errore nella chiusura degli statement");
         }
@@ -95,12 +97,20 @@ public class AmministratoreDAO_MySQL extends DAO implements AmministratoreDAO {
 
     }
 
-    
-///////////////////////////////////////////////////////////////////////
- //     METODI DA IMPLEMENTARE
-//////////////////////////////////////////////////////////////////////
     @Override
     public Amministratore getAmministratoreByID(int key) throws DataException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Amministratore amministratore = null;
+        try{
+            sAmministratoreByID.setInt(1, key);
+            
+            try ( ResultSet rs = sAmministratoreByID.executeQuery()) {
+                if (rs.next()) {
+                    amministratore = createAmministratore(rs);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Impossibile caricare l'amministratore dall' ID", ex);
+        }
+        return amministratore;
     }
 }

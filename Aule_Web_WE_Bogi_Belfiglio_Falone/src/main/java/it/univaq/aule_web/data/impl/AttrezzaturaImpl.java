@@ -10,7 +10,7 @@ import it.univaq.aule_web.data.model.Aula;
 
 /**
  *
- * @author stefa
+ * @author Stefano Belfiglio
  */
 public class AttrezzaturaImpl extends DataItemImpl<Integer> implements Attrezzatura {
     

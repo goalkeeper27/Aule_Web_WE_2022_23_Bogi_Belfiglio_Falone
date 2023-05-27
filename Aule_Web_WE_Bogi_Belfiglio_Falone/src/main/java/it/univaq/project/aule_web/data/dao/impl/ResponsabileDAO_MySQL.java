@@ -7,6 +7,7 @@ package it.univaq.project.aule_web.data.dao.impl;
 import it.univaq.aule_web.data.model.Responsabile;
 import it.univaq.aule_web.framework.data.DAO;
 import it.univaq.aule_web.framework.data.DataException;
+import it.univaq.aule_web.framework.data.DataItemProxy;
 import it.univaq.aule_web.framework.data.DataLayer;
 import it.univaq.project.aule_web.data.dao.ResponsabileDAO;
 import java.sql.PreparedStatement;
@@ -19,7 +20,8 @@ import java.sql.SQLException;
  */
 public class ResponsabileDAO_MySQL extends DAO implements ResponsabileDAO{
     
-    private PreparedStatement sResponsabileByID;
+    private PreparedStatement sResponsabileByID, sResponsabileByEmail;
+    private PreparedStatement iResponsabile, dResponsabileByEmail;
 
     public ResponsabileDAO_MySQL(DataLayer d) {
         super(d);
@@ -29,6 +31,9 @@ public class ResponsabileDAO_MySQL extends DAO implements ResponsabileDAO{
         try{
             super.init();
             sResponsabileByID = this.connection.prepareStatement("SELECT * FROM responsabile WHERE ID=?");
+            sResponsabileByEmail = this.connection.prepareStatement("SELECT * FROM responsabile WHERE email=?");
+            iResponsabile = this.connection.prepareStatement("INSERT INTO responsabile (nome,cognome,codice_fiscale,email) VALUES(?,?,?,?)");
+            dResponsabileByEmail = this.connection.prepareStatement("DELETE FROM responsabile WHERE email=?");
         } catch (SQLException ex) {
             throw new DataException("Errore nell'inizializzazione del data layer", ex);
         }
@@ -38,11 +43,13 @@ public class ResponsabileDAO_MySQL extends DAO implements ResponsabileDAO{
     public void destroy() throws DataException {
 
         try {
-
             sResponsabileByID.close();
+            sResponsabileByEmail.close();
+            iResponsabile.close();
+            dResponsabileByEmail.close();
 
         } catch (SQLException ex) {
-            throw new DataException("Errore nella chiusura degli statement");
+            throw new DataException("Errore nella chiusura degli statement", ex);
         }
         super.destroy();
     }
@@ -74,33 +81,64 @@ public class ResponsabileDAO_MySQL extends DAO implements ResponsabileDAO{
             r.setCognome(rs.getString("cognome"));
             r.setCodiceFiscale(rs.getString("codice_fiscale"));
             r.setEmail(rs.getString("email"));
-            r.setVersion(rs.getLong("versione"));
         } catch (SQLException ex) {
             throw new DataException("Impossibile creare l'oggetto Responsabile dal ResultSet", ex);
         }
-        return r;
-        
+        return r;  
     }
 
- ///////////////////////////////////////////////////////////////////////////////
-    
-    /*************************************
-     * METODI DA IMPLEMENTARE
-     * 
-     */
     @Override
     public void storeResponsabile(Responsabile responsabile) throws DataException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            if(responsabile.getKey() == null && responsabile.getKey() > 0){
+              iResponsabile.setString(1, responsabile.getNome());
+              iResponsabile.setString(2, responsabile.getCognome());
+              iResponsabile.setString(3, responsabile.getCodiceFiscale());
+              iResponsabile.setString(4, responsabile.getEmail()); 
+              
+              if(iResponsabile.executeUpdate() == 1){
+                 
+                  try(ResultSet keys = iResponsabile.getGeneratedKeys()){
+                      if(keys.next()){
+                          int key = keys.getInt(1);
+                          responsabile.setKey(key);
+                      }
+                  }
+              }
+            }
+            if(responsabile instanceof DataItemProxy){
+                ((DataItemProxy) responsabile).setModified(false);
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Non è stato possibile memorizzare il responsabile", ex);
+        }       
     }
 
     @Override
-    public void deleteResponsabile(Responsabile responsabile) throws DataException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void deleteResponsabileByEmail(Responsabile responsabile) throws DataException {
+        try{
+            if(responsabile instanceof DataItemProxy){
+                dResponsabileByEmail.setString(1, responsabile.getEmail());
+                dResponsabileByEmail.execute();
+                responsabile = null;
+            }
+        }catch (SQLException ex) {
+            throw new DataException("Non è stato possibile eliminare il responsabile", ex);
+        }
     }
-
+    
     @Override
     public Responsabile getResponsabileByEmail(String email) throws DataException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Responsabile responsabile = null;
+        try{
+            sResponsabileByEmail.setString(1, email);
+            try (ResultSet rs = sResponsabileByEmail.executeQuery()) {
+                    if (rs.next()) responsabile = createResponsabile(rs);   
+                }
+        } catch (SQLException ex) {
+                throw new DataException("Impossibile caricare il responsabile dalla email citata", ex);
+            }
+        return responsabile;
     }
     
 }

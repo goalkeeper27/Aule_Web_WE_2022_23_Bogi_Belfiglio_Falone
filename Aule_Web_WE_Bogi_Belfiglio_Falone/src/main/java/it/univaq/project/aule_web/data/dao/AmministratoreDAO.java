@@ -5,7 +5,6 @@
 package it.univaq.project.aule_web.data.dao;
 
 import it.univaq.aule_web.data.model.Amministratore;
-import it.univaq.aule_web.data.model.Attrezzatura;
 import it.univaq.aule_web.framework.data.DataException;
 
 /**

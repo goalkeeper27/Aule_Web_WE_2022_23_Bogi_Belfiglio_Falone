@@ -60,7 +60,7 @@ public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO {
            dAttrezzaturaByID.close();
 
         } catch (SQLException ex) {
-            throw new DataException("Errore nella chiusura degli statement");
+            throw new DataException("Errore nella chiusura degli statement", ex);
         }
         super.destroy();
     }
@@ -183,9 +183,11 @@ public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO {
     @Override
     public void deleteAttrezzaturaByID(Attrezzatura attrezzatura) throws DataException {
         try{
-            dAttrezzaturaByID.setInt(1, attrezzatura.getKey());
-            dAttrezzaturaByID.execute();
-            attrezzatura = null;
+            if(attrezzatura instanceof DataItemProxy){
+                dAttrezzaturaByID.setInt(1, attrezzatura.getKey());
+                dAttrezzaturaByID.execute();
+                attrezzatura = null;
+            }
         }catch (SQLException ex) {
             throw new DataException("Non è stato possibile eliminare l'attrezzatura", ex);
         }
