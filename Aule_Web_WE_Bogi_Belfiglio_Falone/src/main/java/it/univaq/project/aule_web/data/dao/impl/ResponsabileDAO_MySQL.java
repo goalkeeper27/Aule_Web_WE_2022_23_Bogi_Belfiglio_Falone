@@ -115,12 +115,11 @@ public class ResponsabileDAO_MySQL extends DAO implements ResponsabileDAO{
     }
 
     @Override
-    public void deleteResponsabileByEmail(Responsabile responsabile) throws DataException {
+    public void deleteResponsabileByEmail(String email) throws DataException {
         try{
-            if(responsabile instanceof DataItemProxy){
-                dResponsabileByEmail.setString(1, responsabile.getEmail());
+            if(email != null){
+                dResponsabileByEmail.setString(1, email);
                 dResponsabileByEmail.execute();
-                responsabile = null;
             }
         }catch (SQLException ex) {
             throw new DataException("Non è stato possibile eliminare il responsabile", ex);
