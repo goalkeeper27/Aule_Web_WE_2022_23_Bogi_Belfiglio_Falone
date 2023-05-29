@@ -183,10 +183,9 @@ public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO {
     @Override
     public void deleteAttrezzaturaByID(Attrezzatura attrezzatura) throws DataException {
         try{
-            if(attrezzatura instanceof DataItemProxy){
+            if(attrezzatura.getKey() != null && attrezzatura.getKey() > 0){
                 dAttrezzaturaByID.setInt(1, attrezzatura.getKey());
                 dAttrezzaturaByID.execute();
-                attrezzatura = null;
             }
         }catch (SQLException ex) {
             throw new DataException("Non è stato possibile eliminare l'attrezzatura", ex);
