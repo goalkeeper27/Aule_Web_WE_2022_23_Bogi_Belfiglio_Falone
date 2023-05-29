@@ -53,4 +53,28 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     text-align: center;
     
 }
+.footer {
+    width: 100%;       
+    font-size: 11pt;
+    text-align: center;
+    background-color: #add8e6; 
+    color: white;
+    position: fixed;
+    left: 0px;
+    bottom: 0%;
+    height: 5%
+    
+}
+.footer_container{
+    width:100%;
+    
+}
+.footer_text{
+    position: relative;
+    top:30%;
+    text-align: left;
+    left: 5px;
+    
+    
+}
 
