@@ -90,7 +90,7 @@ public class ResponsabileDAO_MySQL extends DAO implements ResponsabileDAO{
     @Override
     public void storeResponsabile(Responsabile responsabile) throws DataException {
         try{
-            if(responsabile.getKey() == null && responsabile.getKey() > 0){
+            if(responsabile.getKey() == null){
               iResponsabile.setString(1, responsabile.getNome());
               iResponsabile.setString(2, responsabile.getCognome());
               iResponsabile.setString(3, responsabile.getCodiceFiscale());

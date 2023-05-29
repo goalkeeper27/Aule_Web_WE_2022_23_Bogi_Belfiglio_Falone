@@ -24,15 +24,17 @@ public interface EventoDAO {
     public Evento createEvento();
     
     // Mostrare gli eventi associati a una specifica aula in una determinata settimana o in giornata
-    public List<Evento> getEventoByAulaAndPeriodo(Aula aula, LocalDate dataInizio, Integer period) throws DataException;
+    public List<Evento> getEventoInAWeekByAula(Aula aula, LocalDate dataInizio, LocalDate dataFine) throws DataException;
+    
+    public List<Evento> getEventoInADayByAula(Aula aula, LocalDate data) throws DataException;
     
     // Mostrare tutti gli eventi attuali e quelli delle prossime tre ore
-    public List<Evento> getCurrentEvento()throws DataException;
+    public List<Evento> getCurrentEventoByAula(Aula aula)throws DataException;
     
     // Mostrare gli eventi associati a uno specifico corso in una determinata settimana
-    public List<Evento> getEventByPeriodoAndCorso(Corso corso, LocalDate data) throws DataException;
+    public List<Evento> getEventInAWeekByCorso(Corso corso, LocalDate dataInizio, LocalDate dataFine) throws DataException;
     
-    public Evento storeEvento(Evento evento);
+    public void storeEvento(Evento evento)throws DataException;
     
     public void deleteEvento(Evento evento) throws DataException;
     

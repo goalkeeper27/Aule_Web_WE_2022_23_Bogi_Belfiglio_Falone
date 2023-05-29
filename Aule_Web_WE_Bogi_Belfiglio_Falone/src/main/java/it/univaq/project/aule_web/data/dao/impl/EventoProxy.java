@@ -27,14 +27,14 @@ import java.util.logging.Logger;
  */
 public class EventoProxy extends EventoImpl implements DataItemProxy{
     
-    private boolean modified;
+    protected boolean modified;
     protected DataLayer dataLayer;
     
-    private int corsoKey;
-    private int responsabileKey;
-    private int aulaKey;
+    protected int corsoKey;
+    protected int responsabileKey;
+    protected int aulaKey;
     
-    public EventoProxy(DataLayer d){
+    protected EventoProxy(DataLayer d){
         super();
         this.modified = false;
         this.dataLayer = d;
@@ -191,6 +191,23 @@ public class EventoProxy extends EventoImpl implements DataItemProxy{
     public void setAulaKey(int key){
         this.aulaKey = key;
         super.setAula(null);
+    }
+    
+    public void setCorsoKey(int key){
+        this.corsoKey = key;
+        super.setCorso(null);
+    }
+    
+    public int getResponsabileKey(){
+        return this.responsabileKey;
+    }
+    
+    public int getAulaKey(){
+        return this.aulaKey;
+    }
+    
+    public int getCorsoKey(){
+        return this.corsoKey;
     }
     
     
