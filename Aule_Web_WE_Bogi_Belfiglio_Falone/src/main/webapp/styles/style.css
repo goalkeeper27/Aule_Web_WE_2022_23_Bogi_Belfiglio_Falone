@@ -120,6 +120,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     margin-top: 5px;
 }
 
+.gruppo_form_login input:focus {
+    width: 95%;
+    padding: 8px;
+    border: 1px solid #CCC;
+    border-radius: 3px;
+    margin-top: 5px;
+    background-color: #efefef;
+}
+
 .gruppo_form_login button {
     width: 100%;
     padding: 8px;
