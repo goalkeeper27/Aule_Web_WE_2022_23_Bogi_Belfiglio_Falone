@@ -29,7 +29,8 @@ import java.util.logging.Logger;
  */
 public class AulaDAO_MySQL extends DAO implements AulaDAO {
 
-    private PreparedStatement sAulaByID, sAuleByIDs, sAulaByNomeAndPosizione, sAuleByGruppo;
+
+    private PreparedStatement sAulaByID, sAuleByIDs, sAulaByNomeAndPosizione,sAuleByGruppoID;
     private PreparedStatement iAula;
     private PreparedStatement uAula;
     private PreparedStatement dAula;
@@ -47,8 +48,10 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
             // sAuleByIDs =  connection.prepareStatement("SELECT ID FROM aula");
              // sAulaByID = connection.prepareStatement("SELECT * FROM aula WHERE GRUPPO=?");
             sAulaByNomeAndPosizione = connection.prepareStatement("SELECT * FROM aula WHERE nome=?, luogo=?,edificio=?,piano =?");
-            sAuleByGruppo = connection.prepareStatement("SELECT A.* FROM aula A, associazione_aula_gruppo AG, gruppo G WHERE "
+
+            sAuleByGruppoID = connection.prepareStatement("SELECT A.* FROM aula A, associazione_aula_gruppo AG, gruppo G WHERE "
                     + "G.ID = ? AND AG.ID_gruppo = G.ID AND A.ID = AG.ID_aula");
+
             iAula = connection.prepareStatement("INSERT INTO gruppo (nome,luogo,edificio,piano,capienza,numero_prese_elettriche,numero_prese_di_rete,note_generiche,ID_responsabile) VALUES(?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             uAula = connection.prepareStatement("UPDATE gruppo SET nome=?,luogo=?,edificio=?,piano=?,capienza=?,numero_prese_elettriche=?,numero_prese_di_rete=?,note_generiche = ?,ID_responsabile =?, versione=? WHERE ID=? and versione=?");
             dAula = connection.prepareStatement("DELETE FROM gruppo WHERE ID=?");
@@ -62,7 +65,7 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
             sAulaByID.close();
             sAulaByNomeAndPosizione.close();
             // sAuleByIDs.close();
-            sAuleByGruppo.close();
+            sAuleByGruppoID.close();
             iAula.close();
             uAula.close();
             dAula.close();
@@ -268,14 +271,14 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
     }
 
     @Override
-    public List<Aula> getAuleByGruppo(Gruppo gruppo) throws DataException {
+    public List<Aula> getAuleByGruppoID(String gruppo_key) throws DataException {
          List<Aula> aule = new ArrayList<>();
         try {
-            sAuleByGruppo.setInt(1, gruppo.getKey());
+            sAuleByGruppoID.setString(1, gruppo_key);
         } catch (SQLException ex) {
             Logger.getLogger(AulaDAO_MySQL.class.getName()).log(Level.SEVERE, null, ex);
         }
-         try ( ResultSet rs = sAuleByGruppo.executeQuery()) {
+         try ( ResultSet rs = sAuleByGruppoID.executeQuery()) {
             while (rs.next()) {
                 Aula aula = createAula(rs);
                 aule.add(aula);
@@ -287,9 +290,5 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
 
         return aule;
     }
-    
- 
-
-    
 
 }
