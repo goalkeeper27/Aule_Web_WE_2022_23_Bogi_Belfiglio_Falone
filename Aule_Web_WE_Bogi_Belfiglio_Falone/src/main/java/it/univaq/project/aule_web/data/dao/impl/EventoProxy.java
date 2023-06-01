@@ -4,15 +4,15 @@
  */
 package it.univaq.project.aule_web.data.dao.impl;
 
-import it.univaq.aule_web.data.impl.EventoImpl;
-import it.univaq.aule_web.data.model.Aula;
-import it.univaq.aule_web.data.model.Corso;
-import it.univaq.aule_web.data.model.Responsabile;
-import it.univaq.aule_web.data.model.enumerable.Ricorrenza;
-import it.univaq.aule_web.data.model.enumerable.Tipologia;
-import it.univaq.aule_web.framework.data.DataException;
-import it.univaq.aule_web.framework.data.DataItemProxy;
-import it.univaq.aule_web.framework.data.DataLayer;
+import it.univaq.project.aule_web.data.impl.EventoImpl;
+import it.univaq.project.aule_web.data.model.Aula;
+import it.univaq.project.aule_web.data.model.Corso;
+import it.univaq.project.aule_web.data.model.Responsabile;
+import it.univaq.project.aule_web.data.model.enumerable.Ricorrenza;
+import it.univaq.project.aule_web.data.model.enumerable.Tipologia;
+import it.univaq.project.aule_web.framework.data.DataException;
+import it.univaq.project.aule_web.framework.data.DataItemProxy;
+import it.univaq.project.aule_web.framework.data.DataLayer;
 import it.univaq.project.aule_web.data.dao.AulaDAO;
 import it.univaq.project.aule_web.data.dao.CorsoDAO;
 import it.univaq.project.aule_web.data.dao.ResponsabileDAO;
@@ -61,7 +61,7 @@ public class EventoProxy extends EventoImpl implements DataItemProxy{
     public Aula getAula() {
        if(super.getAula() == null && this.aulaKey > 0){
             try{
-                super.setAula(((AulaDAO)dataLayer.getDAO(Corso.class)).getAula(this.aulaKey));
+                super.setAula(((AulaDAO)dataLayer.getDAO(Aula.class)).getAula(this.aulaKey));
             }
             catch(DataException ex){
                 Logger.getLogger(EventoProxy.class.getName()).log(Level.SEVERE, null, ex);
@@ -74,7 +74,7 @@ public class EventoProxy extends EventoImpl implements DataItemProxy{
     public Responsabile getResponsabile() {
        if(super.getResponsabile() == null && this.responsabileKey > 0){
             try{
-                super.setResponsabile(((ResponsabileDAO)dataLayer.getDAO(Corso.class)).getResponsabile(this.responsabileKey));
+                super.setResponsabile(((ResponsabileDAO)dataLayer.getDAO(Responsabile.class)).getResponsabile(this.responsabileKey));
             }
             catch(DataException ex){
                 Logger.getLogger(EventoProxy.class.getName()).log(Level.SEVERE, null, ex);

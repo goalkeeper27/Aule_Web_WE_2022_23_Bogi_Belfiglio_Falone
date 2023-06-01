@@ -4,11 +4,11 @@
  */
 package it.univaq.project.aule_web.data.dao;
 
-import it.univaq.aule_web.data.model.Aula;
-import it.univaq.aule_web.data.model.Corso;
-import it.univaq.aule_web.data.model.Evento;
-import it.univaq.aule_web.data.model.Gruppo;
-import it.univaq.aule_web.framework.data.DataException;
+import it.univaq.project.aule_web.data.model.Aula;
+import it.univaq.project.aule_web.data.model.Corso;
+import it.univaq.project.aule_web.data.model.Evento;
+import it.univaq.project.aule_web.data.model.Gruppo;
+import it.univaq.project.aule_web.framework.data.DataException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;

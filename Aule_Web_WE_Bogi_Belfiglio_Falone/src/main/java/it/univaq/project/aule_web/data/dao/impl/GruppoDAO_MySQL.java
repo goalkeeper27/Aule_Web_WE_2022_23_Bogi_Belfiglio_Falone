@@ -4,19 +4,22 @@
  */
 package it.univaq.project.aule_web.data.dao.impl;
 
-import it.univaq.aule_web.data.model.Gruppo;
-import it.univaq.aule_web.framework.data.DAO;
-import it.univaq.aule_web.framework.data.DataException;
-import it.univaq.aule_web.framework.data.DataItemProxy;
-import it.univaq.aule_web.framework.data.DataLayer;
+import it.univaq.project.aule_web.data.model.Gruppo;
+import it.univaq.project.aule_web.framework.data.DAO;
+import it.univaq.project.aule_web.framework.data.DataException;
+import it.univaq.project.aule_web.framework.data.DataItemProxy;
+import it.univaq.project.aule_web.framework.data.DataLayer;
 import it.univaq.project.aule_web.data.dao.GruppoDAO;
+import it.univaq.project.aule_web.framework.data.OptimisticLockException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.OptimisticLockException;
+
 
 /**
  *
@@ -24,7 +27,7 @@ import javax.persistence.OptimisticLockException;
  */
 public class GruppoDAO_MySQL  extends DAO implements GruppoDAO{
     
-     private PreparedStatement sGruppoByTipoAndNome;
+     private PreparedStatement sGruppoByTipoAndNome, sTipiGruppo;
      private PreparedStatement iGruppo;
      private PreparedStatement uGruppo;
      private PreparedStatement dGruppo;
@@ -38,9 +41,10 @@ public class GruppoDAO_MySQL  extends DAO implements GruppoDAO{
             super.init();
             
             sGruppoByTipoAndNome = connection.prepareStatement("SELECT * FROM Gruppo WHERE tipo = ? AND nome=?;");
-            iGruppo = connection.prepareStatement("INSERT INTO gruppo (nome,tipo,descrizione) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS);
-            uGruppo = connection.prepareStatement("UPDATE gruppo SET nome=?,tipo=?,descrizione=?, versione=? WHERE ID=? AND versione=?");
-            dGruppo = connection.prepareStatement("DELETE FROM gruppo WHERE ID=?");
+            sTipiGruppo = connection.prepareStatement("SELECT DISTINCT tipo FROM gruppo; ");
+            iGruppo = connection.prepareStatement("INSERT INTO gruppo (nome,tipo,descrizione) VALUES(?,?,?);", Statement.RETURN_GENERATED_KEYS);
+            uGruppo = connection.prepareStatement("UPDATE gruppo SET nome=?,tipo=?,descrizione=?, versione=? WHERE ID=? AND versione=?;");
+            dGruppo = connection.prepareStatement("DELETE FROM gruppo WHERE ID=?;");
         } catch (SQLException ex) {
             throw new DataException("Errore durante l'inizializzazione del data layer", ex);
         }
@@ -175,6 +179,22 @@ public class GruppoDAO_MySQL  extends DAO implements GruppoDAO{
              throw new DataException("Errore nell'eliminazione del gruppo", ex);
          }
         
+    }
+
+    @Override
+    public List<String> getTipiGruppo() throws DataException {
+        List<String> tipi = new ArrayList<>();
+        
+        try(ResultSet rs = sTipiGruppo.executeQuery()){
+            while(rs.next())
+                tipi.add(rs.getString("tipo"));
+            
+        }
+        catch(SQLException ex){
+            throw new DataException("error DB", ex);
+        }
+        
+        return tipi;
     }
     
 }

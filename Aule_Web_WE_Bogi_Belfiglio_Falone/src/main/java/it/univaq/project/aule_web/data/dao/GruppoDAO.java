@@ -4,8 +4,9 @@
  */
 package it.univaq.project.aule_web.data.dao;
 
-import it.univaq.aule_web.data.model.Gruppo;
-import it.univaq.aule_web.framework.data.DataException;
+import it.univaq.project.aule_web.data.model.Gruppo;
+import it.univaq.project.aule_web.framework.data.DataException;
+import java.util.List;
 
 /**
  *
@@ -16,6 +17,8 @@ public interface GruppoDAO {
     public Gruppo createGruppo();
     
     public Gruppo getGruppoByTipoAndNome(String tipo, String nome) throws DataException;
+    
+    public List<String> getTipiGruppo() throws DataException;
     
     public void storeGruppo(Gruppo gruppo)throws DataException;
     

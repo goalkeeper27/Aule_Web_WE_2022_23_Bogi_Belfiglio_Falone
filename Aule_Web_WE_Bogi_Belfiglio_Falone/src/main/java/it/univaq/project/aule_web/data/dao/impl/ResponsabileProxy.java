@@ -4,9 +4,9 @@
  */
 package it.univaq.project.aule_web.data.dao.impl;
 
-import it.univaq.aule_web.data.impl.ResponsabileImpl;
-import it.univaq.aule_web.framework.data.DataItemProxy;
-import it.univaq.aule_web.framework.data.DataLayer;
+import it.univaq.project.aule_web.data.impl.ResponsabileImpl;
+import it.univaq.project.aule_web.framework.data.DataItemProxy;
+import it.univaq.project.aule_web.framework.data.DataLayer;
 
 /**
  *

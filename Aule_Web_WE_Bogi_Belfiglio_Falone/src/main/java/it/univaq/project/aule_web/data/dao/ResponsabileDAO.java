@@ -4,8 +4,8 @@
  */
 package it.univaq.project.aule_web.data.dao;
 
-import it.univaq.aule_web.data.model.Responsabile;
-import it.univaq.aule_web.framework.data.DataException;
+import it.univaq.project.aule_web.data.model.Responsabile;
+import it.univaq.project.aule_web.framework.data.DataException;
 
 /**
  *

@@ -4,13 +4,13 @@
  */
 package it.univaq.project.aule_web.data.dao.impl;
 
-import it.univaq.aule_web.data.model.Corso;
-import it.univaq.aule_web.data.model.enumerable.TipoLaurea;
-import it.univaq.aule_web.framework.data.DAO;
-import it.univaq.aule_web.framework.data.DataException;
-import it.univaq.aule_web.framework.data.DataItemProxy;
-import it.univaq.aule_web.framework.data.DataLayer;
-import it.univaq.aule_web.framework.data.OptimisticLockException;
+import it.univaq.project.aule_web.data.model.Corso;
+import it.univaq.project.aule_web.data.model.enumerable.TipoLaurea;
+import it.univaq.project.aule_web.framework.data.DAO;
+import it.univaq.project.aule_web.framework.data.DataException;
+import it.univaq.project.aule_web.framework.data.DataItemProxy;
+import it.univaq.project.aule_web.framework.data.DataLayer;
+import it.univaq.project.aule_web.framework.data.OptimisticLockException;
 import it.univaq.project.aule_web.data.dao.CorsoDAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

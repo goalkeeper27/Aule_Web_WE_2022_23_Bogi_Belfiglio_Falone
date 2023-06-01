@@ -4,19 +4,20 @@
  */
 package it.univaq.project.aule_web.data.dao.impl;
 
-import it.univaq.aule_web.data.model.Attrezzatura;
-import it.univaq.aule_web.data.model.Aula;
-import it.univaq.aule_web.framework.data.DAO;
-import it.univaq.aule_web.framework.data.DataException;
-import it.univaq.aule_web.framework.data.DataItemProxy;
-import it.univaq.aule_web.framework.data.DataLayer;
+
 import it.univaq.project.aule_web.data.dao.AttrezzaturaDAO;
+import it.univaq.project.aule_web.data.model.Attrezzatura;
+import it.univaq.project.aule_web.data.model.Aula;
+import it.univaq.project.aule_web.framework.data.DAO;
+import it.univaq.project.aule_web.framework.data.DataException;
+import it.univaq.project.aule_web.framework.data.DataItemProxy;
+import it.univaq.project.aule_web.framework.data.DataLayer;
+import it.univaq.project.aule_web.framework.data.OptimisticLockException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.OptimisticLockException;
 
 /**
  *

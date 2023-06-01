@@ -4,11 +4,11 @@
  */
 package it.univaq.project.aule_web.data.dao.impl;
 
-import it.univaq.aule_web.data.impl.AttrezzaturaImpl;
-import it.univaq.aule_web.data.model.Aula;
-import it.univaq.aule_web.framework.data.DataException;
-import it.univaq.aule_web.framework.data.DataItemProxy;
-import it.univaq.aule_web.framework.data.DataLayer;
+import it.univaq.project.aule_web.data.impl.AttrezzaturaImpl;
+import it.univaq.project.aule_web.data.model.Aula;
+import it.univaq.project.aule_web.framework.data.DataException;
+import it.univaq.project.aule_web.framework.data.DataItemProxy;
+import it.univaq.project.aule_web.framework.data.DataLayer;
 import it.univaq.project.aule_web.data.dao.AulaDAO;
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -4,10 +4,10 @@
  */
 package it.univaq.project.aule_web.data.dao.impl;
 
-import it.univaq.aule_web.data.impl.CorsoImpl;
-import it.univaq.aule_web.data.model.enumerable.TipoLaurea;
-import it.univaq.aule_web.framework.data.DataItemProxy;
-import it.univaq.aule_web.framework.data.DataLayer;
+import it.univaq.project.aule_web.data.impl.CorsoImpl;
+import it.univaq.project.aule_web.data.model.enumerable.TipoLaurea;
+import it.univaq.project.aule_web.framework.data.DataItemProxy;
+import it.univaq.project.aule_web.framework.data.DataLayer;
 
 /**
  *

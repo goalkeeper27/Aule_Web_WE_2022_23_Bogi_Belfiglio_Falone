@@ -4,10 +4,22 @@
  */
 package it.univaq.project.aule_web.data.dao;
 
+import it.univaq.project.aule_web.data.model.Evento;
+import it.univaq.project.aule_web.data.model.EventoRicorrente;
+import it.univaq.project.aule_web.framework.data.DataException;
+import java.util.List;
+
 /**
  *
- * @author acer
+ * @author Alberto Bogi
  */
 public interface EventoRicorrenteDAO {
+    
+    EventoRicorrente createEventoRicorrente();
+    
+    List<EventoRicorrente> EventoRicorrenteByEvento(Evento evento)throws DataException;
+    
+    
+    
     
 }

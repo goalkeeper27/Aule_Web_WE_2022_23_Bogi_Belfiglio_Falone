@@ -4,14 +4,15 @@
  */
 package it.univaq.project.aule_web.data.dao.impl;
 
-import it.univaq.aule_web.data.model.Aula;
-import it.univaq.aule_web.data.model.Gruppo;
-import it.univaq.aule_web.framework.data.DAO;
-import it.univaq.aule_web.framework.data.DataException;
-import it.univaq.aule_web.framework.data.DataItemProxy;
-import it.univaq.aule_web.framework.data.DataLayer;
+import it.univaq.project.aule_web.data.model.Aula;
+import it.univaq.project.aule_web.data.model.Gruppo;
+import it.univaq.project.aule_web.framework.data.DAO;
+import it.univaq.project.aule_web.framework.data.DataException;
+import it.univaq.project.aule_web.framework.data.DataItemProxy;
+import it.univaq.project.aule_web.framework.data.DataLayer;
 import it.univaq.project.aule_web.data.dao.AulaDAO;
 import it.univaq.project.aule_web.data.dao.GruppoDAO;
+import it.univaq.project.aule_web.framework.data.OptimisticLockException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.OptimisticLockException;
+
 
 /**
  *
