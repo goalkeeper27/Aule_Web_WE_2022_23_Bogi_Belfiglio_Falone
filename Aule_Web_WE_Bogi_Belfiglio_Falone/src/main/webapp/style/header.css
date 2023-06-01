@@ -4,7 +4,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 */
 /* 
     Created on : 29 mag 2023, 15:37:47
-    Author     : 
+    Author : 
 */
 
 html, body {
@@ -155,9 +155,16 @@ li{
 
 button{
     width:10%;
-    border-radius: 15%;
+    border-radius: 10%;
     font-weight: bold;
+    font-size:50%;
     
+}
+
+button:hover{
+    background-color: #696969;
+    border-color: black;
+    color:white;
 }
 
 .login{

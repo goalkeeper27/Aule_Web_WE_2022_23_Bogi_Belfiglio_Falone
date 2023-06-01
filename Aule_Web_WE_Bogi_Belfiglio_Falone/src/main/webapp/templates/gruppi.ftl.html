@@ -1,22 +1,25 @@
 <div class="container">
+    <div class="gruppi">
+        <p>Seleziona il gruppo di aule di tuo interesse</p>
 
-    <p>Seleziona il gruppo di aule di tuo interesse</p>
+        <div class="ten columns">
+            <#list tipi_gruppo as tipo>
+            <form method="GET" action="templates/login_admin.html">
+                <fieldset>
+                    <legend>${tipo}</legend>
+                    <#list gruppi as gruppo>
+                    <#if tipo == gruppo.tipoGruppo> 
+                    <button type = "submit" name="IDgruppo" value="${gruppo.key}" id="${
+                        gruppo.key
+                    }">vedi</button>
+                    <label for="${gruppo.key}">${gruppo.nome}</label>
+                    <br><br>
+                    </#if>
+                    </#list>
+                </fieldset>
 
-    <div class="ten columns">
-        <#list tipi_gruppo as tipo>
-        <form method="GET" action="templates/login_admin.html">
-        <fieldset>
-            <legend>${tipo}</legend>
-            <#list gruppi as gruppo>
-            <#if tipo == gruppo.tipoGruppo> 
-            <button type = "submit" name="IDgruppo" value="${gruppo.key}" id="${gruppo.key}">vedi</button>
-            <label for="${gruppo.key}">${gruppo.nome}</label>
-             <br><br>
-            </#if>
+            </form>
             </#list>
-        </fieldset>
-
-        </form>
-        </#list>
+        </div>
     </div>
 </div>

@@ -29,7 +29,7 @@ import java.util.logging.Logger;
  */
 public class AulaDAO_MySQL extends DAO implements AulaDAO {
 
-    private PreparedStatement sAulaByID, sAuleByIDs, sAulaByNomeAndPosizione,sAuleByGruppo;
+    private PreparedStatement sAulaByID, sAuleByIDs, sAulaByNomeAndPosizione, sAuleByGruppo;
     private PreparedStatement iAula;
     private PreparedStatement uAula;
     private PreparedStatement dAula;
@@ -45,9 +45,10 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
 
             sAulaByID = connection.prepareStatement("SELECT * FROM aula WHERE ID=?");
             // sAuleByIDs =  connection.prepareStatement("SELECT ID FROM aula");
-             sAulaByID = connection.prepareStatement("SELECT * FROM aula WHERE GRUPPO=?");
+             // sAulaByID = connection.prepareStatement("SELECT * FROM aula WHERE GRUPPO=?");
             sAulaByNomeAndPosizione = connection.prepareStatement("SELECT * FROM aula WHERE nome=?, luogo=?,edificio=?,piano =?");
-            sAuleByGruppo = connection.prepareStatement("SELECT * FROM aula WHERE aula.id = associazione_aula_gruppo.ID_aula AND associazione_aula_gruppo.ID_gruppo=gruppo.id AND gruppo.id =? ");
+            sAuleByGruppo = connection.prepareStatement("SELECT A.* FROM aula A, associazione_aula_gruppo AG, gruppo G WHERE "
+                    + "G.ID = ? AND AG.ID_gruppo = G.ID AND A.ID = AG.ID_aula");
             iAula = connection.prepareStatement("INSERT INTO gruppo (nome,luogo,edificio,piano,capienza,numero_prese_elettriche,numero_prese_di_rete,note_generiche,ID_responsabile) VALUES(?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             uAula = connection.prepareStatement("UPDATE gruppo SET nome=?,luogo=?,edificio=?,piano=?,capienza=?,numero_prese_elettriche=?,numero_prese_di_rete=?,note_generiche = ?,ID_responsabile =?, versione=? WHERE ID=? and versione=?");
             dAula = connection.prepareStatement("DELETE FROM gruppo WHERE ID=?");
@@ -59,6 +60,7 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
     public void destroy() throws DataException {
         try {
             sAulaByID.close();
+            sAulaByNomeAndPosizione.close();
             // sAuleByIDs.close();
             sAuleByGruppo.close();
             iAula.close();

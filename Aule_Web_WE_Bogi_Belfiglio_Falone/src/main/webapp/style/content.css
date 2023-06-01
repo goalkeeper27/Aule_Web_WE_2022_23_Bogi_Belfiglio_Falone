@@ -4,17 +4,22 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 */
 /* 
     Created on : 1 giu 2023, 17:53:31
-    Author     : acer
+    Author     : Alberto Bogi
 */
 
+/********************************
 
-fieldset{
+* proprietà per gruppi.ftl.html
+
+********************************/
+.gruppi fieldset{
     margin-top:1%;
     padding-top: 1%;
+    border-color: black;
     
 }
 
-fieldset button{
+.gruppi fieldset button{
     width: 5%;
     background-color: #add8e6;
     color:black;
@@ -23,7 +28,7 @@ fieldset button{
     
 }
 
-fieldset legend{
+.gruppi fieldset legend{
     font-size: xx-large;
     text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
     color: #add8e6;
@@ -31,18 +36,18 @@ fieldset legend{
       
 }
 
-fieldset label{
+.gruppi fieldset label{
     font-style:italic;
     margin-left:0.5%;
 }
 
-fieldset button:hover{
+.gruppi fieldset button:hover{
     background-color: white;
     color: #add8e6;
     border-color: #add8e6;
 }
 
-p{
+.gruppi p{
     font-size: xx-large;
     font-style: italic;
     font-weight: bold;
@@ -53,14 +58,20 @@ p{
     
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 800px) {
     
-    fieldset button{
+    .gruppi fieldset button{
         width:10%;
     }
     
     
 }
 
+
+/********************************
+
+* proprietà per aule.ftl.html
+
+********************************/
 
 

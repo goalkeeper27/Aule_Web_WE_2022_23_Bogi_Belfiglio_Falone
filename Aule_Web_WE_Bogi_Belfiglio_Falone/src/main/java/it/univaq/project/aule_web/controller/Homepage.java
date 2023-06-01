@@ -30,7 +30,7 @@ public class Homepage extends AuleWebBaseController {
             Map data = new HashMap<>();
             data.put("tipi_gruppo", ((AuleWebDataLayer) request.getAttribute("datalayer")).getGruppoDAO().getTipiGruppo());
             data.put("gruppi", ((AuleWebDataLayer) request.getAttribute("datalayer")).getGruppoDAO().getAllGruppi());
-            data.put("outline_tpl", "home_page.ftl.html");
+            data.put("outline_tpl", "outline_without_login.ftl.html");
             TemplateResult res = new TemplateResult(getServletContext());
             res.activate("gruppi.ftl.html", data, response);
         } catch (DataException ex) {
