@@ -10,15 +10,30 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 fieldset{
     margin-top:1%;
+    padding-top: 1%;
     
 }
 
 fieldset button{
-    width: 7%;
+    width: 5%;
     background-color: #add8e6;
     color:black;
     border-radius:5%;
+    font-size: 70%;
     
+}
+
+fieldset legend{
+    font-size: xx-large;
+    text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
+    color: #add8e6;
+    padding-top:0.5%;
+      
+}
+
+fieldset label{
+    font-style:italic;
+    margin-left:0.5%;
 }
 
 fieldset button:hover{
@@ -26,4 +41,26 @@ fieldset button:hover{
     color: #add8e6;
     border-color: #add8e6;
 }
+
+p{
+    font-size: xx-large;
+    font-style: italic;
+    font-weight: bold;
+    text-align:center;
+    
+    color: #add8e6;
+    padding-top:0.5%;
+    
+}
+
+@media only screen and (max-width: 700px) {
+    
+    fieldset button{
+        width:10%;
+    }
+    
+    
+}
+
+
 

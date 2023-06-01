@@ -9,8 +9,8 @@
             <legend>${tipo}</legend>
             <#list gruppi as gruppo>
             <#if tipo == gruppo.tipoGruppo> 
-            <button type = "submit" name="IDgruppo" value="${gruppo.key}" id="${gruppo.nome}">seleziona</button>
-            <label for="${gruppo.nome}">${gruppo.nome}</label>
+            <button type = "submit" name="IDgruppo" value="${gruppo.key}" id="${gruppo.key}">vedi</button>
+            <label for="${gruppo.key}">${gruppo.nome}</label>
              <br><br>
             </#if>
             </#list>

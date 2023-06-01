@@ -157,6 +157,7 @@ button{
     width:10%;
     border-radius: 15%;
     font-weight: bold;
+    
 }
 
 .login{
@@ -205,10 +206,11 @@ button{
         display:block;
     }
 
-    
 
+    .bottom_page{
+        margin-bottom: 15%;
 
-
+    }
 
     .menu_icon{
         width: 5%;
@@ -237,6 +239,8 @@ button{
 
 
 }
+
+
 
 
 
