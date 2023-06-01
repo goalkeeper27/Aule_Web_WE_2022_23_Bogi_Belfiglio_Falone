@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `aule_web` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `aule_web`;
 -- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: aule_web
@@ -16,29 +18,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `responsabile`
+-- Table structure for table `attrezzatura`
 --
 
-DROP TABLE IF EXISTS `responsabile`;
+DROP TABLE IF EXISTS `attrezzatura`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `responsabile` (
+CREATE TABLE `attrezzatura` (
   `ID` int NOT NULL AUTO_INCREMENT,
-  `nome` varchar(20) NOT NULL,
-  `cognome` varchar(20) NOT NULL,
-  `codice_fiscale` char(16) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  PRIMARY KEY (`ID`)
+  `nome` varchar(30) NOT NULL,
+  `numero_di_serie` varchar(40) NOT NULL,
+  `ID_aula` int DEFAULT NULL,
+  `versione` int DEFAULT '0',
+  PRIMARY KEY (`ID`),
+  KEY `ID_aula` (`ID_aula`),
+  CONSTRAINT `attrezzatura_ibfk_1` FOREIGN KEY (`ID_aula`) REFERENCES `aula` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `responsabile`
+-- Dumping data for table `attrezzatura`
 --
 
-LOCK TABLES `responsabile` WRITE;
-/*!40000 ALTER TABLE `responsabile` DISABLE KEYS */;
-/*!40000 ALTER TABLE `responsabile` ENABLE KEYS */;
+LOCK TABLES `attrezzatura` WRITE;
+/*!40000 ALTER TABLE `attrezzatura` DISABLE KEYS */;
+/*!40000 ALTER TABLE `attrezzatura` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-25 17:27:07
+-- Dump completed on 2023-06-01 18:26:44

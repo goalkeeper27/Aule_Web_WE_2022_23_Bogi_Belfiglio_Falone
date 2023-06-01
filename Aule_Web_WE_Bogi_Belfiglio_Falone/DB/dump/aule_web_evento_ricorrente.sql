@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `aule_web` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `aule_web`;
 -- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: aule_web
@@ -16,30 +18,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `attrezzatura`
+-- Table structure for table `evento_ricorrente`
 --
 
-DROP TABLE IF EXISTS `attrezzatura`;
+DROP TABLE IF EXISTS `evento_ricorrente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `attrezzatura` (
+CREATE TABLE `evento_ricorrente` (
   `ID` int NOT NULL AUTO_INCREMENT,
-  `nome` varchar(30) NOT NULL,
-  `numero_di_serie` varchar(40) NOT NULL,
-  `ID_aula` int DEFAULT NULL,
+  `data_evento` date NOT NULL,
+  `ID_evento` int NOT NULL,
+  `versione` int DEFAULT '0',
   PRIMARY KEY (`ID`),
-  KEY `ID_aula` (`ID_aula`),
-  CONSTRAINT `attrezzatura_ibfk_1` FOREIGN KEY (`ID_aula`) REFERENCES `aula` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `ID_evento` (`ID_evento`),
+  CONSTRAINT `evento_ricorrente_ibfk_1` FOREIGN KEY (`ID_evento`) REFERENCES `evento` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `attrezzatura`
+-- Dumping data for table `evento_ricorrente`
 --
 
-LOCK TABLES `attrezzatura` WRITE;
-/*!40000 ALTER TABLE `attrezzatura` DISABLE KEYS */;
-/*!40000 ALTER TABLE `attrezzatura` ENABLE KEYS */;
+LOCK TABLES `evento_ricorrente` WRITE;
+/*!40000 ALTER TABLE `evento_ricorrente` DISABLE KEYS */;
+INSERT INTO `evento_ricorrente` VALUES (1,'2023-06-30',1,0),(2,'2023-07-30',1,0);
+/*!40000 ALTER TABLE `evento_ricorrente` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-25 17:27:06
+-- Dump completed on 2023-06-01 18:26:45

@@ -2,13 +2,21 @@
 
     <p>Seleziona il gruppo di aule di tuo interesse</p>
 
-<div class="nine columns">
-<#list gruppi as gruppo>
+    <div class="ten columns">
+        <#list tipi_gruppo as tipo>
+        <form method="GET" action="templates/login_admin.html">
+        <fieldset>
+            <legend>${tipo}</legend>
+            <#list gruppi as gruppo>
+            <#if tipo == gruppo.tipoGruppo> 
+            <button type = "submit" name="IDgruppo" value="${gruppo.key}" id="${gruppo.nome}">seleziona</button>
+            <label for="${gruppo.nome}">${gruppo.nome}</label>
+             <br><br>
+            </#if>
+            </#list>
+        </fieldset>
 
-<fieldset>
-    <legend>${gruppo}</legend>
-    <P>PROVAAAA</P>
-</fieldset>
-</#list>
-</div>
+        </form>
+        </#list>
+    </div>
 </div>

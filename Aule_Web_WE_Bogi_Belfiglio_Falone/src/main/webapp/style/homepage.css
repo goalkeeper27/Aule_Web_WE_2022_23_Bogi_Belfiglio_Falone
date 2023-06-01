@@ -1,0 +1,29 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 1 giu 2023, 17:53:31
+    Author     : acer
+*/
+
+
+fieldset{
+    margin-top:1%;
+    
+}
+
+fieldset button{
+    width: 7%;
+    background-color: #add8e6;
+    color:black;
+    border-radius:5%;
+    
+}
+
+fieldset button:hover{
+    background-color: white;
+    color: #add8e6;
+    border-color: #add8e6;
+}
+

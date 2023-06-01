@@ -28,7 +28,8 @@ public class Homepage extends AuleWebBaseController {
     private void action_default(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
         try {
             Map data = new HashMap<>();
-            data.put("gruppi", ((AuleWebDataLayer) request.getAttribute("datalayer")).getGruppoDAO().getTipiGruppo());
+            data.put("tipi_gruppo", ((AuleWebDataLayer) request.getAttribute("datalayer")).getGruppoDAO().getTipiGruppo());
+            data.put("gruppi", ((AuleWebDataLayer) request.getAttribute("datalayer")).getGruppoDAO().getAllGruppi());
             data.put("outline_tpl", "home_page.ftl.html");
             TemplateResult res = new TemplateResult(getServletContext());
             res.activate("gruppi.ftl.html", data, response);

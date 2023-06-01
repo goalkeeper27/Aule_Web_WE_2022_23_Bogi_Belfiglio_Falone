@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `aule_web` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `aule_web`;
 -- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: aule_web
@@ -16,27 +18,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `amministratore`
+-- Table structure for table `gruppo`
 --
 
-DROP TABLE IF EXISTS `amministratore`;
+DROP TABLE IF EXISTS `gruppo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `amministratore` (
+CREATE TABLE `gruppo` (
   `ID` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(30) NOT NULL,
-  `psw` varchar(200) NOT NULL,
+  `nome` varchar(30) NOT NULL,
+  `tipo` varchar(20) NOT NULL,
+  `descrizione` varchar(60) NOT NULL,
+  `versione` int DEFAULT '0',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `amministratore`
+-- Dumping data for table `gruppo`
 --
 
-LOCK TABLES `amministratore` WRITE;
-/*!40000 ALTER TABLE `amministratore` DISABLE KEYS */;
-/*!40000 ALTER TABLE `amministratore` ENABLE KEYS */;
+LOCK TABLES `gruppo` WRITE;
+/*!40000 ALTER TABLE `gruppo` DISABLE KEYS */;
+INSERT INTO `gruppo` VALUES (1,'polo coppito','POLO','aaaa',0),(2,'DISIM','DIPARTIMENTO','GGaa',0),(3,'polo 1','POLO','aaFFFF',0),(4,'aaa','aaa','aaa',0),(5,'bbb','bbb','aaa',0),(6,'aaa','ccc','aaa',0),(7,'aaa','ddd','aaa',0),(8,'aaa','eee','aaa',0),(9,'aaa','fff','aaa',0);
+/*!40000 ALTER TABLE `gruppo` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-25 17:27:07
+-- Dump completed on 2023-06-01 18:26:45

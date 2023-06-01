@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `aule_web` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `aule_web`;
 -- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: aule_web
@@ -16,36 +18,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `aula`
+-- Table structure for table `amministratore`
 --
 
-DROP TABLE IF EXISTS `aula`;
+DROP TABLE IF EXISTS `amministratore`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `aula` (
+CREATE TABLE `amministratore` (
   `ID` int NOT NULL AUTO_INCREMENT,
-  `nome` varchar(20) NOT NULL,
-  `luogo` varchar(20) NOT NULL,
-  `edificio` varchar(20) NOT NULL,
-  `piano` int NOT NULL,
-  `capienza` int NOT NULL,
-  `numero_prese_elettriche` int NOT NULL,
-  `numero_prese_di_rete` int NOT NULL,
-  `note_generiche` varchar(100) DEFAULT NULL,
-  `ID_responsabile` int DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `ID_responsabile` (`ID_responsabile`),
-  CONSTRAINT `aula_ibfk_1` FOREIGN KEY (`ID_responsabile`) REFERENCES `responsabile` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE
+  `username` varchar(30) NOT NULL,
+  `psw` varchar(200) NOT NULL,
+  `versione` int DEFAULT '0',
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `aula`
+-- Dumping data for table `amministratore`
 --
 
-LOCK TABLES `aula` WRITE;
-/*!40000 ALTER TABLE `aula` DISABLE KEYS */;
-/*!40000 ALTER TABLE `aula` ENABLE KEYS */;
+LOCK TABLES `amministratore` WRITE;
+/*!40000 ALTER TABLE `amministratore` DISABLE KEYS */;
+/*!40000 ALTER TABLE `amministratore` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -57,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-25 17:27:07
+-- Dump completed on 2023-06-01 18:26:44

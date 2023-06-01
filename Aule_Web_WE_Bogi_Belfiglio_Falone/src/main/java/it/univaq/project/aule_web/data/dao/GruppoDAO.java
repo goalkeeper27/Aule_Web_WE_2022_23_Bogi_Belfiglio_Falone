@@ -18,6 +18,8 @@ public interface GruppoDAO {
     
     public Gruppo getGruppoByTipoAndNome(String tipo, String nome) throws DataException;
     
+    public List<Gruppo> getAllGruppi() throws DataException;
+    
     public List<String> getTipiGruppo() throws DataException;
     
     public void storeGruppo(Gruppo gruppo)throws DataException;

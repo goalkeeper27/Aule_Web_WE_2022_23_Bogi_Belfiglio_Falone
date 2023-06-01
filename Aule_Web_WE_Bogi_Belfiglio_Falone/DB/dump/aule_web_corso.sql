@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `aule_web` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `aule_web`;
 -- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: aule_web
@@ -16,28 +18,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `gruppo`
+-- Table structure for table `corso`
 --
 
-DROP TABLE IF EXISTS `gruppo`;
+DROP TABLE IF EXISTS `corso`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `gruppo` (
+CREATE TABLE `corso` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `nome` varchar(30) NOT NULL,
-  `tipo` varchar(20) NOT NULL,
-  `descrizione` varchar(60) NOT NULL,
+  `corso_di_laurea` varchar(30) DEFAULT NULL,
+  `tipo_laurea` varchar(20) NOT NULL,
+  `anno_di_frequentazione` int DEFAULT NULL,
+  `versione` int DEFAULT '0',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `gruppo`
+-- Dumping data for table `corso`
 --
 
-LOCK TABLES `gruppo` WRITE;
-/*!40000 ALTER TABLE `gruppo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `gruppo` ENABLE KEYS */;
+LOCK TABLES `corso` WRITE;
+/*!40000 ALTER TABLE `corso` DISABLE KEYS */;
+INSERT INTO `corso` VALUES (1,'informatica','it','triennale',3,0);
+/*!40000 ALTER TABLE `corso` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-25 17:27:07
+-- Dump completed on 2023-06-01 18:26:45

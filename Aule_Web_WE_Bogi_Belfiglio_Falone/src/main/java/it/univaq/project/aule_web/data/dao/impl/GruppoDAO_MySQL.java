@@ -20,28 +20,29 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  *
  * @author Francesco Falone
  */
-public class GruppoDAO_MySQL  extends DAO implements GruppoDAO{
-    
-     private PreparedStatement sGruppoByTipoAndNome, sTipiGruppo;
-     private PreparedStatement iGruppo;
-     private PreparedStatement uGruppo;
-     private PreparedStatement dGruppo;
-     
+public class GruppoDAO_MySQL extends DAO implements GruppoDAO {
+
+    private PreparedStatement sGruppoByTipoAndNome, sTipiGruppo, sAllGruppi;
+    private PreparedStatement iGruppo;
+    private PreparedStatement uGruppo;
+    private PreparedStatement dGruppo;
+
     public GruppoDAO_MySQL(DataLayer d) {
         super(d);
     }
+
     public void init() throws DataException {
 
         try {
             super.init();
-            
+
             sGruppoByTipoAndNome = connection.prepareStatement("SELECT * FROM Gruppo WHERE tipo = ? AND nome=?;");
             sTipiGruppo = connection.prepareStatement("SELECT DISTINCT tipo FROM gruppo; ");
+            sAllGruppi = connection.prepareStatement("SELECT * FROM Gruppo;");
             iGruppo = connection.prepareStatement("INSERT INTO gruppo (nome,tipo,descrizione) VALUES(?,?,?);", Statement.RETURN_GENERATED_KEYS);
             uGruppo = connection.prepareStatement("UPDATE gruppo SET nome=?,tipo=?,descrizione=?, versione=? WHERE ID=? AND versione=?;");
             dGruppo = connection.prepareStatement("DELETE FROM gruppo WHERE ID=?;");
@@ -53,22 +54,23 @@ public class GruppoDAO_MySQL  extends DAO implements GruppoDAO{
     public void destroy() throws DataException {
         try {
             sGruppoByTipoAndNome.close();
+            sTipiGruppo.close();
+            sAllGruppi.close();
             iGruppo.close();
             uGruppo.close();
             dGruppo.close();
 
         } catch (SQLException ex) {
-            
+
         }
         super.destroy();
     }
 
     @Override
     public Gruppo createGruppo() {
-       return new GruppoProxy(getDataLayer());
+        return new GruppoProxy(getDataLayer());
     }
-    
-    
+
     private GruppoProxy createGruppo(ResultSet rs) throws DataException {
         GruppoProxy g = (GruppoProxy) createGruppo();
         try {
@@ -85,11 +87,11 @@ public class GruppoDAO_MySQL  extends DAO implements GruppoDAO{
 
     @Override
     public Gruppo getGruppoByTipoAndNome(String tipo, String nome) throws DataException {
-       Gruppo gruppo = null;
-       try {
+        Gruppo gruppo = null;
+        try {
             sGruppoByTipoAndNome.setString(1, tipo);
             sGruppoByTipoAndNome.setString(2, nome);
-            try (ResultSet rs = sGruppoByTipoAndNome.executeQuery()) {
+            try ( ResultSet rs = sGruppoByTipoAndNome.executeQuery()) {
                 if (rs.next()) {
                     gruppo = createGruppo(rs);
                 }
@@ -112,8 +114,7 @@ public class GruppoDAO_MySQL  extends DAO implements GruppoDAO{
                 uGruppo.setString(1, gruppo.getNome());
                 uGruppo.setString(2, gruppo.getTipoGruppo());
                 uGruppo.setString(3, gruppo.getDescrizione());
-            
-               
+
                 long versioneCorrente = gruppo.getVersion();
                 long versioneSuccessiva = versioneCorrente + 1;
 
@@ -130,14 +131,14 @@ public class GruppoDAO_MySQL  extends DAO implements GruppoDAO{
                 iGruppo.setString(1, gruppo.getNome());
                 iGruppo.setString(2, gruppo.getTipoGruppo());
                 iGruppo.setString(3, gruppo.getDescrizione());
-                
+
                 if (iGruppo.executeUpdate() == 1) {
                     //per leggere la chiave generata dal database
                     //per il record appena inserito, usiamo il metodo
                     //getGeneratedKeys sullo statement.
                     //to read the generated record key from the database
                     //we use the getGeneratedKeys method on the same statement
-                    try (ResultSet keys = iGruppo.getGeneratedKeys()) {
+                    try ( ResultSet keys = iGruppo.getGeneratedKeys()) {
                         //il valore restituito è un ResultSet con un record
                         //per ciascuna chiave generata (uno solo nel nostro caso)
                         //the returned value is a ResultSet with a distinct record for
@@ -167,34 +168,51 @@ public class GruppoDAO_MySQL  extends DAO implements GruppoDAO{
         }
     }
 
-    
     @Override
     public void deleteGruppo(Gruppo gruppo) throws DataException {
-         try {
-             if (gruppo.getKey() != null && gruppo.getKey() > 0) {
+        try {
+            if (gruppo.getKey() != null && gruppo.getKey() > 0) {
                 dGruppo.setInt(1, gruppo.getKey());
                 dGruppo.execute();
             }
-         } catch (SQLException ex) {
-             throw new DataException("Errore nell'eliminazione del gruppo", ex);
-         }
-        
+        } catch (SQLException ex) {
+            throw new DataException("Errore nell'eliminazione del gruppo", ex);
+        }
+
     }
 
     @Override
     public List<String> getTipiGruppo() throws DataException {
         List<String> tipi = new ArrayList<>();
-        
-        try(ResultSet rs = sTipiGruppo.executeQuery()){
-            while(rs.next())
+
+        try ( ResultSet rs = sTipiGruppo.executeQuery()) {
+            while (rs.next()) {
                 tipi.add(rs.getString("tipo"));
-            
-        }
-        catch(SQLException ex){
+            }
+
+        } catch (SQLException ex) {
             throw new DataException("error DB", ex);
         }
-        
+
         return tipi;
     }
-    
+
+    @Override
+    public List<Gruppo> getAllGruppi() throws DataException {
+
+        List<Gruppo> gruppi = new ArrayList<>();
+
+        try ( ResultSet rs = sAllGruppi.executeQuery()) {
+            while (rs.next()) {
+                Gruppo gruppo = createGruppo(rs);
+                gruppi.add(gruppo);
+            }
+
+        } catch (SQLException ex) {
+            throw new DataException("error DB", ex);
+        }
+
+        return gruppi;
+    }
+
 }
