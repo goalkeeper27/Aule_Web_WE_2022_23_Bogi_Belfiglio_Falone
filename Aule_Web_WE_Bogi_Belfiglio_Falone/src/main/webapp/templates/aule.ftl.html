@@ -1,10 +1,73 @@
+   <div class="aule">
 <div class="container">
-    <div class="ten columns">
-        <#list aule as aula>
-        <fieldset>
-            <legend>${aula.nome}</legend>
-            <p>Bla Bla Bla</p>
-        </fieldset>
+    
+    <#list ricerche as ricerca>
+        <#if ricerca == "datapicker">
+ 
+        <div class="three columns">
+
+
+            <p>seleziona giorno specifico</p>
+            <input type="text" id="datepicker"/>
+            <button type="submit">vedi</button>
+
+            <script src="script/script.js"></script>
+        </div>
+        
+        
+        
+        <#elseif ricerca == "corso">
+        <div class="three columns">
+
+
+            <p>scegli un corso specifico</p>
+            <button type="submit">cerca</button> 
+
+        </div>
+        
+        
+        <#elseif ricerca == "aula">
+        <div class="three columns">
+
+
+            <p>seleziona un'aula specifica</p>
+            <button type="submit">cerca</button>
+
+
+        </div>
+       
+        
+        <#elseif ricerca == "orario_attuale">
+        <div class="three columns">
+
+
+            <p>vedi gli orari attuali</p>
+            <button type="submit">cerca</button>
+
+
+        </div>
+        </#if>
         </#list>
+        
     </div>
+
+
+
+<div class="container">
+    <div class="aule">
+
+        <div class="ten columns">
+            <h2>Eventi attuali</h2>
+            <#list aule as aula>
+            <fieldset>
+                <legend>${aula.nome}</legend>
+                <p>Bla Bla Bla</p>
+            </fieldset>
+            </#list>
+        </div>
+
+    </div>
+</div>
+   </div>
+
 </div>

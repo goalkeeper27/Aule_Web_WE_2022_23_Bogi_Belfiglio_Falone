@@ -21,7 +21,7 @@ public interface AulaDAO {
     
     public Aula getAulaByNomeAndPosizione(String nome, String luogo, String edificio, int piano) throws DataException;
     
-    public List<Aula> getAuleByGruppoID(String gruppo_key) throws DataException;
+    public List<Aula> getAuleByGruppoID(int gruppo_key) throws DataException;
     
     // public List<Aula> getAuleByIDs(Aula aula) throws DataException;
     

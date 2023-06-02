@@ -13,7 +13,7 @@
  * init parameters (see web.xml).
  * 
  */
-package it.univaq.f4i.iw.framework.result;
+package it.univaq.project.aule_web.framework.result;
 
 import freemarker.core.HTMLOutputFormat;
 import freemarker.core.JSONOutputFormat;
@@ -24,6 +24,9 @@ import freemarker.template.Template;
 import freemarker.template.TemplateDateModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import it.univaq.f4i.iw.framework.result.DataModelFiller;
+import it.univaq.f4i.iw.framework.result.TemplateManagerException;
+import java.io.Console;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -103,7 +106,7 @@ public class TemplateResult {
         Enumeration parms = context.getInitParameterNames();
         while (parms.hasMoreElements()) {
             String name = (String) parms.nextElement();
-            
+
             //
             if (name.startsWith("view.data.filler.")) {
                 try {
@@ -196,9 +199,20 @@ public class TemplateResult {
                 //...e il template specifico per questa pagina viene indicato all'outline tramite una variabile content_tpl
                 //...and pass the requested template name to the outline using the content_tpl variable
                 localdatamodel.put("content_tpl", tplname);
-                //si suppone che l'outline includa questo secondo template
-                //we suppose that the outline template includes this second template somewhere
+
+                List<String> researches = new ArrayList<>();
+                //Controllo quali selezioni posso effettuare dalla pagina in cui vengo renderizzato
+
+                researches.add(context.getInitParameter("view.select.datapicker"));
+                researches.add(context.getInitParameter("view.select.corso"));
+                researches.add(context.getInitParameter("view.select.aula"));
+
+                localdatamodel.put("ricerche", researches);
+
             }
+
+            //si suppone che l'outline includa questo secondo template
+            //we suppose that the outline template includes this second template somewhere
             //associamo i dati al template e lo mandiamo in output
             //add the data to the template and output the result
             t.process(localdatamodel, out);

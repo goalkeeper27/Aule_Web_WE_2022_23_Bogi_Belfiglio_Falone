@@ -25,6 +25,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     color:black;
     border-radius:5%;
     font-size: 70%;
+    cursor:pointer;
     
 }
 
@@ -73,5 +74,36 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 * proprietà per aule.ftl.html
 
 ********************************/
+
+
+
+/* Stile personalizzato per il calendario */
+
+.custom-datepicker-theme .ui-datepicker {
+
+  display: block;
+
+}
+
+.aule .container{
+    margin-bottom:3%;
+}
+
+.aule button{
+    width: 20%;
+    background-color: #add8e6;
+    color:black;
+    border-radius:5%;
+    font-size: 90%;
+    cursor:pointer;
+    border-radius: 3px;
+}
+
+.aule button:hover{
+    background-color: white;
+    color: #add8e6;
+    border-color: #add8e6;
+    text-align: center;
+}
 
 

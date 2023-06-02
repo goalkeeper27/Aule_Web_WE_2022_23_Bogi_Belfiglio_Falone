@@ -15,6 +15,7 @@
  */
 package it.univaq.f4i.iw.framework.result;
 
+import it.univaq.project.aule_web.framework.result.TemplateResult;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

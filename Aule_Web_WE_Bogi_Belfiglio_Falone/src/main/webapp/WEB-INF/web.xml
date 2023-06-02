@@ -4,9 +4,17 @@
         <servlet-name>Homepage</servlet-name>
         <servlet-class>it.univaq.project.aule_web.controller.Homepage</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FirstPageAule</servlet-name>
+        <servlet-class>it.univaq.project.aule_web.controller.FirstPageAule</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Homepage</servlet-name>
         <url-pattern>/homepage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FirstPageAule</servlet-name>
+        <url-pattern>/first_page_aule</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -16,29 +24,39 @@
     <welcome-file-list>
         <welcome-file>homepage</welcome-file>
     </welcome-file-list>
-    
     <context-param>
         <param-name>data.source</param-name>
         <!-- qui configuriamo in nome della data source da usare nel codice -->
         <param-value>jdbc/aule_web</param-value>
     </context-param>
-    
-    
-    
     <context-param>
         <param-name>view.template_directory</param-name>
         <param-value>templates</param-value>
-    </context-param> 
+    </context-param>
     <context-param>
         <param-name>view.outline_template</param-name>
         <param-value>outline.ftl.html</param-value>
     </context-param>
-   
+    <context-param>
+        <param-name>view.select.datapicker</param-name>
+        <param-value>datapicker</param-value>
+    </context-param>
+    <context-param>
+        <param-name>view.select.corso</param-name>
+        <param-value>corso</param-value>
+    </context-param>
+    <context-param>
+        <param-name>view.select.aula</param-name>
+        <param-value>aula</param-value>
+    </context-param>
+    <context-param>
+        <param-name>view.select.orario_attuale</param-name>
+        <param-value>orario_attuale</param-value>
+    </context-param>
     <context-param>
         <param-name>view.error_template</param-name>
         <param-value>errore.ftl.html</param-value>
     </context-param>
-    
     <resource-ref>
         <res-ref-name>jdbc/aule_web</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>

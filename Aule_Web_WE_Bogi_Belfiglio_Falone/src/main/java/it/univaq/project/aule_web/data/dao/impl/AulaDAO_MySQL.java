@@ -271,10 +271,10 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
     }
 
     @Override
-    public List<Aula> getAuleByGruppoID(String gruppo_key) throws DataException {
+    public List<Aula> getAuleByGruppoID(int gruppo_key) throws DataException {
          List<Aula> aule = new ArrayList<>();
         try {
-            sAuleByGruppoID.setString(1, gruppo_key);
+            sAuleByGruppoID.setInt(1, gruppo_key);
         } catch (SQLException ex) {
             Logger.getLogger(AulaDAO_MySQL.class.getName()).log(Level.SEVERE, null, ex);
         }
