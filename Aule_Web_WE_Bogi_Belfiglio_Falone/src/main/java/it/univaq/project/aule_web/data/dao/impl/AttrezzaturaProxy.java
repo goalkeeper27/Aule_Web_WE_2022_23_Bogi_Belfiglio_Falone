@@ -22,7 +22,7 @@ public class AttrezzaturaProxy extends AttrezzaturaImpl implements DataItemProxy
     private boolean modified;
     protected DataLayer dataLayer;
 
-    private int aulaKey;
+    protected int aulaKey;
 
     protected AttrezzaturaProxy(DataLayer d) {
         super();
@@ -87,6 +87,10 @@ public class AttrezzaturaProxy extends AttrezzaturaImpl implements DataItemProxy
     public void setAulaKey(int key){
         this.aulaKey = key;
         super.setAula(null);
+    }
+    
+    public int getAulaKey(){
+        return this.aulaKey;
     }
 
 }

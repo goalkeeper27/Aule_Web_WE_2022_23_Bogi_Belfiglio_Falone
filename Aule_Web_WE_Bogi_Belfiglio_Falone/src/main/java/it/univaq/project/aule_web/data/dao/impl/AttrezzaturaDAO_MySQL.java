@@ -113,8 +113,8 @@ public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO {
             }
         
         try (ResultSet rs = sAttrezzaturaByAula.executeQuery()) {
-                if (rs.next()){
-                    result.add((Attrezzatura) this.getAttrezzatura(rs.getInt("ID")));
+                while (rs.next()){
+                    result.add(this.getAttrezzatura(rs.getInt("ID")));
                 }  
 
             }
