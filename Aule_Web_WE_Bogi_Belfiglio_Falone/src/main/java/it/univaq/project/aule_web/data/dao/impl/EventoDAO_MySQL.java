@@ -46,8 +46,7 @@ public class EventoDAO_MySQL extends DAO implements EventoDAO {
             sEventoByID = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE ID = ?");
             sEventoInAWeekByAula = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE ID_aula = ? AND (data_evento BETWEEN ? AND ?)");
             sEventoInADayByAula = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE ID_aula = ? AND data_evento = ?");
-            sCurrentEventoByAula = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE data_evento = CURDATE() "
-                    + "AND (ora_inizio BETWEEN CURTIME() AND (CURTIME() + INTERVAL 3 HOUR) AND ID_aula = ?");
+            sCurrentEventoByAula = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE data_evento = CURDATE() AND (ora_inizio BETWEEN CURTIME() AND (CURTIME() + INTERVAL 3 HOUR) AND ID_aula = ?");
             sEventoInAWeekByCorso = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE ID_corso = ? AND "
                     + "(data_evento BETWEEN ? AND ?)");
             iEvento = this.dataLayer.getConnection().prepareStatement("INSERT INTO Evento(nome, descrizione, tipologia, data_evento,"

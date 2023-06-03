@@ -1,0 +1,55 @@
+<div class="aule">
+<div class="container">
+    
+    <#list ricerche as ricerca>
+        <#if ricerca == "datapicker">
+ 
+        <div class="three columns">
+
+
+            <p>seleziona giorno specifico</p>
+            <input type="text" id="datepicker"/>
+            <button type="submit">vedi</button>
+
+            <script src="script/script.js"></script>
+        </div>
+        
+        
+        
+        <#elseif ricerca == "corso">
+        <div class="three columns">
+
+
+            <p>scegli un corso specifico</p>
+            <button type="submit">cerca</button> 
+
+        </div>
+        
+        
+        <#elseif ricerca == "aula">
+        <div class="three columns">
+
+            <form method="POST" action="specificAula">
+            <p>seleziona un'aula specifica</p>
+            <input type="hidden" name="IDgruppo" value="${IDgruppo}"/>
+            <button type="submit">cerca</button>
+            </form>
+
+        </div>
+       
+        
+        <#elseif ricerca == "orario_attuale">
+        <div class="three columns">
+
+
+            <p>vedi gli orari attuali</p>
+            <button type="submit">cerca</button>
+
+
+        </div>
+        </#if>
+        </#list>
+        
+    </div>
+
+

@@ -21,7 +21,9 @@ public class AulaProxy extends AulaImpl implements DataItemProxy {
 
     private boolean modified;
     protected DataLayer dataLayer;
-    private int responsabileKey;
+    protected int responsabileKey;
+
+  
 
     protected AulaProxy(DataLayer d) {
         super();
@@ -126,6 +128,10 @@ public class AulaProxy extends AulaImpl implements DataItemProxy {
     public void setResponsabileKey(int key){
         this.responsabileKey = key;
         super.setResponsabile(null);
+    }
+    
+    public int getResponsabileKey() {
+        return responsabileKey;
     }
 
 }

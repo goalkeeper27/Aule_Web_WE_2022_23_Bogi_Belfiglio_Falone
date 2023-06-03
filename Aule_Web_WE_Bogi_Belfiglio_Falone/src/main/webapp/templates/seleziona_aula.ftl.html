@@ -1,0 +1,35 @@
+
+<div class="seleziona aula">
+    <div class="container">
+        <div class="ten columns">
+            <h2>Seleziona l'aula di tuo interesse</h2>
+            <#list aule as aula>
+            <fieldset>
+                <legend>Aula ${aula.nome} </legend>
+                <button type="submit" name="${aula.nome}">vedi</button>
+                <p><span class="info">Responsabile</span>: ${aula.responsabile.email}</p>
+                <p><span class="info">Luogo</span>: ${aula.luogo}</p>
+                <p><span class="info">Edificio</span>: ${aula.edificio}</p>
+                <p><span class="info">Piano</span>: ${aula.piano}</p>
+                <p><span class="info">Capienza aula</span>: ${aula.capienza}</p>
+                <p><span class="info">numero prese elettriche</span>: ${aula.numeroPreseElettriche}</p>
+                <p><span class="info">numero prese di rete</span>: ${aula.numeroPreseDiRete}</p>
+                
+                <p><span class="info">vedi attrezzature:</span><span class="attrezzature">
+                            <#list attrezzature as attrezzatura>
+                            <#if attrezzatura.aulaKey == aula.key>
+                                ${attrezzatura.nome},
+                            </#if>
+
+                        </#list>
+                       
+                    </span></p>
+
+
+              <p>${aula.noteGeneriche}</p>
+            </fieldset>
+            </#list>
+        </div>
+    </div>
+</div>
+

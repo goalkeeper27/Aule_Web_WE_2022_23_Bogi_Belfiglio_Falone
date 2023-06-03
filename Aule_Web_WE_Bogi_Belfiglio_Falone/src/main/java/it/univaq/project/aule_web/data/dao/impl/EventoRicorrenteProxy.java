@@ -83,5 +83,10 @@ public class EventoRicorrenteProxy extends EventoRicorrenteImpl implements DataI
         this.eventoKey = key;
         super.setEvento(null);
     }
+
+    public int getEventoKey() {
+        return eventoKey;
+    }
+    
     
 }

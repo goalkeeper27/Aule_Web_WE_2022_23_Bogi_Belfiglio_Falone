@@ -107,3 +107,58 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 
+/********************************
+
+* proprietà per seleziona_aula.ftl.html
+
+********************************/
+
+.seleziona.aula .container{
+    margin-bottom: 3%;
+
+    
+    
+}
+
+
+.seleziona.aula button{
+    width:10%;
+    margin-bottom:3%;
+}
+
+.seleziona.aula fieldset{
+    margin-top:1%;
+    padding-top: 1%;
+    border-color: black;
+    
+}
+
+.seleziona.aula fieldset button{
+    width: 5%;
+    background-color: #add8e6;
+    color:black;
+    border-radius:5%;
+    font-size: 70%;
+    cursor:pointer;
+    
+}
+
+.seleziona.aula fieldset legend{
+    font-size: xx-large;
+    text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
+    color: #add8e6;
+    padding-top:0.5%;
+      
+}
+
+.seleziona.aula fieldset .info{
+    font-style: italic;
+    color: blue;
+}
+
+.seleziona.aula fieldset p{
+    width:50%;
+}
+
+
+
