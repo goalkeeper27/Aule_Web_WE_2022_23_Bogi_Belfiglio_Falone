@@ -7,6 +7,7 @@ package it.univaq.project.aule_web.controller;
 import it.univaq.f4i.iw.framework.result.TemplateManagerException;
 import it.univaq.project.aule_web.framework.result.TemplateResult;
 import it.univaq.project.aule_web.data.dao.impl.AuleWebDataLayer;
+import it.univaq.project.aule_web.data.model.Aula;
 import it.univaq.project.aule_web.framework.data.DataException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,9 +27,18 @@ public class FirstPageAule extends AuleWebBaseController {
     private void action_default(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
         try {
             Map data = new HashMap<>();
+            
             int gruppo_key = Integer.valueOf(request.getParameter("IDgruppo"));
-            //int gruppo_key = 2;
-            data.put("aule", ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().getAuleByGruppoID(gruppo_key));
+            List<Aula> aule = new ArrayList<>();
+            aule = ((AuleWebDataLayer)request.getAttribute("datalayer")).getAulaDAO().getAuleByGruppoID(gruppo_key);
+            Map EventiByAula = new HashMap<>();
+            
+            for(Aula aula: aule){
+                EventiByAula.put(aula, ((AuleWebDataLayer)request.getAttribute("datalayer")).getEventoDAO().getCurrentEventoByAula(aula));
+            }
+
+            data.put("aulaEventi", EventiByAula);
+            //data.put("aule", ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().getAuleByGruppoID(gruppo_key));
             data.put("outline_tpl", "outline_without_login.ftl.html");
             TemplateResult res = new TemplateResult(getServletContext());
             res.activate("aule.ftl.html",data, response);
@@ -56,5 +66,6 @@ public class FirstPageAule extends AuleWebBaseController {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 
 }

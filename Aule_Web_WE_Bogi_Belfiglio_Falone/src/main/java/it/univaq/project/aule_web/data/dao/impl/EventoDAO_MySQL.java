@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,13 +47,9 @@ public class EventoDAO_MySQL extends DAO implements EventoDAO {
             sEventoByID = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE ID = ?");
             sEventoInAWeekByAula = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE ID_aula = ? AND (data_evento BETWEEN ? AND ?)");
             sEventoInADayByAula = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE ID_aula = ? AND data_evento = ?");
-            sCurrentEventoByAula = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE data_evento = CURDATE() "
-                    + "AND (ora_inizio BETWEEN CURTIME() AND (CURTIME() + INTERVAL 3 HOUR) AND ID_aula = ?");
-            sEventoInAWeekByCorso = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE ID_corso = ? AND "
-                    + "(data_evento BETWEEN ? AND ?)");
-            iEvento = this.dataLayer.getConnection().prepareStatement("INSERT INTO Evento(nome, descrizione, tipologia, data_evento,"
-                    + " ora_inizio, ora_fine, ricorrenza, data_fine_ricorrenza, ID_corso, ID_responsabile, ID_aula) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
-                    Statement.RETURN_GENERATED_KEYS);
+            sCurrentEventoByAula = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE data_evento = ? AND (ora_inizio BETWEEN ? AND (? + INTERVAL 3 HOUR)) AND ID_aula = ?");
+            sEventoInAWeekByCorso = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE ID_corso = ? AND (data_evento BETWEEN ? AND ?)");
+            iEvento = this.dataLayer.getConnection().prepareStatement("INSERT INTO Evento(nome, descrizione, tipologia, data_evento, ora_inizio, ora_fine, ricorrenza, data_fine_ricorrenza, ID_corso, ID_responsabile, ID_aula) VALUES (?,?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
             uEvento = this.dataLayer.getConnection().prepareStatement("UPDATE Evento SET nome = ?, descrizione = ?, tipologia = ?,"
                     + "data_evento = ?, ora_inizio = ?, ora_fine = ?, ricorrenza = ?, data_fine_ricorrenza = ?, ID_corso = ?, ID_responsabile =?,"
                     + "ID_aula = ?, versione = ? WHERE ID = ? AND versione = ?");
@@ -163,7 +160,10 @@ public class EventoDAO_MySQL extends DAO implements EventoDAO {
     public List<Evento> getCurrentEventoByAula(Aula aula) throws DataException {
         List<Evento> eventi = new ArrayList();
         try {
-            sCurrentEventoByAula.setInt(1, aula.getKey());
+            sCurrentEventoByAula.setDate(1, Date.valueOf(LocalDate.now()));
+            sCurrentEventoByAula.setTime(2, Time.valueOf(LocalTime.now()));
+            sCurrentEventoByAula.setTime(3, Time.valueOf(LocalTime.now()));
+            sCurrentEventoByAula.setInt(4, aula.getKey());
             try ( ResultSet rs = sCurrentEventoByAula.executeQuery()) {
                 while (rs.next()) {
                     eventi.add(this.createEvento(rs));

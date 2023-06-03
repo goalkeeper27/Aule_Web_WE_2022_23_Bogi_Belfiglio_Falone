@@ -58,10 +58,14 @@
 
         <div class="ten columns">
             <h2>Eventi attuali</h2>
-            <#list aule as aula>
+            <#list aulaEventi?keys as aula>
             <fieldset>
                 <legend>${aula.nome}</legend>
-                <p>Bla Bla Bla</p>
+                <#list aulaEventi[aula] as evento>
+                <p>
+                Evento: ${evento.nome}
+                </p>
+                </#list>
             </fieldset>
             </#list>
         </div>
@@ -70,4 +74,4 @@
 </div>
    </div>
 
-</div>
+
