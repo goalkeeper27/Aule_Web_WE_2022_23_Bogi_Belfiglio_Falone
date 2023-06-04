@@ -116,9 +116,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .seleziona.aula .container{
     margin-bottom: 3%;
 
+
     
     
 }
+
 
 
 .seleziona.aula button{
@@ -130,6 +132,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     margin-top:1%;
     padding-top: 1%;
     border-color: black;
+    margin-right:10%;
     
 }
 
@@ -138,9 +141,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     background-color: #add8e6;
     color:black;
     border-radius:5%;
-    font-size: 70%;
+    font-size: 100%;
     cursor:pointer;
-    
+    margin-top:1%;
+    margin-bottom: 1%;
 }
 
 .seleziona.aula fieldset legend{
@@ -156,9 +160,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     color: blue;
 }
 
-.seleziona.aula fieldset p{
-    width:50%;
+
+
+@media only screen and (max-width: 800px) {
+    
+    .seleziona.aula .container fieldset .note{
+        display:none;
+    }
+    
+    
 }
+
+
 
 
 

@@ -163,7 +163,7 @@ public class EventoDAO_MySQL extends DAO implements EventoDAO {
         List<Evento> eventi = new ArrayList();
         try {
             sCurrentEventoByAula.setInt(1, aula.getKey());
-            try ( ResultSet rs = sCurrentEventoByAula.executeQuery()) {
+            try (ResultSet rs = sCurrentEventoByAula.executeQuery()) {
                 while (rs.next()) {
                     eventi.add(this.createEvento(rs));
                 }

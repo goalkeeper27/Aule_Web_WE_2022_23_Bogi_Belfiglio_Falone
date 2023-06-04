@@ -12,21 +12,19 @@
                 <p><span class="info">Edificio</span>: ${aula.edificio}</p>
                 <p><span class="info">Piano</span>: ${aula.piano}</p>
                 <p><span class="info">Capienza aula</span>: ${aula.capienza}</p>
-                <p><span class="info">numero prese elettriche</span>: ${aula.numeroPreseElettriche}</p>
-                <p><span class="info">numero prese di rete</span>: ${aula.numeroPreseDiRete}</p>
+                <p><span class="info">Numero prese elettriche</span>: ${aula.numeroPreseElettriche}</p>
+                <p><span class="info">Numero prese di rete</span>: ${aula.numeroPreseDiRete}</p>
                 
-                <p><span class="info">vedi attrezzature:</span><span class="attrezzature">
+                <p><span class="info">Attrezzature</span>:
+               
                             <#list attrezzature as attrezzatura>
                             <#if attrezzatura.aulaKey == aula.key>
-                                ${attrezzatura.nome},
+                            ${attrezzatura.nome?lower_case},
                             </#if>
 
                         </#list>
-                       
-                    </span></p>
-
-
-              <p>${aula.noteGeneriche}</p>
+                      </p>
+                  
             </fieldset>
             </#list>
         </div>
