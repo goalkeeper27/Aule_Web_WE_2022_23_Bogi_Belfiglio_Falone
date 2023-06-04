@@ -77,7 +77,7 @@ public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO {
             attrezzatura.setKey(rs.getInt("ID"));
             attrezzatura.setAulaKey(rs.getInt("ID_aula"));
             attrezzatura.setNome(rs.getString("nome"));
-            attrezzatura.setNumeroDiSerie(rs.getInt("numero_di_serie"));
+            attrezzatura.setNumeroDiSerie(rs.getString("numero_di_serie"));
         } catch (SQLException ex) {
             throw new DataException("Impossibile creare l'oggetto Attrezzatura", ex);
         }
@@ -133,7 +133,7 @@ public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO {
                     return;
                 }
                 uAttrezzatura.setString(1,attrezzatura.getNome());
-                uAttrezzatura.setInt(2, attrezzatura.getNumeroDiSerie());
+                uAttrezzatura.setString(2, attrezzatura.getNumeroDiSerie());
                 
                 if(attrezzatura.getAula() != null){
                     uAttrezzatura.setInt(3, attrezzatura.getAula().getKey());
@@ -156,7 +156,7 @@ public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO {
                 
                 }else{
                     iAttrezzatura.setString(1, attrezzatura.getNome());
-                    iAttrezzatura.setInt(2, attrezzatura.getNumeroDiSerie());
+                    iAttrezzatura.setString(2, attrezzatura.getNumeroDiSerie());
                     
                         if(attrezzatura.getAula() != null){
                             iAttrezzatura.setInt(3, attrezzatura.getAula().getKey());

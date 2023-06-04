@@ -49,6 +49,7 @@ public class SpecificAula extends AuleWebBaseController {
             data.put("aule", aule);
             data.put("attrezzature", attrezzature);
             data.put("outline_tpl", "outline_with_select_without_login.ftl.html");
+            data.put("select_button", 2);
             data.put("IDgruppo", gruppo_key);
             TemplateResult res = new TemplateResult(getServletContext());
             res.activate("seleziona_aula.ftl.html", data, response);

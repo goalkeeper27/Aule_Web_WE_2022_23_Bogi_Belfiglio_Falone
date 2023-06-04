@@ -5,7 +5,7 @@
         <servlet-class>it.univaq.project.aule_web.controller.Homepage</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>FirstPageAule</servlet-name>
+        <servlet-name>Eventi</servlet-name>
         <servlet-class>it.univaq.project.aule_web.controller.EventiCorrenti</servlet-class>
     </servlet>
     <servlet>
@@ -17,8 +17,8 @@
         <url-pattern>/homepage</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>FirstPageAule</servlet-name>
-        <url-pattern>/first_page_aule</url-pattern>
+        <servlet-name>Eventi</servlet-name>
+        <url-pattern>/eventi</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SpecificAula</servlet-name>

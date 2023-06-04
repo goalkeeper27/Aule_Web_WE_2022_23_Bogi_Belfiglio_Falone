@@ -20,8 +20,8 @@ public interface Attrezzatura extends DataItem<Integer>{
     
     void setNome(String nome);
     
-    int getNumeroDiSerie();
+    String getNumeroDiSerie();
     
-    void setNumeroDiSerie(int numeroDiSerie);
+    void setNumeroDiSerie(String numeroDiSerie);
        
 }

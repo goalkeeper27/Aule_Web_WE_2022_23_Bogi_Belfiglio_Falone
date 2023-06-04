@@ -16,12 +16,12 @@ public class AttrezzaturaImpl extends DataItemImpl<Integer> implements Attrezzat
     
     private Aula aula;
     private String nome;
-    private int numeroDiSerie;
+    private String numeroDiSerie;
     
     public AttrezzaturaImpl() {
         aula = null;
         nome = "";
-        numeroDiSerie = 0;
+        numeroDiSerie = null;
     }
     
     @Override
@@ -45,12 +45,12 @@ public class AttrezzaturaImpl extends DataItemImpl<Integer> implements Attrezzat
     }
 
     @Override
-    public int getNumeroDiSerie() {
+    public String getNumeroDiSerie() {
         return this.numeroDiSerie;
     }
 
     @Override
-    public void setNumeroDiSerie(int numeroDiSerie) {
+    public void setNumeroDiSerie(String numeroDiSerie) {
         this.numeroDiSerie = numeroDiSerie;
     }
     

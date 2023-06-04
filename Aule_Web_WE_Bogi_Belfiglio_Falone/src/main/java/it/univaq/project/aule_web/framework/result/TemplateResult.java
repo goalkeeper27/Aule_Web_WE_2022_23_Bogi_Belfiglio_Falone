@@ -132,6 +132,7 @@ public class TemplateResult {
         //inject some default data in the data model
         default_data_model.put("compiled_on", Calendar.getInstance().getTime()); //data di compilazione del template
         default_data_model.put("outline_tpl", context.getInitParameter("view.outline_template")); //eventuale template di outline
+        default_data_model.put("select_button", 0);
 
         //aggiungiamo altri dati di inizializzazione presi dal web.xml
         //add other data taken from web.xml
@@ -201,9 +202,31 @@ public class TemplateResult {
                 List<String> researches = new ArrayList<>();
                 //Controllo quali selezioni posso effettuare dalla pagina in cui vengo renderizzato
 
-                researches.add(context.getInitParameter("view.select.datapicker"));
-                researches.add(context.getInitParameter("view.select.corso"));
-                researches.add(context.getInitParameter("view.select.aula"));
+                switch((Integer)localdatamodel.get("select_button")) {
+                    case 1:
+                        researches.add(context.getInitParameter("view.select.datapicker"));
+                        researches.add(context.getInitParameter("view.select.corso"));
+                        researches.add(context.getInitParameter("view.select.aula"));
+                        break;
+                    case 2:
+                        researches.add(context.getInitParameter("view.select.datapicker"));
+                        researches.add(context.getInitParameter("view.select.corso"));
+                        researches.add(context.getInitParameter("view.select.orario_attuale"));
+                        break;
+                    case 3:
+                        researches.add(context.getInitParameter("view.select.datapicker"));
+                        researches.add(context.getInitParameter("view.select.orario_attuale"));
+                        researches.add(context.getInitParameter("view.select.aula"));
+                        break;
+                    case 4:
+                        researches.add(context.getInitParameter("view.select.orario_attuale"));
+                        researches.add(context.getInitParameter("view.select.corso"));
+                        researches.add(context.getInitParameter("view.select.aula"));
+                        break;
+                        
+
+                }
+               
 
                 localdatamodel.put("ricerche", researches);
 

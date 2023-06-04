@@ -1,10 +1,10 @@
 <div class="container">
     <div class="gruppi">
-        <p>Seleziona il gruppo di aule di tuo interesse</p>
+        <p class="title">Seleziona il gruppo di aule di tuo interesse</p>
 
         <div class="ten columns">
             <#list tipi_gruppo as tipo>
-            <form method="GET" action="first_page_aule">
+            <form method="POST" action="eventi">
                 <fieldset>
                     <legend>${tipo}</legend>
                     <#list gruppi as gruppo>

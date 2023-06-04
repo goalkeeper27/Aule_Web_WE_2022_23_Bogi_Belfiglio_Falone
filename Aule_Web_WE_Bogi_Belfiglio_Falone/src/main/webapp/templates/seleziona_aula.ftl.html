@@ -2,29 +2,35 @@
 <div class="seleziona aula">
     <div class="container">
         <div class="ten columns">
-            <h2>Seleziona l'aula di tuo interesse</h2>
+            <p class="title">Seleziona l'aula di tuo interesse</p>
             <#list aule as aula>
             <fieldset>
                 <legend>Aula ${aula.nome} </legend>
-                <button type="submit" name="${aula.nome}">vedi</button>
-                <p><span class="info">Responsabile</span>: ${aula.responsabile.email}</p>
-                <p><span class="info">Luogo</span>: ${aula.luogo}</p>
-                <p><span class="info">Edificio</span>: ${aula.edificio}</p>
-                <p><span class="info">Piano</span>: ${aula.piano}</p>
-                <p><span class="info">Capienza aula</span>: ${aula.capienza}</p>
-                <p><span class="info">Numero prese elettriche</span>: ${aula.numeroPreseElettriche}</p>
-                <p><span class="info">Numero prese di rete</span>: ${aula.numeroPreseDiRete}</p>
-                
-                <p><span class="info">Attrezzature</span>:
-               
-                            <#list attrezzature as attrezzatura>
-                            <#if attrezzatura.aulaKey == aula.key>
-                            ${attrezzatura.nome?lower_case},
-                            </#if>
+                <div class="plane aula">
+                    <form method="GET" action="eventi">
+                        <input type="hidden" name="IDgruppo" value="${IDgruppo}">
+                        <button type="submit" name="IDaula" value="${aula.key}">vedi</button>
+                    </form>
+                    <p><span class="info">Responsabile</span>: ${aula.responsabile.email}</p>
+                    <p><span class="info">Luogo</span>: ${aula.luogo}</p>
+                    <p><span class="info">Edificio</span>: ${aula.edificio}</p>
+                    <p><span class="info">Piano</span>: ${aula.piano}</p>
+                    <p><span class="info">Capienza aula</span>: ${aula.capienza}</p>
+                    <p><span class="info">Numero prese elettriche</span>: ${aula.numeroPreseElettriche}</p>
+                    <p><span class="info">Numero prese di rete</span>: ${aula.numeroPreseDiRete}</p>
+
+                    <p><span class="info">Attrezzature</span>:
+
+                        <#list attrezzature as attrezzatura>
+                        <#if attrezzatura.aulaKey == aula.key>
+                        ${attrezzatura.nome?lower_case},
+                        </#if>
 
                         </#list>
-                      </p>
-                  
+                    </p>
+
+                    <p class="note">${aula.noteGeneriche}</p>
+                </div>
             </fieldset>
             </#list>
         </div>

@@ -69,7 +69,7 @@ public class AttrezzaturaProxy extends AttrezzaturaImpl implements DataItemProxy
     }
     
     @Override
-    public void setNumeroDiSerie(int numero){
+    public void setNumeroDiSerie(String numero){
         super.setNumeroDiSerie(numero);
         this.modified = true;
     }
