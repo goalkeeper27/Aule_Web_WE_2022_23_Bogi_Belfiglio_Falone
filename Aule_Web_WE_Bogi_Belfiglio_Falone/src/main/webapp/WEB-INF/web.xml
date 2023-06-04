@@ -6,7 +6,7 @@
     </servlet>
     <servlet>
         <servlet-name>FirstPageAule</servlet-name>
-        <servlet-class>it.univaq.project.aule_web.controller.FirstPageAule</servlet-class>
+        <servlet-class>it.univaq.project.aule_web.controller.EventiCorrenti</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SpecificAula</servlet-name>
