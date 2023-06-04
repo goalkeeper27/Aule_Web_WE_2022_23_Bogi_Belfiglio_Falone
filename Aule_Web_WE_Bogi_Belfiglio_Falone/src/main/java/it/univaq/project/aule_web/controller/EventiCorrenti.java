@@ -7,6 +7,8 @@ package it.univaq.project.aule_web.controller;
 import it.univaq.f4i.iw.framework.result.TemplateManagerException;
 import it.univaq.project.aule_web.framework.result.TemplateResult;
 import it.univaq.project.aule_web.data.dao.impl.AuleWebDataLayer;
+import it.univaq.project.aule_web.data.model.Aula;
+import it.univaq.project.aule_web.data.model.Evento;
 import it.univaq.project.aule_web.framework.data.DataException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,14 +23,25 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Alberto Bogi
  */
-public class FirstPageAule extends AuleWebBaseController {
+public class EventiCorrenti extends AuleWebBaseController {
 
     private void action_default(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
         try {
             Map data = new HashMap<>();
+            
             int gruppo_key = Integer.valueOf(request.getParameter("IDgruppo"));
-            //int gruppo_key = 2;
-            data.put("aule", ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().getAuleByGruppoID(gruppo_key));
+            // lista di tutte le aule del gruppo specificato
+            List<Aula> aule = ((AuleWebDataLayer)request.getAttribute("datalayer")).getAulaDAO().getAuleByGruppoID(gruppo_key);
+            
+            //lista di tutte gli eventi relativi alle aule specificate
+            List<Evento> eventi = new ArrayList<>();
+            
+            for(Aula aula: aule){
+                eventi.addAll(((AuleWebDataLayer)request.getAttribute("datalayer")).getEventoDAO().getCurrentEventoByAula(aula));
+            }
+
+            data.put("aule", aule);
+            data.put("eventi", eventi);
             data.put("outline_tpl", "outline_with_select_without_login.ftl.html");
             data.put("IDgruppo", gruppo_key);
             TemplateResult res = new TemplateResult(getServletContext());
@@ -57,5 +70,6 @@ public class FirstPageAule extends AuleWebBaseController {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 
 }

@@ -26,7 +26,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     border-radius:5%;
     font-size: 70%;
     cursor:pointer;
-    
+    border-radius: 4px;
 }
 
 .gruppi fieldset legend{
@@ -76,6 +76,34 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 ********************************/
 
 
+.aule .nome_aula{
+    color: #add8e6;
+    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+    font-size: 19px;
+}
+
+.aule fieldset .descrizione{
+    font-style: italic;
+}
+
+.aule fieldset .info{
+    font-style: italic;
+    color: blue;
+}
+
+.aule fieldset .contenitore_evento{
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f7f7f7;
+}
+
+.aule fieldset .contenitore_evento div{
+    margin-bottom: 10px;
+}
+
+
+
 
 /* Stile personalizzato per il calendario */
 
@@ -96,7 +124,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     border-radius:5%;
     font-size: 90%;
     cursor:pointer;
-    border-radius: 3px;
+    border-radius: 4px;
 }
 
 .aule button:hover{
@@ -105,6 +133,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     border-color: #add8e6;
     text-align: center;
 }
+
 
 
 /********************************
