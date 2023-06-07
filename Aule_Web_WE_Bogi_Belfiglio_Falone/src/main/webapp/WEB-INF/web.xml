@@ -12,6 +12,10 @@
         <servlet-name>SpecificAula</servlet-name>
         <servlet-class>it.univaq.project.aule_web.controller.SpecificAula</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SpecificCorso</servlet-name>
+        <servlet-class>it.univaq.project.aule_web.controller.SpecificCorso</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Homepage</servlet-name>
         <url-pattern>/homepage</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>SpecificAula</servlet-name>
         <url-pattern>/specificAula</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SpecificCorso</servlet-name>
+        <url-pattern>/specificCorso</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

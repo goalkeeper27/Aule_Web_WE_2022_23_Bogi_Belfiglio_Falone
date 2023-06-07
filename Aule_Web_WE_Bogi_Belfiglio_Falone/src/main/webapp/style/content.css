@@ -292,7 +292,7 @@ input[type="date"]{
 
 .seleziona.aula fieldset .plane.aula{
     border: 1px solid black;
-    padding: 1%;;
+    padding: 1%;
     border-radius: 10px;
     background-color: #f7f7f7;
 }
@@ -347,6 +347,78 @@ input[type="date"]{
     border-radius: 4px;
     
 }
+
+/********************************
+
+* proprietà per seleziona_corso.ftl.html
+
+********************************/
+
+.seleziona.corso fieldset .plane.corsi{
+    border: 1px solid black;
+    padding: 1%;
+    border-radius: 10px;
+    background-color: #f7f7f7;
+}
+
+.seleziona.corso fieldset .info{
+    font-style: italic;
+    color: blue;
+}
+
+.seleziona.corso .title{
+    font-size: xx-large;
+    font-style: italic;
+    font-weight: bold;
+    text-align:center;
+    
+    color: #add8e6;
+    padding-top:0.5%;
+    
+}
+
+.seleziona.corso .container{
+    margin-bottom: 3%; 
+}
+
+.seleziona.corso button{
+    width:10%;
+    margin-bottom:3%;
+}
+
+.seleziona.corso fieldset{
+    margin-top:1%;
+    padding-top: 1%;
+    
+    
+}
+
+.seleziona.corso fieldset button{
+    width: 5%;
+    background-color: #add8e6;
+    color:black;
+    border-radius:5px;
+    font-size: 100%;
+    cursor:pointer;
+    margin-top:1%;
+    margin-bottom: 1%;
+}
+
+.seleziona.corso fieldset button:hover{
+    background-color: white;
+    color: #add8e6;
+    border-color: #add8e6;
+    text-align: center;
+}
+
+.seleziona.corso fieldset legend{
+    font-size: xx-large;
+    text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
+    color: #add8e6;
+    padding-top:0.5%;
+      
+}
+
 
 
 
