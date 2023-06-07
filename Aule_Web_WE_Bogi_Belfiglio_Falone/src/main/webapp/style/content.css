@@ -400,16 +400,23 @@ input[type="date"]{
 
 ********************************/
 
-.seleziona.corso fieldset .plane.corsi{
-    border: 1px solid black;
-    padding: 1%;
+.seleziona.corso table{
     border-radius: 10px;
-    background-color: #f7f7f7;
+    width: 100%;  
 }
 
-.seleziona.corso fieldset .info{
+.seleziona.corso th,td{
+    border: 1px solid black;
+    text-align: center;
+}
+
+.seleziona.corso .info{
     font-style: italic;
     color: blue;
+}
+
+.seleziona.corso th{
+    background-color: #e9e9e9;
 }
 
 .seleziona.corso .title{
@@ -417,7 +424,6 @@ input[type="date"]{
     font-style: italic;
     font-weight: bold;
     text-align:center;
-    
     color: #add8e6;
     padding-top:0.5%;
     
@@ -427,20 +433,8 @@ input[type="date"]{
     margin-bottom: 3%; 
 }
 
-.seleziona.corso button{
-    width:10%;
-    margin-bottom:3%;
-}
-
-.seleziona.corso fieldset{
-    margin-top:1%;
-    padding-top: 1%;
-    
-    
-}
-
-.seleziona.corso fieldset button{
-    width: 5%;
+.seleziona.corso table button{
+    width: 60%;
     background-color: #add8e6;
     color:black;
     border-radius:5px;
@@ -450,20 +444,13 @@ input[type="date"]{
     margin-bottom: 1%;
 }
 
-.seleziona.corso fieldset button:hover{
+.seleziona.corso table button:hover{
     background-color: white;
     color: #add8e6;
     border-color: #add8e6;
     text-align: center;
 }
 
-.seleziona.corso fieldset legend{
-    font-size: xx-large;
-    text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
-    color: #add8e6;
-    padding-top:0.5%;
-      
-}
 
 
 
