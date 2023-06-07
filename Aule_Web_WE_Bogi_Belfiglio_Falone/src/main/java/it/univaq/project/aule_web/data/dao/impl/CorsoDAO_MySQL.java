@@ -164,7 +164,7 @@ public class CorsoDAO_MySQL extends DAO implements CorsoDAO {
         List<Corso> corsi = new ArrayList<>();
         try{
             try ( ResultSet rs = sAllCorsi.executeQuery()) {
-                if (rs.next()) {
+                while(rs.next()) {
                     corsi.add(createCorso(rs));
                 }
             }

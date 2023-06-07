@@ -128,6 +128,61 @@ public class EventiCorrenti extends AuleWebBaseController {
         }
     }
 
+    
+     private void action_eventi_giornaliero(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
+        try {
+            Map data = new HashMap<>();
+            
+            int aula_key = Integer.valueOf(request.getParameter("IDaula"));
+            int gruppo_key = Integer.valueOf(request.getParameter("IDgruppo"));
+            List<Aula> aule = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().getAuleByGruppoID(gruppo_key);
+            
+            data.put("select_button", 1);
+            data.put("IDgruppo", gruppo_key);
+            data.put("aula", (aule));
+            data.put("outline_tpl", "outline_with_select_without_login.ftl.html");
+            
+            TemplateResult res = new TemplateResult(getServletContext());
+            
+            if (request.getParameter("date") != null) {
+                String giorno[] = request.getParameter("date").split("-D");
+                
+                Calendar calendar = Calendar.getInstance();
+                calendar.clear();
+  
+                LocalDate giorno1 = calendar.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                
+                 for (Aula aula : aule) {
+                        List<Evento> eventi = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().getEventoInADayByAula(aula, giorno1);
+                        if (eventi != null) {
+                            data.put("eventi", eventi);
+                         }
+                 }
+                 
+              
+
+               
+              
+               
+               
+
+                
+
+                //utili per visualizzazione messaggio in caso di mancanza di eventi in uno specifico giorno
+                data.put("data", giorno);
+                
+
+                //CODICE PER TROVARE EVENTI DAL GIORNO
+                res.activate("eventi_giornaliero.ftl.html", data, response);
+            } else {
+                res.activate("eventi_giornaliero.ftl.html", data, response);
+            }
+        } catch (DataException ex) {
+            handleError("Data access exception: " + ex.getMessage(), request, response);
+        }
+    }
+    
+
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         try {

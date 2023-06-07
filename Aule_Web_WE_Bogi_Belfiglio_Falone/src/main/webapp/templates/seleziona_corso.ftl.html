@@ -2,18 +2,40 @@
     <div class="container">
         <div class="ten columns">
             <p class="title">Seleziona il corso di tuo interesse</p>
-            <#list corsi as corso>
-            <fieldset>
-                <legend>Corso ${corso.nome} </legend>
-                <div class="plane corsi">  
-                    <button type="submit">vedi</button>
-                    <p><span class="info">Nome</span>: ${corso.nome}</p>
-                    <p><span class="info">Corso di laurea</span>: ${corso.corsoDiLaurea}</p>
-                    <p><span class="info">Tipo di laurea</span>: ${corso.tipoLaurea}</p>
-                    <p><span class="info">Anno di frequentazione</span>: ${corso.annoDiFrequentazione}</p>
-                </div>
-            </fieldset>
-            </#list>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th class="info">Nome</th>
+                        <th class="info">Corso di laurea</th>
+                        <th class="info">Tipo di laurea</th>
+                        <th class="info">Anno di frequentazione</th>
+                        <th class="info">Azione</th>
+                    </tr>
+                </thead>   
+                <#list corsi as corso>
+                <tbody>
+                    <tr>
+                        <td>${corso.nome}</td>
+                        <td>${corso.corsoDiLaurea}</td>
+                        <#assign tipoLaurea = corso.tipoLaurea>
+                        <#assign tipoDiLaurea = tipoLaurea?replace("_"," ")>
+                        <td>${tipoDiLaurea}</td>
+                        <#assign annoFreqPrec = corso.annoDiFrequentazione-1>
+                        <#assign stringAnnoFreqPrecConPunto = annoFreqPrec?string>
+                        <#assign stringAnnoFreqPrec = stringAnnoFreqPrecConPunto?replace(".","")>
+                        <#assign annoFreq = corso.annoDiFrequentazione>
+                        <#assign stringAnnoFreqConPunto = annoFreq?string>
+                        <#assign stringAnnoFreq = stringAnnoFreqConPunto?replace(".","")>
+                        <td>${stringAnnoFreqPrec} / ${stringAnnoFreq}</td>
+                        <td><button type="submit">vedi</button></td>
+                    </tr>
+                </#list>
+                </tbody>
+            </table>
+
+
+
         </div>
     </div>
 </div>

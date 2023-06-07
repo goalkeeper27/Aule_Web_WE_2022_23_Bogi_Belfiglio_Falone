@@ -490,16 +490,23 @@ input[type="date"]{
 
 ********************************/
 
-.seleziona.corso fieldset .plane.corsi{
-    border: 1px solid black;
-    padding: 1%;
+.seleziona.corso table{
     border-radius: 10px;
-    background-color: #f7f7f7;
+    width: 100%;  
 }
 
-.seleziona.corso fieldset .info{
+.seleziona.corso th,td{
+    border: 1px solid black;
+    text-align: center;
+}
+
+.seleziona.corso .info{
     font-style: italic;
     color: blue;
+}
+
+.seleziona.corso th{
+    background-color: #e9e9e9;
 }
 
 .seleziona.corso .title{
@@ -531,6 +538,9 @@ input[type="date"]{
 
 .seleziona.corso fieldset button{
     width: 5%;
+
+.seleziona.corso table button{
+    width: 60%;
     background-color: #add8e6;
     color:black;
     border-radius:5px;
@@ -540,14 +550,60 @@ input[type="date"]{
     margin-bottom: 1%;
 }
 
-.seleziona.corso fieldset button:hover{
+.seleziona.corso table button:hover{
     background-color: white;
     color: #add8e6;
     border-color: #add8e6;
     text-align: center;
 }
 
-.seleziona.corso fieldset legend{
+
+
+/********************************
+
+* proprietà per eventi_giornalieri.ftl.html
+
+********************************/
+    
+.eventi.aula input[type="date"]{
+    background-color: #add8e6;
+    padding: 0.5%;
+    font-family: sans-serif;
+    color: black;
+    font-size: 100%;
+    border: 1px solid black;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom:1%;
+    
+}  
+
+.eventi.giornalieri .title{
+    font-size: xx-large;
+    font-style: italic;
+    font-weight: bold;
+    text-align:center;
+    color: #add8e6;
+    padding-top:0.5%;
+    
+}
+
+.eventi.giornalieri .giorno{
+    text-align:center;
+}
+
+.eventi.giornalieri .giorno p{
+    font-weight: bold;
+    font-style: italic;
+    
+}
+
+.eventi.giornalieri fieldset{
+    height: 50%;
+    overflow:auto;
+}
+
+.eventi.giornalieri fieldset legend{
     font-size: xx-large;
     text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
     color: #add8e6;
@@ -555,11 +611,47 @@ input[type="date"]{
 
 }
 
+.eventi.giornalieri fieldset .descrizione{
+    font-style: italic;
+    font-size: small;
+}
 
+.eventi.giornalieri fieldset .info{
+    font-style: italic;
+    color: blue;
+}
 
+.eventi.giornalieri fieldset .contenitore_evento{
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f7f7f7;
+}
 
+.eventi.giornalieri fieldset .contenitore_evento div{
+    margin-bottom: 10px;
+}
 
+#button_date{
+    width: 4%;
+    background-color: #add8e6;
+    color:black;
+    border-radius:5%;
+    font-size: 90%;
+    cursor:pointer;
+    border-radius: 4px;
 
+}
 
+#button_date:hover{
+    background-color: white;
+    color: #add8e6;
+    border-color: #add8e6;
+    text-align: center;
+}
 
+#button_date:disabled{
+    color: #696969;
+    pointer-events: none;
 
+}
