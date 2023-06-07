@@ -12,10 +12,14 @@ import it.univaq.project.aule_web.framework.data.DataItemProxy;
 import it.univaq.project.aule_web.framework.data.DataLayer;
 import it.univaq.project.aule_web.framework.data.OptimisticLockException;
 import it.univaq.project.aule_web.data.dao.CorsoDAO;
+import it.univaq.project.aule_web.data.model.Evento;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -23,7 +27,7 @@ import java.sql.Statement;
  */
 public class CorsoDAO_MySQL extends DAO implements CorsoDAO {
 
-    private PreparedStatement sCorsoByID, sCorsoByName, sCorsoByPartialName;
+    private PreparedStatement sCorsoByID, sCorsoByName, sCorsoByPartialName, sAllCorsi;
     private PreparedStatement iCorso, uCorso, dCorso;
 
     public CorsoDAO_MySQL(DataLayer d) {
@@ -37,6 +41,7 @@ public class CorsoDAO_MySQL extends DAO implements CorsoDAO {
             this.sCorsoByID = this.connection.prepareStatement("SELECT * FROM Corso WHERE ID = ?");
             this.sCorsoByName = this.connection.prepareStatement("SELECT * FROM Corso WHERE nome = ?");
             this.sCorsoByPartialName = this.connection.prepareStatement("SELECT * from Corso C WHERE substring(C.nome,1,?) = ?");
+            this.sAllCorsi = this.connection.prepareStatement("SELECT * FROM corso");
 
             this.iCorso = this.connection.prepareStatement("INSERT INTO Corso(nome, corso_di_laurea, tipo_laurea, anno_di_frequentazione) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             this.uCorso = this.connection.prepareStatement("UPDATE Corso SET nome = ?, corso_di_laurea = ?, tipo_laurea = ?, anno_di_frequentazione = ?, versione = ? WHERE versione = ? AND ID = ?");
@@ -57,6 +62,7 @@ public class CorsoDAO_MySQL extends DAO implements CorsoDAO {
             sCorsoByID.close();
             sCorsoByName.close();
             sCorsoByPartialName.close();
+            sAllCorsi.close();
             iCorso.close();
             uCorso.close();
             dCorso.close();
@@ -151,6 +157,21 @@ public class CorsoDAO_MySQL extends DAO implements CorsoDAO {
             throw new DataException("Impossibile caricare il corso dal nome parziale digitato", ex);
         }
         return corso;
+    }
+    
+    @Override
+    public List<Corso> getAllCorsi() throws DataException {
+        List<Corso> corsi = new ArrayList<>();
+        try{
+            try ( ResultSet rs = sAllCorsi.executeQuery()) {
+                if (rs.next()) {
+                    corsi.add(createCorso(rs));
+                }
+            }
+        }catch (SQLException ex) {
+            throw new DataException("Errore nell'eliminazione del corso", ex);
+        }
+        return corsi;
     }
 
     @Override
@@ -290,5 +311,6 @@ public class CorsoDAO_MySQL extends DAO implements CorsoDAO {
         }
 
     }
-    
+
+
 }

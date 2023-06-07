@@ -8,6 +8,7 @@ import it.univaq.f4i.iw.framework.result.TemplateManagerException;
 import it.univaq.project.aule_web.framework.result.TemplateResult;
 import it.univaq.project.aule_web.data.dao.impl.AuleWebDataLayer;
 import it.univaq.project.aule_web.data.model.Aula;
+import it.univaq.project.aule_web.data.model.Corso;
 import it.univaq.project.aule_web.data.model.Evento;
 import it.univaq.project.aule_web.data.model.EventoRicorrente;
 import it.univaq.project.aule_web.framework.data.DataException;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,15 +39,18 @@ public class EventiCorrenti extends AuleWebBaseController {
 
             int gruppo_key = Integer.valueOf(request.getParameter("IDgruppo"));
             // lista di tutte le aule del gruppo specificato
-            List<Aula> aule = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().getAuleByGruppoID(gruppo_key);
 
-            //lista di tutte gli eventi relativi alle aule specificate
+            List<Aula> aule = ((AuleWebDataLayer)request.getAttribute("datalayer")).getAulaDAO().getAuleByGruppoID(gruppo_key);
+            
+            //lista di tutte gli eventi relativi alle aule e corsi specificate
+
             List<Evento> eventi = new ArrayList<>();
 
             for (Aula aula : aule) {
                 eventi.addAll(((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().getCurrentEventoByAula(aula));
                 data.put(aula.getNome(), ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().getCurrentEventoByAula(aula));
             }
+            
 
             data.put("aule", aule);
             data.put("eventi", eventi);
