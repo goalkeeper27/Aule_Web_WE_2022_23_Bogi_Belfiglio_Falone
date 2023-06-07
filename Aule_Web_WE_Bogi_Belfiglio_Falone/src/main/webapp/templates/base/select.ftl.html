@@ -1,62 +1,126 @@
 <div class="select">
-<div class="container">
-    
-    <#list ricerche as ricerca>
-        <#if ricerca == "datapicker">
- 
-        
-        
-        
-        
-        <#elseif ricerca == "corso">
-        <div class="three columns">
-            <form method="POST" action="specificCorso">
-            <p>scegli un corso specifico</p>
-            <input type="hidden" name="IDgruppo" value="${IDgruppo}"/>
-            <button type="submit">cerca</button> 
-            </form>
+    <div class="container">
+
+        <div id="normal_select">
+            <div class="two columns">
+                <form method="POST" action="homepage">
+                    <p>scegli nuovo gruppo</p>
+                    <button type="submit">cerca</button> 
+                </form>
+            </div>
+            <#list ricerche as ricerca>
+
+            <#if ricerca == "corso">
+            <div class="two columns">
+                <form method="POST" action="specificCorso">
+                    <p>scegli un corso specifico</p>
+                    <input type="hidden" name="IDgruppo" value="${IDgruppo}"/>
+                    <button type="submit">cerca</button> 
+                </form>
+            </div>
+
+
+            <#elseif ricerca == "aula">
+            <div class="two columns">
+
+                <form method="POST" action="specificAula">
+                    <p>seleziona un'aula specifica</p>
+                    <input type="hidden" name="IDgruppo" value="${IDgruppo}"/>
+                    <button type="submit">cerca</button>
+                </form>
+
+            </div>
+
+
+            <#elseif ricerca == "orario_attuale">
+            <div class="two columns">
+
+                <form method="POST" action="eventi">
+                    <p>vedi gli eventi attuali</p>
+                    <input type="hidden" name="IDgruppo" value="${IDgruppo}"/>
+                    <button type="submit">vedi</button>
+                </form>
+
+            </div>
+            </#if>
+            </#list>
+
+            <div class="four columns">
+
+
+                <p>vedi gli eventi in un giorno specifico:</p>
+
+                <input name="data" type="date" id="date"/><br>
+                <!--<input type="text" id="datepicker"  oninput="check_data()"/>-->
+                <button id="calendar" type="submit">cerca</button>
+                <!--<script src="script/script.js"></script>-->
+
+
+            </div>
+
         </div>
-        
-        
-        <#elseif ricerca == "aula">
-        <div class="three columns">
 
-            <form method="POST" action="specificAula">
-            <p>seleziona un'aula specifica</p>
-            <input type="hidden" name="IDgruppo" value="${IDgruppo}"/>
-            <button type="submit">cerca</button>
-            </form>
+        <div id="restrict_select">
+            <div class="sel">
+                <form method="POST" action="homepage">
+
+                    <label>scegli nuovo gruppo:</label>
+                    <button type="submit">cerca</button>
+                </form>
+            </div>
+            <#list ricerche as ricerca>
+
+            <#if ricerca == "corso">
+            <div class="sel">
+                <form method="POST" action="specificCorso">
+                    <label>scegli un corso specifico:</label>
+                    <input type="hidden" name="IDgruppo" value="${IDgruppo}"/>
+                    <button type="submit">cerca</button> 
+                </form>
+            </div>
+
+
+            <#elseif ricerca == "aula">
+            <div class="sel">
+
+                <form method="POST" action="specificAula">
+                    <label>seleziona un'aula specifica:</label>
+                    <input type="hidden" name="IDgruppo" value="${IDgruppo}"/>
+                    <button type="submit">cerca</button>
+                </form>
+
+            </div>
+
+
+            <#elseif ricerca == "orario_attuale">
+            <div class="sel">
+
+                <form method="POST" action="eventi">
+                    <label>vedi gli eventi attuali:</label>
+                    <input type="hidden" name="IDgruppo" value="${IDgruppo}"/>
+                    <button type="submit">vedi</button>
+                </form>
+
+            </div>
+            </#if>
+            </#list>
+
+            <div class="sel">
+
+
+                <label>vedi gli eventi in un giorno specifico:</label>
+
+                <input name="data" type="date" id="date"/>
+                <!--<input type="text" id="datepicker"  oninput="check_data()"/>-->
+                <button id="calendar" type="submit">cerca</button>
+                <!--<script src="script/script.js"></script>-->
+
+
+            </div>
+
+
 
         </div>
-       
-        
-        <#elseif ricerca == "orario_attuale">
-        <div class="three columns">
-
-            <form method="POST" action="eventi">
-            <p>vedi gli eventi attuali</p>
-            <input type="hidden" name="IDgruppo" value="${IDgruppo}"/>
-            <button type="submit">vedi</button>
-            </form>
-
-        </div>
-        </#if>
-        </#list>
-        
-        <div class="four columns">
-
-
-            <p>vedi gli eventi in un giorno specifico</p>
-            
-            <input name="data" type="date" id="date"/><br>
-            <!--<input type="text" id="datepicker"  oninput="check_data()"/>-->
-            <button id="calendar" type="submit">cerca</button>
-            <!--<script src="script/script.js"></script>-->
-            
-            
-        </div>
-        
     </div>
-</div>
 
 

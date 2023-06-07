@@ -38,7 +38,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .select p{
     font-weight: bold;
     font-style: italic;
-    
+
 }
 
 .select{
@@ -82,6 +82,87 @@ input[type="date"]{
 }
 
 
+#normal_select{
+    display:block;
+}
+
+#restrict_select{
+    display:none;
+}
+
+#restrict_select label{
+    font-weight: bold;
+    font-style: italic;
+    margin-right:1%;
+    margin-top:10%;
+
+}
+
+#restrict_select .sel{
+
+    margin-top:3%;
+
+}
+
+#restrict_select button{
+    width: 5%;
+    background-color: #add8e6;
+    color:black;
+    border-radius:5%;
+
+    cursor:pointer;
+    border-radius: 4px;
+
+}
+
+@media only screen and (max-width: 1250px) {
+    #normal_select{
+        display:none;
+    }
+
+    #restrict_select{
+        display:block;
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1000px) {
+    #restrict_select button{
+        width: 7%;
+        background-color: #add8e6;
+        color:black;
+        border-radius:5%;
+        cursor:pointer;
+        border-radius: 4px;
+    }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 800px) {
+    #restrict_select button{
+        width: 8%;
+        background-color: #add8e6;
+        color:black;
+        border-radius:5%;
+        cursor:pointer;
+        border-radius: 4px;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    #restrict_select button{
+        width: 15%;
+        background-color: #add8e6;
+        color:black;
+        border-radius:5%;
+        cursor:pointer;
+        border-radius: 4px;
+    }
+
+
+}
+
+
+
+
 
 
 /********************************
@@ -93,7 +174,7 @@ input[type="date"]{
     margin-top:1%;
     padding-top: 1%;
     border-color: black;
-    
+
 }
 
 .gruppi fieldset button{
@@ -111,7 +192,7 @@ input[type="date"]{
     text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
     color: #add8e6;
     padding-top:0.5%;
-      
+
 }
 
 .gruppi fieldset label{
@@ -130,19 +211,19 @@ input[type="date"]{
     font-style: italic;
     font-weight: bold;
     text-align:center;
-    
+
     color: #add8e6;
     padding-top:0.5%;
-    
+
 }
 
 @media only screen and (max-width: 800px) {
-    
+
     .gruppi fieldset button{
         width:10%;
     }
-    
-    
+
+
 }
 
 
@@ -157,10 +238,10 @@ input[type="date"]{
     font-style: italic;
     font-weight: bold;
     text-align:center;
-    
+
     color: #add8e6;
     padding-top:0.5%;
-    
+
 }
 
 .aule .nome_aula{
@@ -230,14 +311,14 @@ input[type="date"]{
     font-style: italic;
     font-weight: bold;
     text-align:center;
-    
+
     color: #add8e6;
     padding-top:0.5%;
-    
+
 }
 
 .seleziona.aula .container{
-    margin-bottom: 3%; 
+    margin-bottom: 3%;
 }
 
 
@@ -250,8 +331,8 @@ input[type="date"]{
 .seleziona.aula fieldset{
     margin-top:1%;
     padding-top: 1%;
-    
-    
+
+
 }
 
 .seleziona.aula fieldset button{
@@ -277,7 +358,7 @@ input[type="date"]{
     text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
     color: #add8e6;
     padding-top:0.5%;
-      
+
 }
 
 .seleziona.aula fieldset .info{
@@ -303,7 +384,7 @@ input[type="date"]{
 * proprietà per eventi_aula.ftl.html
 
 ********************************/
-    
+
 .eventi.aula input[type="week"]{
     background-color: #add8e6;
     padding: 0.5%;
@@ -314,8 +395,8 @@ input[type="date"]{
     cursor: pointer;
     border-radius: 5px;
     margin-bottom:1%;
-    
-}  
+
+}
 
 .eventi.aula .title{
     font-size: xx-large;
@@ -324,7 +405,7 @@ input[type="date"]{
     text-align:center;
     color: #add8e6;
     padding-top:0.5%;
-    
+
 }
 
 .eventi.aula .settimana{
@@ -334,7 +415,7 @@ input[type="date"]{
 .eventi.aula .settimana p{
     font-weight: bold;
     font-style: italic;
-    
+
 }
 
 .eventi.aula fieldset{
@@ -347,7 +428,7 @@ input[type="date"]{
     text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
     color: #add8e6;
     padding-top:0.5%;
-      
+
 }
 
 .eventi.aula fieldset .descrizione{
@@ -369,6 +450,15 @@ input[type="date"]{
 
 .eventi.aula fieldset .contenitore_evento div{
     margin-bottom: 10px;
+}
+
+.eventi.aula .messaggio.aule{
+    text-align: center;
+    font-size: large;
+    font-style: italic;
+    color: black;
+    padding-top:0.5%;
+
 }
 
 #button_week{
@@ -417,14 +507,14 @@ input[type="date"]{
     font-style: italic;
     font-weight: bold;
     text-align:center;
-    
+
     color: #add8e6;
     padding-top:0.5%;
-    
+
 }
 
 .seleziona.corso .container{
-    margin-bottom: 3%; 
+    margin-bottom: 3%;
 }
 
 .seleziona.corso button{
@@ -435,8 +525,8 @@ input[type="date"]{
 .seleziona.corso fieldset{
     margin-top:1%;
     padding-top: 1%;
-    
-    
+
+
 }
 
 .seleziona.corso fieldset button{
@@ -462,8 +552,10 @@ input[type="date"]{
     text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
     color: #add8e6;
     padding-top:0.5%;
-      
+
 }
+
+
 
 
 

@@ -10,6 +10,7 @@ import it.univaq.project.aule_web.framework.data.DAO;
 import it.univaq.project.aule_web.framework.data.DataException;
 import it.univaq.project.aule_web.framework.data.DataLayer;
 import it.univaq.project.aule_web.data.dao.EventoRicorrenteDAO;
+import it.univaq.project.aule_web.data.model.Aula;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,7 +25,7 @@ import java.util.List;
  */
 public class EventoRicorrenteDAO_MySQL extends DAO implements EventoRicorrenteDAO {
 
-    private PreparedStatement sEventoRicorrenteByEvento, sEventiRicorrentiByData;
+    private PreparedStatement sEventoRicorrenteByEvento, sEventiRicorrentiByDataAndAula;
 
     public EventoRicorrenteDAO_MySQL(DataLayer d) {
         super(d);
@@ -36,7 +37,7 @@ public class EventoRicorrenteDAO_MySQL extends DAO implements EventoRicorrenteDA
 
         try {
             sEventoRicorrenteByEvento = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento_ricorrente WHERE ID_evento = ?");
-            sEventiRicorrentiByData = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento_ricorrente WHERE data_evento BETWEEN (? + interval 1 day) AND ?");
+            sEventiRicorrentiByDataAndAula = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento_ricorrente ev, Evento e WHERE (ev.data_evento BETWEEN (? + interval 1 day) AND ?) and ev.ID_evento = e.ID and e.ID_aula = ?");
         } catch (SQLException ex) {
             throw new DataException("Errore nell'inizializzazione del data layer", ex);
         }
@@ -49,7 +50,7 @@ public class EventoRicorrenteDAO_MySQL extends DAO implements EventoRicorrenteDA
         try {
 
             sEventoRicorrenteByEvento.close();
-            sEventiRicorrentiByData.close();
+            sEventiRicorrentiByDataAndAula.close();
 
         } catch (SQLException ex) {
             //
@@ -95,13 +96,14 @@ public class EventoRicorrenteDAO_MySQL extends DAO implements EventoRicorrenteDA
     }
 
     @Override
-    public List<EventoRicorrente> EventiRicorrentiByData(LocalDate data_inizio, LocalDate data_fine) throws DataException {
+    public List<EventoRicorrente> EventiRicorrentiByDataAndAula(LocalDate data_inizio, LocalDate data_fine, Aula aula) throws DataException {
         List<EventoRicorrente> eventi = new ArrayList();
 
         try {
-            sEventiRicorrentiByData.setDate(1, Date.valueOf(data_inizio));
-            sEventiRicorrentiByData.setDate(2, Date.valueOf(data_fine));
-            try ( ResultSet rs = sEventiRicorrentiByData.executeQuery()) {
+            sEventiRicorrentiByDataAndAula.setDate(1, Date.valueOf(data_inizio));
+            sEventiRicorrentiByDataAndAula.setDate(2, Date.valueOf(data_fine));
+            sEventiRicorrentiByDataAndAula.setInt(3, aula.getKey());
+            try ( ResultSet rs = sEventiRicorrentiByDataAndAula.executeQuery()) {
                 while (rs.next()) {
                     eventi.add(this.createEventoRicorrente(rs));
                 }
