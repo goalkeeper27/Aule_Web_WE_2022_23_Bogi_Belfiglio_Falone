@@ -337,7 +337,41 @@ input[type="date"]{
     
 }
 
-.eventi.aula .settimana button{
+.eventi.aula fieldset{
+    height: 50%;
+    overflow:auto;
+}
+
+.eventi.aula fieldset legend{
+    font-size: xx-large;
+    text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
+    color: #add8e6;
+    padding-top:0.5%;
+      
+}
+
+.eventi.aula fieldset .descrizione{
+    font-style: italic;
+    font-size: small;
+}
+
+.eventi.aula fieldset .info{
+    font-style: italic;
+    color: blue;
+}
+
+.eventi.aula fieldset .contenitore_evento{
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f7f7f7;
+}
+
+.eventi.aula fieldset .contenitore_evento div{
+    margin-bottom: 10px;
+}
+
+#button_week{
     width: 4%;
     background-color: #add8e6;
     color:black;
@@ -345,8 +379,21 @@ input[type="date"]{
     font-size: 90%;
     cursor:pointer;
     border-radius: 4px;
-    
+
 }
+
+#button_week:hover{
+    background-color: white;
+    color: #add8e6;
+    border-color: #add8e6;
+    text-align: center;
+}
+
+#button_week:disabled{
+    color: #696969;
+    pointer-events: none;
+}
+
 
 
 

@@ -6,39 +6,45 @@
 
 
 
-let input = document.getElementById('date');
-let button = document.getElementById('calendar');
-button.disabled = true;   //il bottone viene disattivato inizialmente
-input.addEventListener('input', function(event){
+let input_orario_attuale = document.getElementById('date');
+let button_orario_attuale = document.getElementById('calendar');
+
+
+button_orario_attuale.disabled = true;   //il bottone viene disattivato inizialmente
+
+input_orario_attuale.addEventListener('input', function(event){
    
    let val = event.target.value;  //prendiamo il valore dell'input corrente, nel nostro caso input[type = date]
    
    if(val===''){
-       button.disabled = true;  //bottone disabilitato
+       button_orario_attuale.disabled = true;  //bottone disabilitato
    }
    else{
-       button.disabled = false;  //bottone abilitato
+       button_orario_attuale.disabled = false;  //bottone abilitato
    }
    
 });
 
-function check_button(){
+
     
-let input = document.getElementById('week');
-let button = document.getElementById('button_week');
-button.disabled = true;   //il bottone viene disattivato inizialmente
-input.addEventListener('input', function(event){
+let input_settimana = document.getElementById('week');
+let button_settimana = document.getElementById('button_week');
+
+
+button_settimana.disabled = true;   //il bottone viene disattivato inizialmente
+
+input_settimana.addEventListener('input', function(event){
    
    let val = event.target.value;  //prendiamo il valore dell'input corrente, nel nostro caso input[type = date]
    
    if(val===''){
-       button.disabled = true;  //bottone disabilitato
+       button_settimana.disabled = true;  //bottone disabilitato
    }
    else{
-       button.disabled = false;  //bottone abilitato
+       button_settimana.disabled = false;  //bottone abilitato
    }
    
 });
-}
+
 
 

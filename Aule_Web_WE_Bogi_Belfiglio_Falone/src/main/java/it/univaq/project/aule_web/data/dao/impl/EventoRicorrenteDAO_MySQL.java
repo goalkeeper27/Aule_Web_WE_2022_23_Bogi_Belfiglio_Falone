@@ -10,6 +10,7 @@ import it.univaq.project.aule_web.framework.data.DAO;
 import it.univaq.project.aule_web.framework.data.DataException;
 import it.univaq.project.aule_web.framework.data.DataLayer;
 import it.univaq.project.aule_web.data.dao.EventoRicorrenteDAO;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,7 +24,7 @@ import java.util.List;
  */
 public class EventoRicorrenteDAO_MySQL extends DAO implements EventoRicorrenteDAO {
 
-    private PreparedStatement sEventoRicorrenteByEvento;
+    private PreparedStatement sEventoRicorrenteByEvento, sEventiRicorrentiByData;
 
     public EventoRicorrenteDAO_MySQL(DataLayer d) {
         super(d);
@@ -35,27 +36,42 @@ public class EventoRicorrenteDAO_MySQL extends DAO implements EventoRicorrenteDA
 
         try {
             sEventoRicorrenteByEvento = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento_ricorrente WHERE ID_evento = ?");
+            sEventiRicorrentiByData = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento_ricorrente WHERE data_evento BETWEEN (? + interval 1 day) AND ?");
         } catch (SQLException ex) {
             throw new DataException("Errore nell'inizializzazione del data layer", ex);
         }
     }
-    
+
     @Override
-    public EventoRicorrente createEventoRicorrente(){
+    public void destroy() throws DataException {
+        //anche chiudere i PreparedStamenent � una buona pratica...
+        //also closing PreparedStamenents is a good practice...
+        try {
+
+            sEventoRicorrenteByEvento.close();
+            sEventiRicorrentiByData.close();
+
+        } catch (SQLException ex) {
+            //
+        }
+        super.destroy();
+    }
+
+    @Override
+    public EventoRicorrente createEventoRicorrente() {
         return new EventoRicorrenteProxy(this.dataLayer);
     }
-    
-    private EventoRicorrente createEventoRicorrente(ResultSet rs)throws DataException{
-        EventoRicorrenteProxy evento = (EventoRicorrenteProxy)this.createEventoRicorrente();
-        try{
+
+    private EventoRicorrente createEventoRicorrente(ResultSet rs) throws DataException {
+        EventoRicorrenteProxy evento = (EventoRicorrenteProxy) this.createEventoRicorrente();
+        try {
             evento.setKey(rs.getInt("ID"));
             evento.setDataEvento(rs.getDate("data_evento").toLocalDate());
             evento.setEventoKey(rs.getInt("ID_evento"));
-        }
-        catch(SQLException ex){
+        } catch (SQLException ex) {
             throw new DataException("erroe DB", ex);
         }
-        
+
         return evento;
     }
 
@@ -66,10 +82,28 @@ public class EventoRicorrenteDAO_MySQL extends DAO implements EventoRicorrenteDA
         try {
             if (evento.getKey() != null && evento.getKey() > 0) {
                 sEventoRicorrenteByEvento.setInt(1, evento.getKey());
-                try(ResultSet rs = sEventoRicorrenteByEvento.executeQuery()) {
-                    while(rs.next()){
+                try ( ResultSet rs = sEventoRicorrenteByEvento.executeQuery()) {
+                    while (rs.next()) {
                         eventi.add(this.createEventoRicorrente(rs));
                     }
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Errore DB", ex);
+        }
+        return eventi;
+    }
+
+    @Override
+    public List<EventoRicorrente> EventiRicorrentiByData(LocalDate data_inizio, LocalDate data_fine) throws DataException {
+        List<EventoRicorrente> eventi = new ArrayList();
+
+        try {
+            sEventiRicorrentiByData.setDate(1, Date.valueOf(data_inizio));
+            sEventiRicorrentiByData.setDate(2, Date.valueOf(data_fine));
+            try ( ResultSet rs = sEventiRicorrentiByData.executeQuery()) {
+                while (rs.next()) {
+                    eventi.add(this.createEventoRicorrente(rs));
                 }
             }
         } catch (SQLException ex) {

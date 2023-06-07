@@ -8,19 +8,57 @@
 
         <div class="ten columns">
             <div class="settimana">
+
                 <p>seleziona la settimana di tuo interesse</p>
-                <script src="../script/script.js"></script>
-                <input type="week" name="week" id="week" onselect="check_button()" /><br>
-                <button type="submit" id="button_week">vedi</button> 
-                
-                
+                <form method="GET" action="eventi">
+                    <input type="week" name="week" id="week"/><br>
+                    <input type="hidden" name="IDaula" value="${aula.key}" />
+                    <input type="hidden" name="IDgruppo" value="${IDgruppo}" />
+                    <button type="submit" id="button_week">vedi</button>
+                </form>
+
             </div>
         </div>
 
-
-
-
-
+        <#if eventi?? && eventi?size != 0>
+        
+        <div class="ten columns">
+            <#list date as data>
+                <#assign fieldset_vuoto = "true">
+                    <#list eventi as evento>
+                    <#if data == evento.dataEvento>
+                        <#assign fieldset_vuoto = "false">
+                    </#if>
+                </#list>
+                
+                <#if fieldset_vuoto == "false">
+                    <fieldset>
+                        <legend>${data}</legend> 
+                        <#list eventi as evento>
+                            <#if evento.dataEvento == data>
+                                <div class="contenitore_evento">
+                                    <p>${evento.nome}</p>
+                                    <p><span class="info">Responsabile</span>: ${evento.responsabile.email}</p>
+                                    <p><span class="info">Tipologia</span>: ${evento.tipologia?lower_case}</p>
+                                    <p><span class="info">Ora Inizio</span>: ${evento.oraInizio}</p>
+                                    <p><span class="info">Ora Fine</span>: ${evento.oraFine}</p>
+                                    <p class="descrizione">${evento.descrizione}</p>
+                                </div>
+                            <br>
+                            </#if>
+                        </#list>
+                    </fieldset>
+                </#if>
+            </#list>
+        </div>
+        
+        <#else>
+        <div class="ten columns">
+            <p>Non ci sono eventi in questa aula nella settimana che va dal giorno ${data_inizio} al giorno ${data_fine}</p>
+        </div>
+        
+        </#if>
 
     </div>
 </div>
+

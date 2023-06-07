@@ -9,6 +9,7 @@ import it.univaq.project.aule_web.framework.result.TemplateResult;
 import it.univaq.project.aule_web.data.dao.impl.AuleWebDataLayer;
 import it.univaq.project.aule_web.data.model.Aula;
 import it.univaq.project.aule_web.data.model.Evento;
+import it.univaq.project.aule_web.data.model.EventoRicorrente;
 import it.univaq.project.aule_web.framework.data.DataException;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -18,6 +19,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,17 +34,17 @@ public class EventiCorrenti extends AuleWebBaseController {
     private void action_default(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
         try {
             Map data = new HashMap<>();
-            
+
             int gruppo_key = Integer.valueOf(request.getParameter("IDgruppo"));
             // lista di tutte le aule del gruppo specificato
-            List<Aula> aule = ((AuleWebDataLayer)request.getAttribute("datalayer")).getAulaDAO().getAuleByGruppoID(gruppo_key);
-            
+            List<Aula> aule = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().getAuleByGruppoID(gruppo_key);
+
             //lista di tutte gli eventi relativi alle aule specificate
             List<Evento> eventi = new ArrayList<>();
-            
-            for(Aula aula: aule){
-                eventi.addAll(((AuleWebDataLayer)request.getAttribute("datalayer")).getEventoDAO().getCurrentEventoByAula(aula));
-                data.put(aula.getNome(),((AuleWebDataLayer)request.getAttribute("datalayer")).getEventoDAO().getCurrentEventoByAula(aula) );
+
+            for (Aula aula : aule) {
+                eventi.addAll(((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().getCurrentEventoByAula(aula));
+                data.put(aula.getNome(), ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().getCurrentEventoByAula(aula));
             }
 
             data.put("aule", aule);
@@ -51,56 +54,74 @@ public class EventiCorrenti extends AuleWebBaseController {
             data.put("select_button", 1);
             data.put("IDgruppo", gruppo_key);
             TemplateResult res = new TemplateResult(getServletContext());
-            res.activate("aule.ftl.html",data, response);
+            res.activate("aule.ftl.html", data, response);
         } catch (DataException ex) {
             handleError("Data access exception: " + ex.getMessage(), request, response);
         }
     }
-    
-    
-    private void action_eventi_by_aula(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
+
+    private void action_eventi_aula(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
         try {
             Map data = new HashMap<>();
-            
+
             int aula_key = Integer.valueOf(request.getParameter("IDaula"));
             int gruppo_key = Integer.valueOf(request.getParameter("IDgruppo"));
-            
-            data.put("aula", ((AuleWebDataLayer)request.getAttribute("datalayer")).getAulaDAO().getAula(aula_key));
-            
-            
-            int week = 3;
-            int year = 2010;
+            Aula aula = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().getAula(aula_key);
 
-            // Get calendar, clear it and set week number and year.
-            Calendar calendar = Calendar.getInstance();
-            calendar.clear();
-            calendar.set(Calendar.WEEK_OF_YEAR, week);
-            calendar.set(Calendar.YEAR, year);
-
-            
-            //Il primo giorno della settimana.
-            LocalDate dataInizio = calendar.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            
-            
-            // lista di tutte le aule del gruppo specificato
-            List<Aula> aule = ((AuleWebDataLayer)request.getAttribute("datalayer")).getAulaDAO().getAuleByGruppoID(gruppo_key);
-            
-            //lista di tutte gli eventi relativi alle aule specificate
-            List<Evento> eventi = new ArrayList<>();
-            
-            for(Aula aula: aule){
-                eventi.addAll(((AuleWebDataLayer)request.getAttribute("datalayer")).getEventoDAO().getCurrentEventoByAula(aula));
-                data.put(aula.getNome(),((AuleWebDataLayer)request.getAttribute("datalayer")).getEventoDAO().getCurrentEventoByAula(aula) );
-            }
-
-            data.put("aule", aule);
-            data.put("eventi", eventi);
-            data.put("outline_tpl", "outline_with_select_without_login.ftl.html");
-            //serve per indicare quali bottoni mostrare sul browser per la selezione delle ricerche specifiche
             data.put("select_button", 1);
             data.put("IDgruppo", gruppo_key);
+            data.put("aula", (aula));
+            data.put("outline_tpl", "outline_with_select_without_login.ftl.html");
+
             TemplateResult res = new TemplateResult(getServletContext());
-            res.activate("eventi_aula.ftl.html",data, response);
+
+            if (request.getParameter("week") != null) {
+                String settimana[] = request.getParameter("week").split("-W");
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.clear();
+                calendar.set(Calendar.YEAR, Integer.valueOf(settimana[0]));
+                calendar.set(Calendar.WEEK_OF_YEAR, Integer.valueOf(settimana[1]));
+                LocalDate dataInizio = calendar.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate dataFine = dataInizio.plusDays(6);
+
+                List<Evento> eventi = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().getEventoInAWeekByAula(aula, dataInizio, dataFine);
+                
+                //aggiungo inoltre le eventuali ricorrenze dei vari eventi  che ci sono in quella settimana
+                List<EventoRicorrente> eventiRicorrenti = ((AuleWebDataLayer)request.getAttribute("datalayer")).getEventoRicorrenteDAO().EventiRicorrentiByData(dataInizio, dataFine);
+                if(eventiRicorrenti != null){
+                    for(EventoRicorrente ev: eventiRicorrenti){
+                        Evento e = ev.getEvento();
+                        e.setDataEvento(ev.getDataEvento());
+                        eventi.add(e);
+                    }
+                }
+                if (eventi != null) {
+                    data.put("eventi", eventi);
+                }
+                
+                //Inserisco il range di date utili per la visualizzazione degli eventi
+                List<LocalDate> datas = new ArrayList();
+                LocalDate d = dataInizio;
+                for(int i = 0; i<7; i++){
+                    d = d.plusDays(1);
+                    datas.add(d);
+                   
+                }
+                
+                data.put("date", datas);
+                
+                //utili per visualizzazione messaggio in caso di mancanza di eventi in una specifica settimana
+                data.put("data_inizio", dataInizio);
+                data.put("data_fine", dataFine);
+                
+                       
+                //CODICE PER TROVARE EVENTI DAL PERIODO
+
+                res.activate("eventi_aula.ftl.html", data, response);
+            } else {
+                res.activate("eventi_aula.ftl.html", data, response);
+            }
         } catch (DataException ex) {
             handleError("Data access exception: " + ex.getMessage(), request, response);
         }
@@ -109,19 +130,17 @@ public class EventiCorrenti extends AuleWebBaseController {
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         try {
-            if(request.getParameter("IDaula") != null){
-                action_eventi_by_aula(request, response);
-            }
-            else{
+            if (request.getParameter("IDaula") != null) {
+                action_eventi_aula(request, response);
+            } else {
                 action_default(request, response);
             }
-            
 
         } catch (IOException | TemplateManagerException ex) {
             handleError(ex, request, response);
         }
     }
-    
+
     /**
      * Returns a short description of the servlet.
      *
@@ -131,6 +150,5 @@ public class EventiCorrenti extends AuleWebBaseController {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 
 }
