@@ -32,26 +32,24 @@ import javax.servlet.http.HttpServletResponse;
  * @author Alberto Bogi
  */
 public class EventiCorrenti extends AuleWebBaseController {
-
+    
     private void action_default(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
         try {
             Map data = new HashMap<>();
-
+            
             int gruppo_key = Integer.valueOf(request.getParameter("IDgruppo"));
             // lista di tutte le aule del gruppo specificato
 
-            List<Aula> aule = ((AuleWebDataLayer)request.getAttribute("datalayer")).getAulaDAO().getAuleByGruppoID(gruppo_key);
-            
+            List<Aula> aule = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().getAuleByGruppoID(gruppo_key);
+
             //lista di tutte gli eventi relativi alle aule e corsi specificate
-
             List<Evento> eventi = new ArrayList<>();
-
+            
             for (Aula aula : aule) {
                 eventi.addAll(((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().getCurrentEventoByAula(aula));
                 data.put(aula.getNome(), ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().getCurrentEventoByAula(aula));
             }
             
-
             data.put("aule", aule);
             data.put("eventi", eventi);
             data.put("outline_tpl", "outline_with_select_without_login.ftl.html");
@@ -64,65 +62,65 @@ public class EventiCorrenti extends AuleWebBaseController {
             handleError("Data access exception: " + ex.getMessage(), request, response);
         }
     }
-
+    
     private void action_eventi_aula(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
         try {
             Map data = new HashMap<>();
-
+            
             int aula_key = Integer.valueOf(request.getParameter("IDaula"));
             int gruppo_key = Integer.valueOf(request.getParameter("IDgruppo"));
             Aula aula = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().getAula(aula_key);
-
+            
             data.put("select_button", 1);
             data.put("IDgruppo", gruppo_key);
             data.put("aula", (aula));
             data.put("outline_tpl", "outline_with_select_without_login.ftl.html");
-
+            
             TemplateResult res = new TemplateResult(getServletContext());
-
+            
             if (request.getParameter("week") != null) {
                 String settimana[] = request.getParameter("week").split("-W");
-
+                
                 Calendar calendar = Calendar.getInstance();
                 calendar.clear();
                 calendar.set(Calendar.YEAR, Integer.valueOf(settimana[0]));
                 calendar.set(Calendar.WEEK_OF_YEAR, Integer.valueOf(settimana[1]));
                 LocalDate dataInizio = calendar.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 LocalDate dataFine = dataInizio.plusDays(6);
-
-                List<Evento> eventi = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().getEventoInAWeekByAula(aula, dataInizio, dataFine);
                 
+                List<Evento> eventi = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().getEventoInAWeekByAula(aula, dataInizio, dataFine);
+
                 //aggiungo inoltre le eventuali ricorrenze dei vari eventi  che ci sono in quella settimana
-                List<EventoRicorrente> eventiRicorrenti = ((AuleWebDataLayer)request.getAttribute("datalayer")).getEventoRicorrenteDAO().EventiRicorrentiByData(dataInizio, dataFine);
-                if(eventiRicorrenti != null){
-                    for(EventoRicorrente ev: eventiRicorrenti){
+                List<EventoRicorrente> eventiRicorrenti = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoRicorrenteDAO().EventiRicorrentiByData(dataInizio, dataFine);
+                if (eventiRicorrenti != null) {
+                    for (EventoRicorrente ev : eventiRicorrenti) {
                         Evento e = ev.getEvento();
-                        e.setDataEvento(ev.getDataEvento());
+                        if (e.getAula().equals(aula)) {
+                            e.setDataEvento(ev.getDataEvento());
+                        }
                         eventi.add(e);
                     }
                 }
                 if (eventi != null) {
                     data.put("eventi", eventi);
                 }
-                
+
                 //Inserisco il range di date utili per la visualizzazione degli eventi
                 List<LocalDate> datas = new ArrayList();
                 LocalDate d = dataInizio;
-                for(int i = 0; i<7; i++){
+                for (int i = 0; i < 7; i++) {
                     d = d.plusDays(1);
                     datas.add(d);
-                   
+                    
                 }
                 
                 data.put("date", datas);
-                
+
                 //utili per visualizzazione messaggio in caso di mancanza di eventi in una specifica settimana
                 data.put("data_inizio", dataInizio);
                 data.put("data_fine", dataFine);
-                
-                       
-                //CODICE PER TROVARE EVENTI DAL PERIODO
 
+                //CODICE PER TROVARE EVENTI DAL PERIODO
                 res.activate("eventi_aula.ftl.html", data, response);
             } else {
                 res.activate("eventi_aula.ftl.html", data, response);
@@ -131,7 +129,7 @@ public class EventiCorrenti extends AuleWebBaseController {
             handleError("Data access exception: " + ex.getMessage(), request, response);
         }
     }
-
+    
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         try {
@@ -140,7 +138,7 @@ public class EventiCorrenti extends AuleWebBaseController {
             } else {
                 action_default(request, response);
             }
-
+            
         } catch (IOException | TemplateManagerException ex) {
             handleError(ex, request, response);
         }

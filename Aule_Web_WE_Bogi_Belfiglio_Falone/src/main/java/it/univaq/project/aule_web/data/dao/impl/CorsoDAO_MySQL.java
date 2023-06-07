@@ -83,7 +83,7 @@ public class CorsoDAO_MySQL extends DAO implements CorsoDAO {
         try {
             c.setKey(rs.getInt("ID"));
             c.setNome(rs.getString("nome"));
-            if ("TRIENNALE".equals(rs.getString("tipo__laurea"))) {
+            if ("TRIENNALE".equals(rs.getString("tipo_laurea"))) {
                 c.setTipoLaurea(TipoLaurea.TRIENNALE);
             } else if ("MAGISTRALE".equals(rs.getString("tipo_laurea"))) {
                 c.setTipoLaurea(TipoLaurea.MAGISTRALE);

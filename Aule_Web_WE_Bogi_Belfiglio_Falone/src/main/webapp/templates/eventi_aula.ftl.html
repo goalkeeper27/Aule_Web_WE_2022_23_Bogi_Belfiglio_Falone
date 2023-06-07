@@ -20,7 +20,7 @@
             </div>
         </div>
 
-        <#if eventi?? && eventi?size != 0>
+        <#if eventi?has_content >
         
         <div class="ten columns">
             <#list date as data>
@@ -52,7 +52,7 @@
             </#list>
         </div>
         
-        <#else>
+        <#elseif data_inizio?has_content && data_fine?has_content>
         <div class="ten columns">
             <p>Non ci sono eventi in questa aula nella settimana che va dal giorno ${data_inizio} al giorno ${data_fine}</p>
         </div>

@@ -26,8 +26,10 @@ public class SpecificCorso extends AuleWebBaseController {
     private void action_default(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
         try {
             Map data = new HashMap<>();
+            int gruppo_key = Integer.valueOf(request.getParameter("IDgruppo"));
             List<Corso> corsi = ((AuleWebDataLayer) request.getAttribute("datalayer")).getCorsoDAO().getAllCorsi();
             data.put("corsi", corsi);
+            data.put("IDgruppo", gruppo_key);
             data.put("outline_tpl", "outline_with_select_without_login.ftl.html");
             data.put("select_button", 3);
             TemplateResult res = new TemplateResult(getServletContext());
