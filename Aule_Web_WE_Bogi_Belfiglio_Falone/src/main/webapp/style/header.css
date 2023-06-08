@@ -96,12 +96,12 @@ fieldset{
 
 
 .rigth{
-    margin-left:50%;
+    margin-left:3%;
 }
 
-.text.log{
-    margin-bottom:5%;
-    margin-left:55%;
+.text.icon{
+
+
     font-size: small;
     font-weight: bold;
 }
@@ -155,11 +155,11 @@ li{
 
 button{
     width:10%;
-    border-radius: 10%;
+    border-radius: 4px;
     font-weight: bold;
     font-size:50%;
     cursor: pointer;
-    
+
 }
 
 button:hover{
@@ -168,13 +168,25 @@ button:hover{
     color:white;
 }
 
-.login{
-    width:15%;
-    margin-top:10%;
+
+
+
+
+.csv{
+    text-align: center;
+    margin-top:5%;
+    margin-left:5%;
 }
 
 
 
+
+
+.login{
+    text-align: right;
+    margin-top:10%;
+    margin-right:5%;
+}
 
 
 
@@ -186,10 +198,20 @@ button:hover{
     display:none;
 }
 
+
+
+
+
 @media only screen and (min-width: 1000px) and (max-width: 1300px) {
     .title{
         font-size:large;
         padding-top:1%;
+    }
+
+    .csv{
+        text-align: center;
+        margin-top:3%;
+        margin-left:5%;
     }
 }
 
@@ -202,7 +224,15 @@ button:hover{
         width: 80%;
         margin-top:1%;
     }
+
+    .csv{
+        text-align: center;
+        margin-top:2%;
+        margin-left:5%;
+    }
 }
+
+
 
 @media only screen and (max-width: 900px) {
 
@@ -214,6 +244,8 @@ button:hover{
     #smallmenu{
         display:block;
     }
+
+
 
 
     .bottom_page{
@@ -246,6 +278,13 @@ button:hover{
     }
 
 
+
+}
+
+@media only screen and (max-width: 600px) {
+    #smallmenu button{
+        width:20%;
+    }
 
 }
 
