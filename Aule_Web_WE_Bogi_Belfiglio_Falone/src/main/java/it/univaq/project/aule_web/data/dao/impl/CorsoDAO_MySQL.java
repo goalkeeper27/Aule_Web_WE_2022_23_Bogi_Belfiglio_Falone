@@ -141,13 +141,14 @@ public class CorsoDAO_MySQL extends DAO implements CorsoDAO {
     }
 
     @Override
-    public Corso getCorsoByPartialName(String nomeParziale) throws DataException {
-        Corso corso = null;
+    public List<Corso> getCorsiByPartialName(int lunghezza, String nomeParziale) throws DataException {
+        List<Corso> corsi = new ArrayList<>();
         try {
-            sCorsoByPartialName.setString(1, nomeParziale);
+            sCorsoByPartialName.setInt(1, lunghezza);
+            sCorsoByPartialName.setString(2, nomeParziale);
             try ( ResultSet rs = sCorsoByPartialName.executeQuery()) {
-                if (rs.next()) {
-                    corso = createCorso(rs);
+                while (rs.next()) {
+                    corsi.add(createCorso(rs));
                     //e lo mettiamo anche nella cache
                     //and put it also in the cache
                     //dataLayer.getCache().add(Article.class, a);
@@ -156,7 +157,7 @@ public class CorsoDAO_MySQL extends DAO implements CorsoDAO {
         } catch (SQLException ex) {
             throw new DataException("Impossibile caricare il corso dal nome parziale digitato", ex);
         }
-        return corso;
+        return corsi;
     }
     
     @Override

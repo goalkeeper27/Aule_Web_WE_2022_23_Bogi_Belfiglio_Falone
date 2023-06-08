@@ -394,6 +394,103 @@ input[type="date"]{
     pointer-events: none;
 }
 
+
+/********************************
+
+* proprietà per eventi_corso.ftl.html
+
+********************************/
+    
+.eventi.corso input[type="week"]{
+    background-color: #add8e6;
+    padding: 0.5%;
+    font-family: sans-serif;
+    color: black;
+    font-size: 100%;
+    border: 1px solid black;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom:1%;
+    
+}  
+
+.eventi.corso .title{
+    font-size: xx-large;
+    font-style: italic;
+    font-weight: bold;
+    text-align:center;
+    color: #add8e6;
+    padding-top:0.5%;
+    
+}
+
+.eventi.corso .settimana{
+    text-align:center;
+}
+
+.eventi.corso .settimana p{
+    font-weight: bold;
+    font-style: italic;
+    
+}
+
+.eventi.corso fieldset{
+    height: 50%;
+    overflow:auto;
+}
+
+.eventi.corso fieldset legend{
+    font-size: xx-large;
+    text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
+    color: #add8e6;
+    padding-top:0.5%;
+      
+}
+
+.eventi.corso fieldset .descrizione{
+    font-style: italic;
+    font-size: small;
+}
+
+.eventi.corso fieldset .info{
+    font-style: italic;
+    color: blue;
+}
+
+.eventi.corso fieldset .contenitore_evento{
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f7f7f7;
+}
+
+.eventi.corso fieldset .contenitore_evento div{
+    margin-bottom: 10px;
+}
+
+#button_week{
+    width: 4%;
+    background-color: #add8e6;
+    color:black;
+    border-radius:5%;
+    font-size: 90%;
+    cursor:pointer;
+    border-radius: 4px;
+
+}
+
+#button_week:hover{
+    background-color: white;
+    color: #add8e6;
+    border-color: #add8e6;
+    text-align: center;
+}
+
+#button_week:disabled{
+    color: #696969;
+    pointer-events: none;
+}
+
 /********************************
 
 * proprietà per seleziona_corso.ftl.html
@@ -445,6 +542,39 @@ input[type="date"]{
 }
 
 .seleziona.corso table button:hover{
+    background-color: white;
+    color: #add8e6;
+    border-color: #add8e6;
+    text-align: center;
+}
+
+.seleziona.corso .ricercaForm{
+    text-align: center;
+    margin-bottom: 2%;
+}
+
+.seleziona.corso #ricerca{
+    border-radius: 5px;
+    border-color: #add8e6;
+}
+
+.seleziona.corso #ricerca:focus{
+    border-radius: 5px;
+    border-color: #add8e6;
+    background-color: #efefef;
+}
+
+.seleziona.corso .ricercaForm button{
+    width: 8%;
+    background-color: #add8e6;
+    color:black;
+    border-radius:5px;
+    font-size: 80%;
+    cursor:pointer;
+    margin-left: 1%;
+}
+
+.seleziona.corso .ricercaForm button:hover{
     background-color: white;
     color: #add8e6;
     border-color: #add8e6;

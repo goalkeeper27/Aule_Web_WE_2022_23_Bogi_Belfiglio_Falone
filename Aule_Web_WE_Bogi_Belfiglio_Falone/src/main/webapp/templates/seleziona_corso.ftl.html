@@ -2,7 +2,14 @@
     <div class="container">
         <div class="ten columns">
             <p class="title">Seleziona il corso di tuo interesse</p>
-            
+            <form method="GET" action="specificCorso">
+                <div class="ricercaForm">
+                    <label for="ricerca">Inserisci il nome del corso che vuoi ricercare:</label>
+                    <input type="hidden" name="IDgruppo" value="${IDgruppo}"/>
+                    <input type="text"  id="ricerca" name="ricerca" placeholder="nome corso">
+                    <button type="submit" id="button_ricerca">cerca</button>
+                </div>     
+            </form>
             <table>
                 <thead>
                     <tr>
@@ -28,7 +35,12 @@
                         <#assign stringAnnoFreqConPunto = annoFreq?string>
                         <#assign stringAnnoFreq = stringAnnoFreqConPunto?replace(".","")>
                         <td>${stringAnnoFreqPrec} / ${stringAnnoFreq}</td>
-                        <td><button type="submit">vedi</button></td>
+                        <td>
+                            <form method="GET" action="eventi">
+                                <input type="hidden" name="IDgruppo" value="${IDgruppo}">
+                                <button type="submit" name="IDcorso" value="${corso.key}">vedi</button>
+                            </form>  
+                        </td>
                     </tr>
                 </#list>
                 </tbody>

@@ -46,5 +46,21 @@ input_settimana.addEventListener('input', function(event){
    
 });
 
+let input_ricerca = document.getElementById('ricerca');
+
+button_ricerca.disabled = true;
+
+input_ricerca.addEventListener('input', function(event){
+    
+    let val = event.target.value;
+    
+    if(val===''){
+        button_ricerca.disabled = true;
+    }else{
+        button_ricerca.disabled = false;
+    }
+    
+});
+
 
 
