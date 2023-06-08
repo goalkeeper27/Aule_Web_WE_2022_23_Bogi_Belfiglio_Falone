@@ -23,6 +23,8 @@ public interface EventoRicorrenteDAO {
     
     List<EventoRicorrente> EventiRicorrentiByDataAndAula(LocalDate data_inizio, LocalDate data_fine, Aula aula)throws DataException;
     
+    List<EventoRicorrente> EventiRicorrentiByData(LocalDate data_inizio, LocalDate data_fine)throws DataException;
+    
     
     
     

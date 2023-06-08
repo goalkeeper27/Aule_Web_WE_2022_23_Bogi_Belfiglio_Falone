@@ -611,7 +611,6 @@ input[type="date"]{
     font-style: italic;
     font-weight: bold;
     text-align:center;
-
     color: #add8e6;
     padding-top:0.5%;
 
@@ -635,6 +634,7 @@ input[type="date"]{
 
 .seleziona.corso fieldset button{
     width: 5%;
+}
 
 .seleziona.corso table button{
     width: 60%;

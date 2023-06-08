@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class EventoRicorrenteDAO_MySQL extends DAO implements EventoRicorrenteDAO {
 
-    private PreparedStatement sEventoRicorrenteByEvento, sEventiRicorrentiByDataAndAula;
+    private PreparedStatement sEventoRicorrenteByEvento, sEventiRicorrentiByDataAndAula, sEventiRicorrentiByData;
 
     public EventoRicorrenteDAO_MySQL(DataLayer d) {
         super(d);
@@ -38,6 +38,7 @@ public class EventoRicorrenteDAO_MySQL extends DAO implements EventoRicorrenteDA
         try {
             sEventoRicorrenteByEvento = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento_ricorrente WHERE ID_evento = ?");
             sEventiRicorrentiByDataAndAula = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento_ricorrente ev, Evento e WHERE (ev.data_evento BETWEEN (? + interval 1 day) AND ?) and ev.ID_evento = e.ID and e.ID_aula = ?");
+            sEventiRicorrentiByData = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento_ricorrente WHERE data_evento BETWEEN (? + interval 1 day) AND ?");
         } catch (SQLException ex) {
             throw new DataException("Errore nell'inizializzazione del data layer", ex);
         }
@@ -51,6 +52,7 @@ public class EventoRicorrenteDAO_MySQL extends DAO implements EventoRicorrenteDA
 
             sEventoRicorrenteByEvento.close();
             sEventiRicorrentiByDataAndAula.close();
+            sEventiRicorrentiByData.close();
 
         } catch (SQLException ex) {
             //
@@ -113,5 +115,24 @@ public class EventoRicorrenteDAO_MySQL extends DAO implements EventoRicorrenteDA
         }
         return eventi;
     }
-
+    
+    @Override
+    public List<EventoRicorrente> EventiRicorrentiByData(LocalDate data_inizio, LocalDate data_fine) throws DataException {
+        List<EventoRicorrente> eventi = new ArrayList();
+        try {
+            sEventiRicorrentiByData.setDate(1, Date.valueOf(data_inizio));
+            sEventiRicorrentiByData.setDate(2, Date.valueOf(data_fine));
+            try ( ResultSet rs = sEventiRicorrentiByData.executeQuery()) {
+                while (rs.next()) {
+                    eventi.add(this.createEventoRicorrente(rs));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Errore DB", ex);
+        }
+        return eventi;
+    }
+    
 }
+
+
