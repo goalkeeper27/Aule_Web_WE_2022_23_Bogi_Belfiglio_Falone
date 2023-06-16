@@ -21,7 +21,11 @@ public interface EventoRicorrenteDAO {
     
     List<EventoRicorrente> EventoRicorrenteByEvento(Evento evento)throws DataException;
     
-    List<EventoRicorrente> EventiRicorrentiByDataAndAula(LocalDate data_inizio, LocalDate data_fine, Aula aula)throws DataException;
+    List<EventoRicorrente> EventiRicorrentiByPeriodAndAula(LocalDate data_inizio, LocalDate data_fine, Aula aula)throws DataException;
+    
+    List<EventoRicorrente> EventiRicorrentiByPeriod(LocalDate data_inizio, LocalDate data_fine)throws DataException;
+    
+    List<EventoRicorrente> EventiRicorrentiByDataAndAula(LocalDate data, Aula aula)throws DataException;
     
     
     

@@ -16,6 +16,10 @@
         <servlet-name>SpecificCorso</servlet-name>
         <servlet-class>it.univaq.project.aule_web.controller.SpecificCorso</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CSVEventi</servlet-name>
+        <servlet-class>it.univaq.project.aule_web.controller.CSVEventi</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Homepage</servlet-name>
         <url-pattern>/homepage</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>SpecificCorso</servlet-name>
         <url-pattern>/specificCorso</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CSVEventi</servlet-name>
+        <url-pattern>/csv_eventi</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

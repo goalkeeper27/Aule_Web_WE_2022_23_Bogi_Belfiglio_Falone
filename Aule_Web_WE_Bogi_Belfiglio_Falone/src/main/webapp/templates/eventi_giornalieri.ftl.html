@@ -1,65 +1,49 @@
-div class="eventi aula">
+<div class="eventi aula">
     <div class="container">
 
         <div class="ten columns">
-            <p class="title">Eventi AULA ${aula.nome?upper_case}</p>
+            <p class="title">Eventi del ${data}</p>
         </div>
 
-        <div class="ten columns">
-            <div class="giorno">
-
-                <p>seleziona il giorno di tuo interesse</p>
-                <form method="GET" action="eventi">
-                    <input type="date" name="date" id="date"/><br>
-                    <input type="hidden" name="IDaula" value="${aula.key}" />
-                    <input type="hidden" name="IDgruppo" value="${IDgruppo}" />
-                    <button type="submit" id="button_date">vedi</button>
-                </form>
-
-            </div>
-        </div>
 
         <#if eventi?has_content >
-        
+
         <div class="ten columns">
-            <#list date as data>
-                <#assign fieldset_vuoto = "true">
-                    <#list eventi as evento>
-                    <#if data == evento.dataEvento>
-                        <#assign fieldset_vuoto = "false">
-                    </#if>
-                </#list>
-                
-                <#if fieldset_vuoto == "false">
-                       <fieldset>
-                           <legend>${data}</legend> 
-                           <label for="${aula.key}">${aula.nome}</label>
-                           <#list aule as aula>
-                        
-                              <#list eventi as evento>
-                               <#if evento.dataEvento == data>
-                                 <div class="contenitore_evento">
-                                    <p>${evento.nome}</p>
-                                    <p><span class="info">Responsabile</span>: ${evento.responsabile.email}</p>
-                                    <p><span class="info">Tipologia</span>: ${evento.tipologia?lower_case}</p>
-                                    <p><span class="info">Ora Inizio</span>: ${evento.oraInizio}</p>
-                                    <p><span class="info">Ora Fine</span>: ${evento.oraFine}</p>
-                                    <p class="descrizione">${evento.descrizione}</p>
-                                </div>
-                            <br>
-                            </#if>
-                            </#list>
-                        </#list>
-                    </fieldset>
+            <#list aule as aula>
+            <#assign fieldset_vuoto = "true">
+            <#list eventi as evento>
+            <#if aula.key == evento.aulaKey>
+            <#assign fieldset_vuoto = "false">
+            </#if>
+            </#list>
+
+            <#if fieldset_vuoto == "false">
+            <fieldset>
+                <legend>Aula ${aula.nome}</legend> 
+                <#list eventi as evento>
+                <#if evento.aulaKey == aula.key>
+                <div class="contenitore_evento">
+                    <p>${evento.nome}</p>
+                    <p><span class="info">Responsabile</span>: ${evento.responsabile.email}</p>
+                    <p><span class="info">Tipologia</span>: ${evento.tipologia?lower_case}</p>
+                    <p><span class="info">Ora Inizio</span>: ${evento.oraInizio}</p>
+                    <p><span class="info">Ora Fine</span>: ${evento.oraFine}</p>
+                    <p class="descrizione">${evento.descrizione}</p>
+                </div>
+                <br>
                 </#if>
+                </#list>
+            </fieldset>
+            </#if>
             </#list>
         </div>
-        
-        <#elseif data?has_content >
-        <div class="ten columns">
-            <p>Non ci sono eventi nell'aula nel giorno ${data} </p>
+
+        <#else>
+        <div class="messaggio aule">
+            <p>Non ci sono eventi segnati il giorno ${data} </p>
         </div>
-        
+
         </#if>
 
     </div>
+</div>

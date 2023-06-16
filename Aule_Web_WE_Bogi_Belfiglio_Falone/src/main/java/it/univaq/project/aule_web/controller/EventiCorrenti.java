@@ -5,6 +5,7 @@
 package it.univaq.project.aule_web.controller;
 
 import it.univaq.f4i.iw.framework.result.TemplateManagerException;
+import it.univaq.project.aule_web.data.comparator.EventoComparator;
 import it.univaq.project.aule_web.framework.result.TemplateResult;
 import it.univaq.project.aule_web.data.dao.impl.AuleWebDataLayer;
 import it.univaq.project.aule_web.data.model.Aula;
@@ -13,11 +14,13 @@ import it.univaq.project.aule_web.data.model.Evento;
 import it.univaq.project.aule_web.data.model.EventoRicorrente;
 import it.univaq.project.aule_web.framework.data.DataException;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,11 +50,12 @@ public class EventiCorrenti extends AuleWebBaseController {
 
             for (Aula aula : aule) {
                 eventi.addAll(((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().getCurrentEventoByAula(aula));
-                data.put(aula.getNome(), ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().getCurrentEventoByAula(aula));
+                //data.put(aula.getNome(), ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().getCurrentEventoByAula(aula));
             }
 
             data.put("aule", aule);
             data.put("eventi", eventi);
+
             data.put("outline_tpl", "outline_with_select_without_login.ftl.html");
             //serve per indicare quali bottoni mostrare sul browser per la selezione delle ricerche specifiche
             data.put("select_button", 1);
@@ -85,13 +89,14 @@ public class EventiCorrenti extends AuleWebBaseController {
                 calendar.clear();
                 calendar.set(Calendar.YEAR, Integer.valueOf(settimana[0]));
                 calendar.set(Calendar.WEEK_OF_YEAR, Integer.valueOf(settimana[1]));
+
                 LocalDate dataInizio = calendar.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 LocalDate dataFine = dataInizio.plusDays(6);
 
                 List<Evento> eventi = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().getEventoInAWeekByAula(aula, dataInizio, dataFine);
 
                 //aggiungo inoltre le eventuali ricorrenze dei vari eventi  che ci sono in quella settimana
-                List<EventoRicorrente> eventiRicorrenti = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoRicorrenteDAO().EventiRicorrentiByDataAndAula(dataInizio, dataFine, aula);
+                List<EventoRicorrente> eventiRicorrenti = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoRicorrenteDAO().EventiRicorrentiByPeriodAndAula(dataInizio, dataFine, aula);
                 if (eventiRicorrenti != null) {
                     for (EventoRicorrente ev : eventiRicorrenti) {
                         Evento e = ev.getEvento();
@@ -100,16 +105,16 @@ public class EventiCorrenti extends AuleWebBaseController {
                     }
                 }
                 if (eventi != null) {
+                    Collections.sort(eventi, new EventoComparator());
                     data.put("eventi", eventi);
                 }
 
                 //Inserisco il range di date utili per la visualizzazione degli eventi
                 List<LocalDate> datas = new ArrayList();
                 LocalDate d = dataInizio;
-                for (int i = 0; i < 7; i++) {
-                    d = d.plusDays(1);
+                for (int i = 0; i < 6; i++) {
                     datas.add(d);
-
+                    d = d.plusDays(1);
                 }
 
                 data.put("date", datas);
@@ -118,7 +123,6 @@ public class EventiCorrenti extends AuleWebBaseController {
                 data.put("data_inizio", dataInizio);
                 data.put("data_fine", dataFine);
 
-                //CODICE PER TROVARE EVENTI DAL PERIODO
                 res.activate("eventi_aula.ftl.html", data, response);
             } else {
                 res.activate("eventi_aula.ftl.html", data, response);
@@ -128,65 +132,61 @@ public class EventiCorrenti extends AuleWebBaseController {
         }
     }
 
-    
-     private void action_eventi_giornaliero(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
+    private void action_eventi_giornaliero(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
         try {
             Map data = new HashMap<>();
-            
-            int aula_key = Integer.valueOf(request.getParameter("IDaula"));
+
             int gruppo_key = Integer.valueOf(request.getParameter("IDgruppo"));
             List<Aula> aule = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().getAuleByGruppoID(gruppo_key);
-            
+
             data.put("select_button", 1);
             data.put("IDgruppo", gruppo_key);
-            data.put("aula", (aule));
+            data.put("aule", aule);
             data.put("outline_tpl", "outline_with_select_without_login.ftl.html");
-            
+
             TemplateResult res = new TemplateResult(getServletContext());
-            
-            if (request.getParameter("date") != null) {
+
+            LocalDate giorno = LocalDate.parse(request.getParameter("data"));
+            /*
                 String giorno[] = request.getParameter("date").split("-D");
                 
                 Calendar calendar = Calendar.getInstance();
                 calendar.clear();
   
                 LocalDate giorno1 = calendar.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                
-                 for (Aula aula : aule) {
-                        List<Evento> eventi = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().getEventoInADayByAula(aula, giorno1);
-                        if (eventi != null) {
-                            data.put("eventi", eventi);
-                         }
-                 }
-                 
-              
+             */
 
-               
-              
-               
-               
+            List<Evento> eventi = new ArrayList();
+            for (Aula aula : aule) {
+                eventi.addAll(((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().getEventoInADayByAula(aula, giorno));
+                List<EventoRicorrente> eventiRicorrenti = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoRicorrenteDAO().EventiRicorrentiByDataAndAula(giorno, aula);
+                for (EventoRicorrente ev : eventiRicorrenti) {
+                    Evento e = ev.getEvento();
+                    e.setDataEvento(ev.getDataEvento());
+                    eventi.add(e);
+                }
 
-                
-
-                //utili per visualizzazione messaggio in caso di mancanza di eventi in uno specifico giorno
-                data.put("data", giorno);
-                
-
-                //CODICE PER TROVARE EVENTI DAL GIORNO
-                res.activate("eventi_giornaliero.ftl.html", data, response);
-            } else {
-                res.activate("eventi_giornaliero.ftl.html", data, response);
             }
+
+            data.put("eventi", eventi);
+
+            //utili per visualizzazione messaggio in caso di mancanza di eventi in uno specifico giorno
+            data.put("data", giorno);
+
+            //CODICE PER TROVARE EVENTI DAL GIORNO
+            res.activate("eventi_giornalieri.ftl.html", data, response);
+
         } catch (DataException ex) {
             handleError("Data access exception: " + ex.getMessage(), request, response);
         }
     }
-    
 
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         try {
-            if (request.getParameter("IDaula") != null) {
+            if (request.getParameter("data") != null) {
+                action_eventi_giornaliero(request, response);
+            } else if (request.getParameter("IDaula") != null) {
                 action_eventi_aula(request, response);
             } else {
                 action_default(request, response);

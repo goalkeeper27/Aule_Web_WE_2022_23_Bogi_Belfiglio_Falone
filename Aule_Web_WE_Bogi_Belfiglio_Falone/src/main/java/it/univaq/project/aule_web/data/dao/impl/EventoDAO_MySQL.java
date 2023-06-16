@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class EventoDAO_MySQL extends DAO implements EventoDAO {
 
-    private PreparedStatement sEventoByID, sEventoInAWeekByAula, sEventoInADayByAula, sCurrentEventoByAula, sEventoInAWeekByCorso;
+    private PreparedStatement sEventoByID, sEventoInAWeekByAula, sEventoInADayByAula, sCurrentEventoByAula, sEventoInAWeekByCorso, sEventiByPeriodo;
     private PreparedStatement iEvento, uEvento, dEvento;
 
     public EventoDAO_MySQL(DataLayer d) {
@@ -45,11 +45,12 @@ public class EventoDAO_MySQL extends DAO implements EventoDAO {
         try {
             super.init();
             sEventoByID = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE ID = ?");
-            sEventoInAWeekByAula = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE ID_aula = ? AND (data_evento BETWEEN ? + INTERVAL 1 DAY AND ?)");
+            sEventoInAWeekByAula = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE ID_aula = ? AND (data_evento BETWEEN (? - INTERVAL 1 DAY) AND ?)");
             sEventoInADayByAula = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE ID_aula = ? AND data_evento = ?");
             sCurrentEventoByAula = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE data_evento = CURDATE() AND (ora_inizio BETWEEN (CURTIME() - INTERVAL 15 MINUTE) AND (CURTIME() + INTERVAL 3 HOUR)) AND ID_aula = ? ORDER BY data_evento, ora_inizio");
             sEventoInAWeekByCorso = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE ID_corso = ? AND (data_evento BETWEEN ? AND ?)");
-            iEvento = this.dataLayer.getConnection().prepareStatement("INSERT INTO Evento(nome, descrizione, tipologia, data_evento, ora_inizio, ora_fine, ricorrenza, data_fine_ricorrenza, ID_corso, ID_responsabile, ID_aula) VALUES (?,?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+            sEventiByPeriodo = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento E WHERE (E.data_evento BETWEEN (? - INTERVAL 1 DAY) AND ?)");
+            iEvento = this.dataLayer.getConnection().prepareStatement("INSERT INTO Evento(nome, descrizione, tipologia, data_evento, ora_inizio, ora_fine, ricorrenza, data_fine_ricorrenza, ID_corso, ID_responsabile, ID_aula) VALUES (?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             uEvento = this.dataLayer.getConnection().prepareStatement("UPDATE Evento SET nome = ?, descrizione = ?, tipologia = ?,"
                     + "data_evento = ?, ora_inizio = ?, ora_fine = ?, ricorrenza = ?, data_fine_ricorrenza = ?, ID_corso = ?, ID_responsabile =?,"
                     + "ID_aula = ?, versione = ? WHERE ID = ? AND versione = ?");
@@ -141,6 +142,7 @@ public class EventoDAO_MySQL extends DAO implements EventoDAO {
             try ( ResultSet rs = sEventoByID.executeQuery()) {
                 if (rs.next()) {
                     evento = this.createEvento(rs);
+
                 }
             }
 
@@ -161,7 +163,7 @@ public class EventoDAO_MySQL extends DAO implements EventoDAO {
         List<Evento> eventi = new ArrayList();
         try {
             sCurrentEventoByAula.setInt(1, aula.getKey());
-            try (ResultSet rs = sCurrentEventoByAula.executeQuery()) {
+            try ( ResultSet rs = sCurrentEventoByAula.executeQuery()) {
                 while (rs.next()) {
                     eventi.add(this.createEvento(rs));
                 }
@@ -193,7 +195,7 @@ public class EventoDAO_MySQL extends DAO implements EventoDAO {
     }
 
     @Override
-    public void storeEvento(Evento evento) throws DataException{
+    public void storeEvento(Evento evento) throws DataException {
         try {
             EventoProxy eventoProxy = (EventoProxy) evento;
 
@@ -427,5 +429,23 @@ public class EventoDAO_MySQL extends DAO implements EventoDAO {
         return eventi;
     }
 
+    @Override
+    public List<Evento> getEventiByPeriodo(LocalDate inizio, LocalDate fine) throws DataException {
+        List<Evento> eventi = new ArrayList<>();
+        try {
+            sEventiByPeriodo.setDate(1, Date.valueOf(inizio));
+            sEventiByPeriodo.setDate(2, Date.valueOf(fine));
+            try (ResultSet rs = sEventiByPeriodo.executeQuery()) {
+                while (rs.next()) {
+                    eventi.add(this.createEvento(rs));
+                }
+            }
+
+        } catch (SQLException ex) {
+            throw new DataException("Errore durante il caricamento degli eventi", ex);
+        }
+
+        return eventi;
+    }
 
 }

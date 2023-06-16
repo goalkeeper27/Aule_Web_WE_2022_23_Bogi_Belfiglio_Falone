@@ -33,6 +33,9 @@ public interface EventoDAO {
     
     // Mostrare gli eventi associati a uno specifico corso in una determinata settimana
     public List<Evento> getEventoInAWeekByCorso(Corso corso, LocalDate dataInizio, LocalDate dataFine) throws DataException;
+      
+    // Metodo che serirà per il contenuto del file csv
+    public List<Evento> getEventiByPeriodo(LocalDate inizio, LocalDate fine)throws DataException;
     
     
     public void storeEvento(Evento evento)throws DataException;

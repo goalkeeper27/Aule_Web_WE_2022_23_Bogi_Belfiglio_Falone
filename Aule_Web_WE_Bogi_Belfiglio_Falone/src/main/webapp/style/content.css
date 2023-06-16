@@ -484,6 +484,11 @@ input[type="date"]{
     pointer-events: none;
 }
 
+
+
+
+
+
 /********************************
 
 * proprietà per seleziona_corso.ftl.html
@@ -500,29 +505,38 @@ input[type="date"]{
     text-align: center;
 }
 
+
+
 .seleziona.corso .info{
     font-style: italic;
     color: blue;
 }
 
+
+
 .seleziona.corso th{
     background-color: #e9e9e9;
 }
+
+
 
 .seleziona.corso .title{
     font-size: xx-large;
     font-style: italic;
     font-weight: bold;
     text-align:center;
-
     color: #add8e6;
     padding-top:0.5%;
 
 }
 
+
+
 .seleziona.corso .container{
     margin-bottom: 3%;
 }
+
+
 
 .seleziona.corso button{
     width:10%;
@@ -538,6 +552,7 @@ input[type="date"]{
 
 .seleziona.corso fieldset button{
     width: 5%;
+}
 
 .seleziona.corso table button{
     width: 60%;
@@ -550,12 +565,16 @@ input[type="date"]{
     margin-bottom: 1%;
 }
 
+
+
 .seleziona.corso table button:hover{
     background-color: white;
     color: #add8e6;
     border-color: #add8e6;
     text-align: center;
 }
+
+
 
 
 
@@ -655,3 +674,122 @@ input[type="date"]{
     pointer-events: none;
 
 }
+
+
+/********************************
+
+* proprietà per csv_eventi.ftl.html
+
+********************************/
+
+
+
+.CSV.form label{
+    margin-bottom:1%;
+}
+
+.CSV.form p{
+    font-weight: bold;
+    font-style: italic;
+    font-size: large;   
+}
+
+.CSV.form button{
+    width: 7%;
+    background-color: #add8e6;
+    color:black;
+    border-radius:5px;
+    font-size: small;
+    cursor:pointer;
+    margin-top:1%;
+    margin-bottom: 1%;
+}
+
+.CSV.form button:hover{
+    background-color: white;
+    color: #add8e6;
+    border-color: #add8e6;
+
+}
+
+.CSV.form input[type="date"]{
+    background-color: #add8e6;
+    padding: 0.2%;
+    font-family: sans-serif;
+    color: black;
+    font-size: 100%;
+    border: 1px solid black;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom:1%;
+    
+}  
+
+.CSV.form label{
+    font-style: italic;
+}
+
+.CSV.form .back{
+    text-align: center;
+    
+}
+
+.CSV.form .back p{
+    font-style: italic;
+    font-size: medium;
+}
+
+.CSV.form .back button{
+    width:30%;
+}
+
+.CSV.form .back button img{
+    width: 30%;
+    
+}
+
+@media only screen and (max-width: 1250px) {
+    #normal_select{
+        display:none;
+    }
+
+    #restrict_select{
+        display:block;
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1000px) {
+    CSV.form button{
+        width: 7%;
+        background-color: #add8e6;
+        color:black;
+        border-radius:5%;
+        cursor:pointer;
+        border-radius: 4px;
+    }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 800px) {
+    CSV.form button{
+        width: 8%;
+        background-color: #add8e6;
+        color:black;
+        border-radius:5%;
+        cursor:pointer;
+        border-radius: 4px;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    CSV.form button{
+        width: 15%;
+        background-color: #add8e6;
+        color:black;
+        border-radius:5%;
+        cursor:pointer;
+        border-radius: 4px;
+    }
+
+
+}
+

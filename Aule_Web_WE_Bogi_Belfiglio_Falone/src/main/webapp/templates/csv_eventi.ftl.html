@@ -1,0 +1,29 @@
+<div class="CSV form">
+    <div class="container">
+        <div class="eigth columns">
+            <p>Scarica gli eventi di un determinato periodo a tua scelta in formato CSV</p>
+            <form method="get" action="csv_eventi">
+                <#if gruppoID?has_content>
+                <input type="hidden" name="IDgruppo" value=${gruppoID} />
+                </#if>
+                <label>data di inizio:</label>
+                <input type="date" name="data_inizio" id="id_date1" oninput="modify_state_button('id_button', 'id_date1', 'id_date2');"/><br>
+                <label>data di fine:</label>
+                <input type="date" name="data_fine" id="id_date2"/><br>
+                <button type="submit" id="id_button">scarica</button>
+
+            </form>
+
+        </div>
+        <div class="two columns">
+            <div class="back">
+                <p>torna alla pagina precedente:</p>
+                <form method="post" action="${referrer}">
+                <button type="submit">
+                    <img src="images/back.png"/>
+                </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
