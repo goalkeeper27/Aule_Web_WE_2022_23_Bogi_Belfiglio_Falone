@@ -5,6 +5,7 @@
 package it.univaq.project.aule_web.data.dao;
 
 import it.univaq.project.aule_web.data.model.Aula;
+import it.univaq.project.aule_web.data.model.Corso;
 import it.univaq.project.aule_web.data.model.Evento;
 import it.univaq.project.aule_web.data.model.EventoRicorrente;
 import it.univaq.project.aule_web.framework.data.DataException;
@@ -27,7 +28,7 @@ public interface EventoRicorrenteDAO {
     
     List<EventoRicorrente> EventiRicorrentiByDataAndAula(LocalDate data, Aula aula)throws DataException;
     
-    List<EventoRicorrente> EventiRicorrentiByData(LocalDate data_inizio, LocalDate data_fine)throws DataException;
+    List<EventoRicorrente> EventiRicorrentiByPeriodAndCorso(LocalDate dataInizio,LocalDate dataFine, Corso corso)throws DataException;
     
     
     

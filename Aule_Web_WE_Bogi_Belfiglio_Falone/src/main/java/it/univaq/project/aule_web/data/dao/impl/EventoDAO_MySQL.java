@@ -47,7 +47,7 @@ public class EventoDAO_MySQL extends DAO implements EventoDAO {
             sEventoByID = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE ID = ?");
             sEventoInAWeekByAula = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE ID_aula = ? AND (data_evento BETWEEN (? - INTERVAL 1 DAY) AND ?)");
             sEventoInADayByAula = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE ID_aula = ? AND data_evento = ?");
-            sCurrentEventoByAula = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE data_evento = CURDATE() AND (ora_inizio BETWEEN (CURTIME() - INTERVAL 15 MINUTE) AND (CURTIME() + INTERVAL 3 HOUR)) AND ID_aula = ? ORDER BY data_evento, ora_inizio");
+            sCurrentEventoByAula = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE data_evento = CURDATE() AND ((ora_inizio BETWEEN (CURTIME() - INTERVAL 15 MINUTE) AND (CURTIME() + INTERVAL 3 HOUR)) OR(CURTIME() BETWEEN ora_inizio AND ora_fine))AND ID_aula = ? ORDER BY data_evento, ora_inizio;");
             sEventoInAWeekByCorso = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE ID_corso = ? AND (data_evento BETWEEN ? AND ?)");
             sEventiByPeriodo = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento E WHERE (E.data_evento BETWEEN (? - INTERVAL 1 DAY) AND ?)");
             iEvento = this.dataLayer.getConnection().prepareStatement("INSERT INTO Evento(nome, descrizione, tipologia, data_evento, ora_inizio, ora_fine, ricorrenza, data_fine_ricorrenza, ID_corso, ID_responsabile, ID_aula) VALUES (?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
