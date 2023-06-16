@@ -11,6 +11,7 @@ import it.univaq.project.aule_web.framework.data.DataException;
 import it.univaq.project.aule_web.framework.data.DataLayer;
 import it.univaq.project.aule_web.data.dao.EventoRicorrenteDAO;
 import it.univaq.project.aule_web.data.model.Aula;
+import it.univaq.project.aule_web.data.model.Corso;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +26,8 @@ import java.util.List;
  */
 public class EventoRicorrenteDAO_MySQL extends DAO implements EventoRicorrenteDAO {
 
-    private PreparedStatement sEventoRicorrenteByEvento, sEventiRicorrentiByPeriodAndAula, sEventiRicorrentiByPeriod, sEventiRicorrentiByDataAndAula;
+
+    private PreparedStatement sEventoRicorrenteByEvento, sEventiRicorrentiByPeriodAndAula, sEventiRicorrentiByPeriod, sEventiRicorrentiByDataAndAula, sEventiRicorrentiByPeriodAndCorso;
 
     public EventoRicorrenteDAO_MySQL(DataLayer d) {
         super(d);
@@ -40,6 +42,7 @@ public class EventoRicorrenteDAO_MySQL extends DAO implements EventoRicorrenteDA
             sEventiRicorrentiByPeriodAndAula = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento_ricorrente ev, Evento e WHERE (ev.data_evento BETWEEN (? - interval 1 day) AND ?) and ev.ID_evento = e.ID and e.ID_aula = ?");
             sEventiRicorrentiByPeriod = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento_ricorrente WHERE data_evento BETWEEN (? - interval 1 day) AND ?"); 
             sEventiRicorrentiByDataAndAula = this.dataLayer.getConnection().prepareStatement("SELECT ev.* FROM Evento_ricorrente ev, Evento e WHERE ev.data_evento = ? and ev.ID_evento = e.ID and e.ID_aula = ?");
+            sEventiRicorrentiByPeriodAndCorso = this.dataLayer.getConnection().prepareStatement("SELECT ev.* FROM Evento_ricorrente ev, Evento e WHERE (ev.data_evento BETWEEN (? - interval 1 day) AND ?) and ev.ID_evento = e.ID and e.ID_corso = ?");
         } catch (SQLException ex) {
             throw new DataException("Errore nell'inizializzazione del data layer", ex);
         }
@@ -55,6 +58,7 @@ public class EventoRicorrenteDAO_MySQL extends DAO implements EventoRicorrenteDA
             sEventiRicorrentiByPeriodAndAula.close();
             sEventiRicorrentiByPeriod.close();
             sEventiRicorrentiByDataAndAula.close();
+            sEventiRicorrentiByPeriodAndCorso.close();
 
         } catch (SQLException ex) {
             //
@@ -118,6 +122,7 @@ public class EventoRicorrenteDAO_MySQL extends DAO implements EventoRicorrenteDA
         return eventi;
     }
 
+
     @Override
     public List<EventoRicorrente> EventiRicorrentiByPeriod(LocalDate data_inizio, LocalDate data_fine) throws DataException {
         List<EventoRicorrente> eventi = new ArrayList();
@@ -153,6 +158,29 @@ public class EventoRicorrenteDAO_MySQL extends DAO implements EventoRicorrenteDA
         }
         return eventi;
     }
+
+    @Override
+    public List<EventoRicorrente> EventiRicorrentiByPeriodAndCorso(LocalDate dataInizio, LocalDate dataFine, Corso corso) throws DataException {
+        List<EventoRicorrente> eventi = new ArrayList();
+
+        try {
+            sEventiRicorrentiByPeriodAndCorso.setDate(1, Date.valueOf(dataInizio));
+            sEventiRicorrentiByPeriodAndCorso.setDate(2, Date.valueOf(dataFine));
+            sEventiRicorrentiByPeriodAndCorso.setInt(3, corso.getKey());
+            try ( ResultSet rs = sEventiRicorrentiByPeriodAndCorso.executeQuery()) {
+                while (rs.next()) {
+                    eventi.add(this.createEventoRicorrente(rs));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Errore DB", ex);
+        }
+        return eventi;
+    }
+
+
     
 
 }
+
+

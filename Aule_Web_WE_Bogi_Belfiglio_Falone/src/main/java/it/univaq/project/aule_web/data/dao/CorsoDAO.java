@@ -22,7 +22,7 @@ public interface CorsoDAO {
     
     public Corso getCorsoByName(String nome) throws DataException;
     
-    public Corso getCorsoByPartialName(String nome) throws DataException;
+    public List<Corso> getCorsiByPartialName(int lunghezza, String nome) throws DataException;
     
     public void storeCorso(Corso corso)throws DataException;
     

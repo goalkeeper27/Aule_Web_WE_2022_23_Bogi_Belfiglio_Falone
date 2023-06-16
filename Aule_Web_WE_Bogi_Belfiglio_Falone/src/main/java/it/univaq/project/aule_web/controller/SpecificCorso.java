@@ -10,6 +10,7 @@ import it.univaq.project.aule_web.data.model.Corso;
 import it.univaq.project.aule_web.framework.data.DataException;
 import it.univaq.project.aule_web.framework.result.TemplateResult;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,13 @@ public class SpecificCorso extends AuleWebBaseController {
         try {
             Map data = new HashMap<>();
             int gruppo_key = Integer.valueOf(request.getParameter("IDgruppo"));
-            List<Corso> corsi = ((AuleWebDataLayer) request.getAttribute("datalayer")).getCorsoDAO().getAllCorsi();
+            List<Corso> corsi = new ArrayList<>();
+            if(request.getParameter("ricerca") != null){
+                corsi = ((AuleWebDataLayer) request.getAttribute("datalayer")).getCorsoDAO().getCorsiByPartialName(request.getParameter("ricerca").length(),request.getParameter("ricerca"));
+            }else{
+               corsi = ((AuleWebDataLayer) request.getAttribute("datalayer")).getCorsoDAO().getAllCorsi(); 
+            }
+            
             data.put("corsi", corsi);
             data.put("IDgruppo", gruppo_key);
             data.put("outline_tpl", "outline_with_select_without_login.ftl.html");
