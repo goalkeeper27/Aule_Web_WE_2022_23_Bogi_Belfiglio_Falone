@@ -22,7 +22,7 @@ import java.sql.SQLException;
  */
 public class AmministratoreDAO_MySQL extends DAO implements AmministratoreDAO {
 
-    private PreparedStatement sAmministratoreByUsernameAndPassword, sAmministratoreByID;
+    private PreparedStatement sAmministratoreByUsername, sAmministratoreByID;
 
     public AmministratoreDAO_MySQL(DataLayer d) {
         super(d);
@@ -32,7 +32,7 @@ public class AmministratoreDAO_MySQL extends DAO implements AmministratoreDAO {
     public void init() throws DataException {
         try {
             super.init();
-            sAmministratoreByUsernameAndPassword = this.connection.prepareStatement("SELECT * FROM amministratore WHERE username = ? AND password = ?");
+            sAmministratoreByUsername = this.connection.prepareStatement("SELECT * FROM amministratore WHERE username = ?");
             sAmministratoreByID = this.connection.prepareStatement("SELECT * FROM amministratore WHERE ID=?");
         } catch (SQLException ex) {
             throw new DataException("Errore nell'inizializzazione del data layer", ex);
@@ -43,7 +43,7 @@ public class AmministratoreDAO_MySQL extends DAO implements AmministratoreDAO {
     public void destroy() throws DataException {
 
         try {
-            sAmministratoreByUsernameAndPassword.close();
+            sAmministratoreByUsername.close();
             sAmministratoreByID.close();
         } catch (SQLException ex) {
             throw new DataException("Errore nella chiusura degli statement");
@@ -61,7 +61,7 @@ public class AmministratoreDAO_MySQL extends DAO implements AmministratoreDAO {
         try {
             a.setKey(rs.getInt("ID"));
             a.setUsername(rs.getString("username"));
-            a.setPassword(rs.getString("password"));
+            a.setPassword(rs.getString("psw"));
         } catch (SQLException ex) {
             throw new DataException("Errore creazione oggetto amministratore", ex);
         }
@@ -69,27 +69,18 @@ public class AmministratoreDAO_MySQL extends DAO implements AmministratoreDAO {
     }
 
     @Override
-    public Amministratore getAmministratoreByUsernameAndPassword(String username, String password) throws DataException {
+    public Amministratore getAmministratoreByUsername(String username) throws DataException {
         Amministratore amministratore = null;
         try {
-            sAmministratoreByUsernameAndPassword.setString(1, username);
-            sAmministratoreByUsernameAndPassword.setString(2, password);
-            try ( ResultSet rs = sAmministratoreByUsernameAndPassword.executeQuery()) {
+            sAmministratoreByUsername.setString(1, username);
+
+            try ( ResultSet rs = sAmministratoreByUsername.executeQuery()) {
                 if (rs.next()) {
                     amministratore = createAmministratore(rs);
                 }
 
-                if (amministratore != null) {
-
-                    if (!SecurityHelpers.checkPasswordHashPBKDF2(password, amministratore.getPassword())) {
-                        throw new DataException("Amministratore non trovato");
-                    }
-                }
-
             }
         } catch (SQLException ex) {
-            throw new DataException("Amministratore non trovato", ex);
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
             throw new DataException("Amministratore non trovato", ex);
         }
 

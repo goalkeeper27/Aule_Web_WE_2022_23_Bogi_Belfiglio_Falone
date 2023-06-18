@@ -17,6 +17,6 @@ public interface AmministratoreDAO {
 
     Amministratore getAmministratoreByID(int key)throws DataException;
     
-    Amministratore getAmministratoreByUsernameAndPassword(String username, String password) throws DataException;
+    Amministratore getAmministratoreByUsername(String username) throws DataException;
     
 }

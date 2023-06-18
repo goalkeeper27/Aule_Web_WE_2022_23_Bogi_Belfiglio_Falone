@@ -51,12 +51,12 @@ function modify_state_button(id_button, ...ids_date) {
         input_date[i] = document.getElementById(ids_date[i]);
     }
     button.disabled = true;
-    
+
     for (let i = 0; i < ids_date.length; i++) {
-        input_settimana[i].addEventListener('input', function() {
+        input_settimana[i].addEventListener('input', function () {
 
             for (let i = 0; i < ids_date.length; i++) {
-                if(input_settimana[i].value !== "")
+                if (input_settimana[i].value !== "")
                     return;
 
             }
@@ -68,6 +68,41 @@ function modify_state_button(id_button, ...ids_date) {
 
 
 
+}
+
+var request;
+function sendInfo()
+{
+
+    if (document.operation.checked) {
+        let id = document.operation.value;
+        var url = "administration?operation=" + id;
+    }
+
+
+
+    if (window.XMLHttpRequest) {
+        request = new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+        request = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    try
+    {
+        request.onreadystatechange = getInfo;
+        request.open("GET", url, true);
+        request.send();
+    } catch (e)
+    {
+        alert("Unable to connect to server");
+    }
+}
+
+function getInfo() {
+    if (request.readyState == 4) {
+        var val = request.responseText;
+        document.getElementById('contenuto').innerHTML = val;
+    }
 }
 
 

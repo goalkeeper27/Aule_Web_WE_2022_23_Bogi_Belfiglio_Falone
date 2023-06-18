@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Alberto Bogi
  */
-public class EventiCorrenti extends AuleWebBaseController {
+public class Eventi extends AuleWebBaseController {
 
     private void action_default(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
         try {
@@ -54,6 +54,8 @@ public class EventiCorrenti extends AuleWebBaseController {
             }
 
             data.put("aule", aule);
+            
+            Collections.sort(eventi, new EventoComparator());
             data.put("eventi", eventi);
 
             data.put("outline_tpl", "outline_with_select_without_login.ftl.html");
@@ -104,10 +106,9 @@ public class EventiCorrenti extends AuleWebBaseController {
                         eventi.add(e);
                     }
                 }
-                if (eventi != null) {
-                    Collections.sort(eventi, new EventoComparator());
-                    data.put("eventi", eventi);
-                }
+
+                Collections.sort(eventi, new EventoComparator());
+                data.put("eventi", eventi);
 
                 //Inserisco il range di date utili per la visualizzazione degli eventi
                 List<LocalDate> datas = new ArrayList();
@@ -167,9 +168,10 @@ public class EventiCorrenti extends AuleWebBaseController {
                         eventi.add(e);
                     }
                 }
-                if (eventi != null) {
-                    data.put("eventi", eventi);
-                }
+
+                Collections.sort(eventi, new EventoComparator());
+
+                data.put("eventi", eventi);
 
                 //Inserisco il range di date utili per la visualizzazione degli eventi
                 List<LocalDate> datas = new ArrayList();
@@ -205,6 +207,7 @@ public class EventiCorrenti extends AuleWebBaseController {
 
             data.put("select_button", 1);
             data.put("IDgruppo", gruppo_key);
+
             data.put("aule", aule);
             data.put("outline_tpl", "outline_with_select_without_login.ftl.html");
 
@@ -223,7 +226,7 @@ public class EventiCorrenti extends AuleWebBaseController {
                 }
             }
 
-                
+            Collections.sort(eventi, new EventoComparator());
             data.put("eventi", eventi);
 
             //utili per visualizzazione messaggio in caso di mancanza di eventi in uno specifico giorno

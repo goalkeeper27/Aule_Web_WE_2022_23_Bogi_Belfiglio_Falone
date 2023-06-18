@@ -4,15 +4,13 @@
  */
 package it.univaq.project.aule_web.controller;
 
-import it.univaq.project.aule_web.framework.data.DataException;
-import it.univaq.f4i.iw.framework.result.FailureResult;
 import it.univaq.f4i.iw.framework.result.TemplateManagerException;
-import it.univaq.project.aule_web.framework.result.TemplateResult;
 import it.univaq.project.aule_web.data.dao.impl.AuleWebDataLayer;
+import it.univaq.project.aule_web.framework.data.DataException;
+import it.univaq.project.aule_web.framework.result.TemplateResult;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,22 +19,15 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Alberto Bogi
+ * @author acer
  */
-public class Homepage extends AuleWebBaseController {
+public class Administration extends AuleWebBaseController {
 
     private void action_default(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
-        try {
-            Map data = new HashMap<>();
-            
-            data.put("tipi_gruppo", ((AuleWebDataLayer) request.getAttribute("datalayer")).getGruppoDAO().getTipiGruppo());
-            data.put("gruppi", ((AuleWebDataLayer) request.getAttribute("datalayer")).getGruppoDAO().getAllGruppi());
-            data.put("outline_tpl", "outline_without_login.ftl.html");
-            TemplateResult res = new TemplateResult(getServletContext());
-            res.activate("gruppi.ftl.html", data, response);
-        } catch (DataException ex) {
-            handleError("Data access exception: " + ex.getMessage(), request, response);
-        }
+        Map data = new HashMap<>();
+        data.put("outline_tpl", "outline_without_login.ftl.html");
+        TemplateResult res = new TemplateResult(getServletContext());
+        res.activate("base/select_administration.html", data, response);
     }
 
     /**
@@ -52,14 +43,17 @@ public class Homepage extends AuleWebBaseController {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
         try {
-            action_default(request, response);
+            if (request.getParameter("operation") != null && (Integer.parseInt(request.getParameter("operation"))) == 2) {
+                action_default(request, response);
+            }
+            else{
+                action_default(request, response);
+            }
 
         } catch (IOException | TemplateManagerException ex) {
             handleError(ex, request, response);
         }
     }
-
-
 
     /**
      * Returns a short description of the servlet.
@@ -72,5 +66,3 @@ public class Homepage extends AuleWebBaseController {
     }// </editor-fold>
 
 }
-
-

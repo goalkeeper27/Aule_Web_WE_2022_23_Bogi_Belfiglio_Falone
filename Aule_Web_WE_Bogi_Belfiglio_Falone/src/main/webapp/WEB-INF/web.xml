@@ -5,8 +5,12 @@
         <servlet-class>it.univaq.project.aule_web.controller.Homepage</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>it.univaq.project.aule_web.controller.Login</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>Eventi</servlet-name>
-        <servlet-class>it.univaq.project.aule_web.controller.EventiCorrenti</servlet-class>
+        <servlet-class>it.univaq.project.aule_web.controller.Eventi</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SpecificAula</servlet-name>
@@ -20,9 +24,17 @@
         <servlet-name>CSVEventi</servlet-name>
         <servlet-class>it.univaq.project.aule_web.controller.CSVEventi</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Administration</servlet-name>
+        <servlet-class>it.univaq.project.aule_web.controller.Administration</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Homepage</servlet-name>
         <url-pattern>/homepage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Eventi</servlet-name>
@@ -39,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>CSVEventi</servlet-name>
         <url-pattern>/csv_eventi</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Administration</servlet-name>
+        <url-pattern>/administration</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

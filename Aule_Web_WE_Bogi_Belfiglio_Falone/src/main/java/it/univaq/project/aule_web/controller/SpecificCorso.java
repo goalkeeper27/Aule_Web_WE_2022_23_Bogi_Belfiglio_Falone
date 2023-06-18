@@ -38,6 +38,7 @@ public class SpecificCorso extends AuleWebBaseController {
             data.put("corsi", corsi);
             data.put("IDgruppo", gruppo_key);
             data.put("outline_tpl", "outline_with_select_without_login.ftl.html");
+
             data.put("select_button", 3);
             TemplateResult res = new TemplateResult(getServletContext());
             res.activate("seleziona_corso.ftl.html", data, response);

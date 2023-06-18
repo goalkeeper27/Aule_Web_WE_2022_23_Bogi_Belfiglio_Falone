@@ -79,7 +79,7 @@ public class CSVEventi extends AuleWebBaseController {
         if (request.getParameter("IDgruppo") != null && !request.getParameter("IDgruppo").isEmpty()) {
             int gruppo_key = Integer.valueOf(request.getParameter("IDgruppo"));
             data.put("IDgruppo", gruppo_key);
-
+            
             data.put("outline_tpl", "outline_with_select_without_login.ftl.html");
         } else {
             data.put("outline_tpl", "outline_without_login.ftl.html");
