@@ -25,7 +25,7 @@ public interface AulaDAO {
     
     // public List<Aula> getAuleByIDs(Aula aula) throws DataException;
     
-    void storeAula(Aula aula)throws DataException;
+    Integer storeAula(Aula aula, List<Integer> gruppi_keys)throws DataException;
     
     void deleteAula(Aula aula) throws DataException;
     

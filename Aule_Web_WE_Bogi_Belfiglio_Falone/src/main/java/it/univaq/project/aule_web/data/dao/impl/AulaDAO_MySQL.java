@@ -22,16 +22,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  *
  * @author Francesco Falone
  */
 public class AulaDAO_MySQL extends DAO implements AulaDAO {
 
-
-    private PreparedStatement sAulaByID, sAuleByIDs, sAulaByNomeAndPosizione,sAuleByGruppoID;
-    private PreparedStatement iAula;
+    private PreparedStatement sAulaByID, sAuleByIDs, sAulaByNomeAndPosizione, sAuleByGruppoID;
+    private PreparedStatement iAula, iAssociationAulaGruppo;
     private PreparedStatement uAula;
     private PreparedStatement dAula;
 
@@ -46,15 +44,16 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
 
             sAulaByID = connection.prepareStatement("SELECT * FROM aula WHERE ID=?");
             // sAuleByIDs =  connection.prepareStatement("SELECT ID FROM aula");
-             // sAulaByID = connection.prepareStatement("SELECT * FROM aula WHERE GRUPPO=?");
+            // sAulaByID = connection.prepareStatement("SELECT * FROM aula WHERE GRUPPO=?");
             sAulaByNomeAndPosizione = connection.prepareStatement("SELECT * FROM aula WHERE nome=?, luogo=?,edificio=?,piano =?");
 
             sAuleByGruppoID = connection.prepareStatement("SELECT A.* FROM aula A, associazione_aula_gruppo AG, gruppo G WHERE "
                     + "G.ID = ? AND AG.ID_gruppo = G.ID AND A.ID = AG.ID_aula");
 
-            iAula = connection.prepareStatement("INSERT INTO gruppo (nome,luogo,edificio,piano,capienza,numero_prese_elettriche,numero_prese_di_rete,note_generiche,ID_responsabile) VALUES(?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-            uAula = connection.prepareStatement("UPDATE gruppo SET nome=?,luogo=?,edificio=?,piano=?,capienza=?,numero_prese_elettriche=?,numero_prese_di_rete=?,note_generiche = ?,ID_responsabile =?, versione=? WHERE ID=? and versione=?");
-            dAula = connection.prepareStatement("DELETE FROM gruppo WHERE ID=?");
+            iAula = connection.prepareStatement("INSERT INTO aula (nome,luogo,edificio,piano,capienza,numero_prese_elettriche,numero_prese_di_rete,note_generiche,ID_responsabile) VALUES(?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            iAssociationAulaGruppo = connection.prepareStatement("INSERT INTO associazione_aula_gruppo(ID_aula, ID_gruppo) values (?,?)");
+            uAula = connection.prepareStatement("UPDATE aula SET nome=?,luogo=?,edificio=?,piano=?,capienza=?,numero_prese_elettriche=?,numero_prese_di_rete=?,note_generiche = ?,ID_responsabile =?, versione=? WHERE ID=? and versione=?");
+            dAula = connection.prepareStatement("DELETE FROM aula WHERE ID=?");
         } catch (SQLException ex) {
             throw new DataException("Errore durante l'inizializzazione del data layer", ex);
         }
@@ -64,9 +63,9 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
         try {
             sAulaByID.close();
             sAulaByNomeAndPosizione.close();
-            // sAuleByIDs.close();
             sAuleByGruppoID.close();
             iAula.close();
+            iAssociationAulaGruppo.close();
             uAula.close();
             dAula.close();
 
@@ -120,18 +119,18 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
         }
         return aula;
     }
-    
+
     @Override
     public Aula getAulaByNomeAndPosizione(String nome, String luogo, String edificio, int piano) throws DataException {
         Aula aula = null;
-       try {
+        try {
             sAulaByNomeAndPosizione.setString(1, nome);
             sAulaByNomeAndPosizione.setString(2, luogo);
             sAulaByNomeAndPosizione.setString(3, edificio);
             sAulaByNomeAndPosizione.setInt(4, piano);
-            try (ResultSet rs =   sAulaByNomeAndPosizione.executeQuery()) {
+            try ( ResultSet rs = sAulaByNomeAndPosizione.executeQuery()) {
                 if (rs.next()) {
-                   aula = createAula(rs);
+                    aula = createAula(rs);
                 }
             }
         } catch (SQLException ex) {
@@ -139,35 +138,29 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
         }
         return aula;
     }
-    
 
-    /*
-    @Override
-    public List<Aula> getAuleByIDs(Aula aula) throws DataException {
-        List<Aula> result = new ArrayList();
-
+    private void storeAssociationAulaGruppi(int aula_key, List<Integer> gruppi_keys) throws DataException {
+        Aula aula = null;
         try {
-            sAuleByIDs.setInt(1, aula.getKey());
-            try (ResultSet rs = sAuleByIDs.executeQuery()) {
-                while (rs.next()) {
-                    
-                    result.add((Aula) getAula(rs.getInt("aulaID")));
-                }
+            for (Integer gk : gruppi_keys) {
+                iAssociationAulaGruppo.setInt(1, aula_key);
+                iAssociationAulaGruppo.setInt(2, gk);
+                iAssociationAulaGruppo.executeUpdate();
             }
         } catch (SQLException ex) {
-            throw new DataException("Unable to load articles by issue", ex);
+            throw new DataException("Impossibile caricare Aula dal nome e dalla posizione digitati", ex);
         }
-        return result;
+
     }
-     */
+
     @Override
-    public void storeAula(Aula aula) throws DataException {
+    public Integer storeAula(Aula aula, List<Integer> gruppi_keys) throws DataException {
         try {
             if (aula.getKey() != null && aula.getKey() > 0) { //update
                 //non facciamo nulla se l'oggetto è un proxy e indica di non aver subito modifiche
                 //do not store the object if it is a proxy and does not indicate any modification
                 if (aula instanceof DataItemProxy && !((DataItemProxy) aula).isModified()) {
-                    return;
+                    return null;
                 }
                 uAula.setString(1, aula.getNome());
                 uAula.setString(2, aula.getLuogo());
@@ -183,7 +176,7 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
                     uAula.setNull(9, java.sql.Types.INTEGER);
                 }
 
-                 long versioneCorrente = aula.getVersion();
+                long versioneCorrente = aula.getVersion();
                 long versioneSuccessiva = versioneCorrente + 1;
 
                 uAula.setLong(10, versioneSuccessiva);
@@ -193,7 +186,7 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
                 if (uAula.executeUpdate() == 0) {
                     throw new OptimisticLockException(aula);
                 } else {
-                    aula.setVersion( versioneSuccessiva);
+                    aula.setVersion(versioneSuccessiva);
                 }
             } else { //insert
                 iAula.setString(1, aula.getNome());
@@ -205,9 +198,9 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
                 iAula.setInt(7, aula.getNumeroPreseDiRete());
                 iAula.setString(8, aula.getNoteGeneriche());
                 if (aula.getResponsabile() != null) {
-                    uAula.setInt(9, aula.getResponsabile().getKey());
+                    iAula.setInt(9, aula.getResponsabile().getKey());
                 } else {
-                    uAula.setNull(9, java.sql.Types.INTEGER);
+                    iAula.setNull(9, java.sql.Types.INTEGER);
                 }
                 if (iAula.executeUpdate() == 1) {
                     //per leggere la chiave generata dal database
@@ -229,6 +222,8 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
                             //aggiornaimo la chiave in caso di inserimento
                             //after an insert, uopdate the object key
                             aula.setKey(key);
+                            storeAssociationAulaGruppi(key, gruppi_keys);
+                            return key;
                             //inseriamo il nuovo oggetto nella cache
                             //add the new object to the cache
                             // dataLayer.getCache().add(Aula.class, aula);
@@ -256,6 +251,7 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
         } catch (SQLException | OptimisticLockException ex) {
             throw new DataException("Unable to store aula", ex);
         }
+        return null;
     }
 
     @Override
@@ -263,7 +259,8 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
         try {
             if (aula.getKey() != null && aula.getKey() > 0) {
                 dAula.setInt(1, aula.getKey());
-                dAula.execute();}
+                dAula.execute();
+            }
         } catch (SQLException ex) {
             Logger.getLogger(AulaDAO_MySQL.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -272,13 +269,13 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
 
     @Override
     public List<Aula> getAuleByGruppoID(int gruppo_key) throws DataException {
-         List<Aula> aule = new ArrayList<>();
+        List<Aula> aule = new ArrayList<>();
         try {
             sAuleByGruppoID.setInt(1, gruppo_key);
         } catch (SQLException ex) {
             Logger.getLogger(AulaDAO_MySQL.class.getName()).log(Level.SEVERE, null, ex);
         }
-         try ( ResultSet rs = sAuleByGruppoID.executeQuery()) {
+        try ( ResultSet rs = sAuleByGruppoID.executeQuery()) {
             while (rs.next()) {
                 Aula aula = createAula(rs);
                 aule.add(aula);

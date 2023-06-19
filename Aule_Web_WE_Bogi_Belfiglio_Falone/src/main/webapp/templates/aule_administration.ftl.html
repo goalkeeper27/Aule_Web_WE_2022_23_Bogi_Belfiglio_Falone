@@ -1,0 +1,85 @@
+<div class="aule administration">
+    <div class="container">
+        <div class="three columns">
+            <p>Inserimento aule</p> 
+            <form method="GET" action="administration">
+                <input type="hidden" name="insert_aula" value="1" />
+                <label for="input1">nome:</label>
+                <input type="text" name="nome" id="input1" oninput="validateInputs()"/>
+                <br>
+                <label for="input2">via:</label>
+                <input type="text" name="via" id="input2" placeholder="inserire nome via" oninput="validateInputs()"/>
+                <br>
+                <label for="input3">n.civico:</label>
+                <input type="number" name="civico" id="input3" oninput="validateInputs()"/>
+                <br>
+                <label for="input4">edificio</label>
+                <input type="text" name="edificio" id="input4" oninput="validateInputs()"/>
+                <br>
+                <label for="input5">piano</label>
+                <input type="number" name="piano" id="input5" min="1" oninput="validateInputs()"/>
+                <br>
+                <label for="input6">capienza</label>
+                <input type="number" id="input6" name="capienza" min="1" oninput="validateInputs()"/>
+                <br>
+                <label for="input7">prese elettriche</label>
+                <input type="number" name="prese_elettriche" id="input7" min="1" oninput="validateInputs()"/>
+                <br>
+                <label for="input8">prese di rete</label>
+                <input type="number" name="prese_di_rete" id="input8" min="1" oninput="validateInputs()"/>
+                <br>
+                <label for="input9">note</label><br>
+                <textarea name="note" id="input9" oninput="validateInputs()"></textarea>
+                <h3>Responsabile</h3>
+                <table class="responsabile">
+
+
+                    <#list responsabili as responsabile>
+                    <tr>
+                        <td class="radio"><input type="radio" name="responsabile" id="input10" value="${responsabile.key}" onchange="validateInputs()"/></td>
+                        <td>${responsabile.email}</td>     
+                    </tr>
+                    </#list>
+                </table>
+                <h3>Gruppi</h3>
+                <#assign i=1>
+                <#list tipi_gruppo as tipo>
+                <#assign name="gruppo"+i>
+                <label>${tipo}:</label>
+                <select class="input11" name="${name}" onchange="validateInputs()">
+                    <option value="null">nessuno</option>
+                    <#list gruppi as gruppo>
+                    <#if gruppo.tipoGruppo == tipo>
+                    <option value="${gruppo.key}">${gruppo.nome}</option>
+                    </#if>
+                    </#list>
+                    
+
+                </select>
+                <br>
+                <#assign i=i+1>
+                </#list>
+
+                <h3>Attrezzature</h3>
+                <table class="attrezzatura">
+
+                    <#assign i=1>
+                    <#list attrezzature as attrezzatura>
+                    <#assign name="attrezzatura"+i>
+                    <tr>
+                        <td class="checkbox"><input type="checkbox" name="${name}" class="input12" value="${attrezzatura.key}" onchange="validateInputs()"/></td>
+                        <td class="extend">${attrezzatura.nome?lower_case}</td>
+                        <td class="extend">${attrezzatura.numeroDiSerie?lower_case}</td>
+                    </tr>
+                     <#assign i=i+1>
+                    </#list>
+                   
+                </table>
+
+                <button type="submit" id="button" disabled>inserisci</button>
+
+
+            </form> 
+        </div>
+    </div>
+</div>

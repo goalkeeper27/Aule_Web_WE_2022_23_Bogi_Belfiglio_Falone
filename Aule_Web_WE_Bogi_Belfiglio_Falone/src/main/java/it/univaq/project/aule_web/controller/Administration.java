@@ -5,13 +5,24 @@
 package it.univaq.project.aule_web.controller;
 
 import it.univaq.f4i.iw.framework.result.TemplateManagerException;
+import it.univaq.project.aule_web.data.dao.impl.AttrezzaturaProxy;
+import it.univaq.project.aule_web.data.dao.impl.AulaProxy;
 import it.univaq.project.aule_web.data.dao.impl.AuleWebDataLayer;
+import it.univaq.project.aule_web.data.impl.AulaImpl;
+import it.univaq.project.aule_web.data.model.Attrezzatura;
+import it.univaq.project.aule_web.data.model.Aula;
 import it.univaq.project.aule_web.framework.data.DataException;
 import it.univaq.project.aule_web.framework.result.TemplateResult;
+import it.univaq.project.aule_web.framework.security.SecurityHelpers;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,11 +34,82 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class Administration extends AuleWebBaseController {
 
-    private void action_default(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
+    private void action_default(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
         Map data = new HashMap<>();
-        data.put("outline_tpl", "outline_without_login.ftl.html");
+        data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));
+        data.put("outline_tpl", "outline_with_login.ftl.html");
+
         TemplateResult res = new TemplateResult(getServletContext());
-        res.activate("base/select_administration.html", data, response);
+        res.activate("", data, response);
+    }
+
+    private void action_aule(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
+        Map data = new HashMap<>();
+        data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));
+        data.put("outline_tpl", "");
+        data.put("gruppi", ((AuleWebDataLayer) request.getAttribute("datalayer")).getGruppoDAO().getAllGruppi());
+        data.put("tipi_gruppo", ((AuleWebDataLayer) request.getAttribute("datalayer")).getGruppoDAO().getTipiGruppo());
+        data.put("attrezzature", ((AuleWebDataLayer) request.getAttribute("datalayer")).getAttrezzaturaDAO().getAttrezzaturaDisponibile());
+        data.put("responsabili", ((AuleWebDataLayer) request.getAttribute("datalayer")).getResponsabileDAO().getAllResponsabili());
+
+        TemplateResult res = new TemplateResult(getServletContext());
+        res.activate("aule_administration.ftl.html", data, response);
+    }
+
+    private void action_insert_aula(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
+        Aula aula = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().createAula();
+        aula.setKey(null);
+        aula.setNome(request.getParameter("nome"));
+        aula.setLuogo(request.getParameter("via") +","+ request.getParameter("civico"));
+        aula.setEdificio(request.getParameter("edificio"));
+        aula.setPiano(Integer.parseInt(request.getParameter("piano")));
+        aula.setCapienza(Integer.parseInt(request.getParameter("capienza")));
+        aula.setNumeroPreseElettriche(Integer.parseInt(request.getParameter("prese_elettriche")));
+        aula.setNumeroPreseDiRete(Integer.parseInt(request.getParameter("prese_di_rete")));
+        aula.setNoteGeneriche(request.getParameter("note"));
+        ((AulaProxy) aula).setResponsabileKey(Integer.parseInt(request.getParameter(("responsabile"))));
+
+        List<Integer> gruppi_keys = new ArrayList<>();
+        List<Attrezzatura> attrezzature = new ArrayList<>();
+        Enumeration<String> params = request.getParameterNames();
+        while (params.hasMoreElements()) {
+            String par = params.nextElement();
+            if (par.startsWith("gruppo")) {
+                int gk = Integer.parseInt(request.getParameter(par));
+                gruppi_keys.add(gk);
+            }
+            else if(par.startsWith("attrezzatura")){
+                Attrezzatura attrezzatura = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAttrezzaturaDAO().getAttrezzatura(Integer.parseInt(request.getParameter(par)));
+                attrezzature.add(attrezzatura);
+            }
+        }
+       
+        int aula_key = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().storeAula(aula, gruppi_keys);
+        
+        for(Attrezzatura attrezzatura: attrezzature){
+               ((AttrezzaturaProxy)attrezzatura).setAulaKey(aula_key);
+               ((AuleWebDataLayer) request.getAttribute("datalayer")).getAttrezzaturaDAO().storeAttrezzatura(attrezzatura);
+        }
+
+        Map data = new HashMap<>();
+        data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));
+        data.put("outline_tpl", "outline_with_login.ftl.html");
+        data.put("attrezzature", attrezzature);
+        data.put("aula", aula);
+        data.put("mex", "inserimento aula avvenuto con successo");
+        TemplateResult res = new TemplateResult(getServletContext());
+        res.activate("", data, response);
+
+    }
+
+    private void action_uno(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
+        Map data = new HashMap<>();
+        data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));
+        data.put("outline_tpl", "");
+        data.put("tipi_gruppo", ((AuleWebDataLayer) request.getAttribute("datalayer")).getGruppoDAO().getTipiGruppo());
+        data.put("gruppi", ((AuleWebDataLayer) request.getAttribute("datalayer")).getGruppoDAO().getAllGruppi());
+        TemplateResult res = new TemplateResult(getServletContext());
+        res.activate("gruppi.ftl.html", data, response);
     }
 
     /**
@@ -43,15 +125,33 @@ public class Administration extends AuleWebBaseController {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
         try {
-            if (request.getParameter("operation") != null && (Integer.parseInt(request.getParameter("operation"))) == 2) {
-                action_default(request, response);
-            }
-            else{
-                action_default(request, response);
+            if (SecurityHelpers.checkSession(request) != null) {
+                if (request.getParameter("operation") != null) {
+                    switch (Integer.parseInt(request.getParameter("operation"))) {
+                        case 1:
+                            action_uno(request, response);
+                            break;
+                        case 2:
+                            action_aule(request, response);
+                            break;
+                        case 3:
+                            break;
+                        default:
+                            break;
+                    }
+                } else if (request.getParameter("insert_aula") != null) {
+                    action_insert_aula(request, response);
+                } else {
+                    action_default(request, response);
+                }
+            } else {
+                response.sendRedirect("homepage");
             }
 
         } catch (IOException | TemplateManagerException ex) {
             handleError(ex, request, response);
+        } catch (DataException ex) {
+            Logger.getLogger(Administration.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

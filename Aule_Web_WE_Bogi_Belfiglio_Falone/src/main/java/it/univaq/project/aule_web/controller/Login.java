@@ -46,6 +46,7 @@ public class Login extends AuleWebBaseController {
                     //          SecurityHelpers.createSession(request, username, u.getKey());
                     //se è stato trasmesso un URL di origine, torniamo a quell'indirizzo
                     //if an origin URL has been transmitted, return to it
+                    SecurityHelpers.createSession(request, username, a.getKey());
                     response.sendRedirect("administration");
 
                 } else {
@@ -70,7 +71,7 @@ public class Login extends AuleWebBaseController {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
         try {
-            if (request.getParameter("login") != null) {
+            if(request.getParameter("login") != null) {
                 action_login(request, response);
             } else {
                 String https_redirect_url = SecurityHelpers.checkHttps(request);

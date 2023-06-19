@@ -490,7 +490,7 @@ input[type="date"]{
 * proprietà per eventi_corso.ftl.html
 
 ********************************/
-    
+
 .eventi.corso input[type="week"]{
     background-color: #add8e6;
     padding: 0.5%;
@@ -501,8 +501,8 @@ input[type="date"]{
     cursor: pointer;
     border-radius: 5px;
     margin-bottom:1%;
-    
-}  
+
+}
 
 .eventi.corso .title{
     font-size: xx-large;
@@ -511,7 +511,7 @@ input[type="date"]{
     text-align:center;
     color: #add8e6;
     padding-top:0.5%;
-    
+
 }
 
 .eventi.corso .settimana{
@@ -521,7 +521,7 @@ input[type="date"]{
 .eventi.corso .settimana p{
     font-weight: bold;
     font-style: italic;
-    
+
 }
 
 .eventi.corso fieldset{
@@ -534,7 +534,7 @@ input[type="date"]{
     text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
     color: #add8e6;
     padding-top:0.5%;
-      
+
 }
 
 .eventi.corso fieldset .descrizione{
@@ -590,7 +590,7 @@ input[type="date"]{
 
 .seleziona.corso table{
     border-radius: 10px;
-    width: 100%;  
+    width: 100%;
 }
 
 .seleziona.corso th,td{
@@ -709,7 +709,7 @@ input[type="date"]{
 * proprietà per eventi_giornalieri.ftl.html
 
 ********************************/
-    
+
 .eventi.giornalieri input[type="date"]{
     background-color: #add8e6;
     padding: 0.5%;
@@ -720,8 +720,8 @@ input[type="date"]{
     cursor: pointer;
     border-radius: 5px;
     margin-bottom:1%;
-    
-}  
+
+}
 
 .eventi.giornalieri .title{
     font-size: xx-large;
@@ -730,7 +730,7 @@ input[type="date"]{
     text-align:center;
     color: #add8e6;
     padding-top:0.5%;
-    
+
 }
 
 .eventi.giornalieri .giorno{
@@ -740,7 +740,7 @@ input[type="date"]{
 .eventi.giornalieri .giorno p{
     font-weight: bold;
     font-style: italic;
-    
+
 }
 
 .eventi.giornalieri fieldset{
@@ -809,7 +809,6 @@ input[type="date"]{
 ********************************/
 
 
-
 .CSV.form label{
     margin-bottom:1%;
 }
@@ -817,7 +816,7 @@ input[type="date"]{
 .CSV.form p{
     font-weight: bold;
     font-style: italic;
-    font-size: large;   
+    font-size: large;
 }
 
 .CSV.form button{
@@ -848,8 +847,8 @@ input[type="date"]{
     cursor: pointer;
     border-radius: 5px;
     margin-bottom:1%;
-    
-}  
+
+}
 
 .CSV.form label{
     font-style: italic;
@@ -857,7 +856,7 @@ input[type="date"]{
 
 .CSV.form .back{
     text-align: center;
-    
+
 }
 
 .CSV.form .back p{
@@ -871,7 +870,7 @@ input[type="date"]{
 
 .CSV.form .back button img{
     width: 30%;
-    
+
 }
 
 @media only screen and (max-width: 1250px) {
@@ -918,4 +917,100 @@ input[type="date"]{
 
 
 }
+
+/********************************
+
+* proprietà per aule_administration.ftl.html
+
+********************************/
+
+.aule.administration p{
+    font-size: xx-large;
+    text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
+    color: #add8e6;
+    padding-top:0.5%;
+}
+
+.aule.administration input{
+    margin-bottom: 3%;
+    border-width: 2px;
+    border-radius:5px;
+    border-color: #CCC;
+
+}
+
+.aule.administration input:focus{
+    outline:none;
+    border: 2px solid #add8e6;
+
+}
+
+.aule.administration input:placeholder-shown {
+    font-style: italic;
+}
+
+.aule.administration textarea{
+    margin-bottom: 3%;
+    border-width: 2px;
+    border-radius:5px;
+    border-color: #CCC;
+
+}
+
+.aule.administration textarea:focus{
+    outline:none;
+    border: 2px solid #add8e6;
+
+}
+
+
+.aule.administration input[type="number"]{
+    width: 10%;
+}
+
+.aule.administration table.responsabile td{
+    border:none;
+    text-align: left;
+}
+
+.aule.administration table.responsabile td.radio{
+    background-color: #add8e6;
+}
+
+.aule.administration select{
+    margin-bottom: 3%;
+    width:40%;
+    border: 2px solid #CCC;
+}
+
+.aule.administration select:focus{
+    outline:none;
+    border-color: #add8e6;
+}
+
+.aule.administration table.attrezzatura{
+    margin-bottom: 5%;
+}
+
+
+.aule.administration table.attrezzatura td.extend{
+    text-align: center;
+    width:40%;
+    padding:4px;
+}
+
+.aule.administration table.attrezzatura td.checkbox{
+    background-color: #add8e6;
+}
+
+.aule.administration button{
+    width:30%;
+}
+
+.aule.administration button:disabled{
+    color: #696969;
+    pointer-events: none;
+}
+
+
 

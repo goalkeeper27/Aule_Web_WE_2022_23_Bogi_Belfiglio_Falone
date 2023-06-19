@@ -21,6 +21,8 @@ public interface AttrezzaturaDAO {
     
     List<Attrezzatura> getAttrezzatureByAula(Aula aula) throws DataException;
     
+    List<Attrezzatura> getAttrezzaturaDisponibile()throws DataException;
+    
     void storeAttrezzatura(Attrezzatura attrezzatura) throws DataException;
     
     void deleteAttrezzaturaByID(Attrezzatura attrezzatura) throws DataException;

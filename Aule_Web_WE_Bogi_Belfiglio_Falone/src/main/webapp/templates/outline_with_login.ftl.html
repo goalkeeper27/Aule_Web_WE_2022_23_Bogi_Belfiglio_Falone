@@ -9,10 +9,15 @@
     </head>
     <body>
 
-        <#include "base/header_without_login.ftl.html">
-        <#include "select_administration.html">
+        <#include "base/header_with_login.ftl.html">
+        
+        <#include "base/select_administration.html">
 
-        <#include content_tpl>
+        <#if mex?has_content && !option?has_content>
+        
+        <p>${mex}</p>
+       
+
 
         <#include "base/footer.html">
 

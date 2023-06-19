@@ -6,6 +6,7 @@ package it.univaq.project.aule_web.data.dao;
 
 import it.univaq.project.aule_web.data.model.Responsabile;
 import it.univaq.project.aule_web.framework.data.DataException;
+import java.util.List;
 
 /**
  *
@@ -13,15 +14,17 @@ import it.univaq.project.aule_web.framework.data.DataException;
  */
 public interface ResponsabileDAO {
     
-    public Responsabile getResponsabile(int key) throws DataException;
+    Responsabile getResponsabile(int key) throws DataException;
     
-    public Responsabile getResponsabileByEmail(String email)throws DataException;
+    Responsabile getResponsabileByEmail(String email)throws DataException;
     
-    public Responsabile createResponsabile();
+    List<Responsabile> getAllResponsabili()throws DataException;
     
-    public void storeResponsabile(Responsabile responsabile)throws DataException;
+    Responsabile createResponsabile();
     
-    public void deleteResponsabileByEmail(String email)throws DataException;
+    void storeResponsabile(Responsabile responsabile)throws DataException;
+    
+    void deleteResponsabileByEmail(String email)throws DataException;
     
     
     
