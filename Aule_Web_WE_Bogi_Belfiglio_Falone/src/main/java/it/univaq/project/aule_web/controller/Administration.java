@@ -8,9 +8,11 @@ import it.univaq.f4i.iw.framework.result.TemplateManagerException;
 import it.univaq.project.aule_web.data.dao.impl.AttrezzaturaProxy;
 import it.univaq.project.aule_web.data.dao.impl.AulaProxy;
 import it.univaq.project.aule_web.data.dao.impl.AuleWebDataLayer;
+import it.univaq.project.aule_web.data.dao.impl.GruppoProxy;
 import it.univaq.project.aule_web.data.impl.AulaImpl;
 import it.univaq.project.aule_web.data.model.Attrezzatura;
 import it.univaq.project.aule_web.data.model.Aula;
+import it.univaq.project.aule_web.data.model.Gruppo;
 import it.univaq.project.aule_web.framework.data.DataException;
 import it.univaq.project.aule_web.framework.result.TemplateResult;
 import it.univaq.project.aule_web.framework.security.SecurityHelpers;
@@ -54,6 +56,16 @@ public class Administration extends AuleWebBaseController {
 
         TemplateResult res = new TemplateResult(getServletContext());
         res.activate("aule_administration.ftl.html", data, response);
+    }
+    
+    private void action_gruppi(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
+        Map data = new HashMap<>();
+        data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));
+        data.put("outline_tpl", "");
+        
+        
+        TemplateResult res = new TemplateResult(getServletContext());
+        res.activate("gruppi_administration.ftl.html", data, response);
     }
 
     private void action_insert_aula(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
@@ -102,6 +114,25 @@ public class Administration extends AuleWebBaseController {
 
     }
 
+    
+    private void action_insert_gruppo(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
+        Gruppo gruppo = ((AuleWebDataLayer) request.getAttribute("datalayer")).getGruppoDAO().createGruppo();
+        gruppo.setKey(null);
+        gruppo.setNome(request.getParameter("nome"));
+        
+        gruppo.setTipoGruppo(request.getParameter("tipo"));
+        gruppo.setDescrizione(request.getParameter("tipo"));
+           
+
+        Map data = new HashMap<>();
+        data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));
+        data.put("outline_tpl", "outline_with_login.ftl.html");
+        data.put("gruppo", gruppo);
+        data.put("mex", "inserimento gruppo avvenuto con successo");
+        TemplateResult res = new TemplateResult(getServletContext());
+        res.activate("", data, response);
+
+    }
     private void action_uno(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
         Map data = new HashMap<>();
         data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));
@@ -135,13 +166,16 @@ public class Administration extends AuleWebBaseController {
                             action_aule(request, response);
                             break;
                         case 3:
+                            action_gruppi(request, response);
                             break;
                         default:
                             break;
                     }
                 } else if (request.getParameter("insert_aula") != null) {
                     action_insert_aula(request, response);
-                } else {
+                } else if (request.getParameter("insert_gruppo") != null) {
+                    action_insert_gruppo(request, response);
+                }else {
                     action_default(request, response);
                 }
             } else {
