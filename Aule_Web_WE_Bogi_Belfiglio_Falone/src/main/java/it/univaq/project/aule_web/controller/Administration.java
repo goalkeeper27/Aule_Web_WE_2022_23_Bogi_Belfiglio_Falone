@@ -121,7 +121,7 @@ public class Administration extends AuleWebBaseController {
         gruppo.setNome(request.getParameter("nome"));
         
         gruppo.setTipoGruppo(request.getParameter("tipo"));
-        gruppo.setDescrizione(request.getParameter("tipo"));
+        gruppo.setDescrizione(request.getParameter("descrizione"));
            
 
         Map data = new HashMap<>();
