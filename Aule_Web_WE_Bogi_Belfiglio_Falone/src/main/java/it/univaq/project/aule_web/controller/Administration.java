@@ -9,9 +9,21 @@ import it.univaq.project.aule_web.data.comparator.EventoComparator;
 import it.univaq.project.aule_web.data.dao.impl.AttrezzaturaProxy;
 import it.univaq.project.aule_web.data.dao.impl.AulaProxy;
 import it.univaq.project.aule_web.data.dao.impl.AuleWebDataLayer;
+import it.univaq.project.aule_web.data.dao.impl.GruppoProxy;
 import it.univaq.project.aule_web.data.impl.AulaImpl;
 import it.univaq.project.aule_web.data.model.Attrezzatura;
 import it.univaq.project.aule_web.data.model.Aula;
+import it.univaq.project.aule_web.framework.data.DataException;
+import it.univaq.project.aule_web.framework.result.TemplateResult;
+import it.univaq.project.aule_web.framework.security.SecurityHelpers;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
 import it.univaq.project.aule_web.data.model.Evento;
 import it.univaq.project.aule_web.data.model.EventoRicorrente;
 import it.univaq.project.aule_web.data.model.Gruppo;
@@ -67,6 +79,15 @@ public class Administration extends AuleWebBaseController {
         res.activate("aule_administration.ftl.html", data, response);
     }
 
+    private void action_gruppi(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
+        Map data = new HashMap<>();
+        data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));
+        data.put("outline_tpl", "");
+
+        TemplateResult res = new TemplateResult(getServletContext());
+        res.activate("gruppi_administration.ftl.html", data, response);
+    }
+
     private void action_insert_aula(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
         Aula aula = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().createAula();
         aula.setKey(null);
@@ -111,6 +132,7 @@ public class Administration extends AuleWebBaseController {
         res.activate("", data, response);
 
     }
+
 
     private void action_modify_aula(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
         Aula aula = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().getAula(SecurityHelpers.checkNumeric(request.getParameter("IDaula")));
@@ -194,6 +216,8 @@ public class Administration extends AuleWebBaseController {
 
     }
 
+
+
     private void action_export_aula(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
         try {
             Map data = new HashMap<>();
@@ -244,6 +268,22 @@ public class Administration extends AuleWebBaseController {
         TemplateResult res = new TemplateResult(getServletContext());
         res.activate("update_aula.ftl.html", data, response);
     }
+    
+    
+    private void action_insert_gruppo(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
+        Gruppo gruppo = ((AuleWebDataLayer) request.getAttribute("datalayer")).getGruppoDAO().createGruppo();
+        gruppo.setKey(null);
+        gruppo.setNome(request.getParameter("nome"));
+
+        gruppo.setTipoGruppo(request.getParameter("tipo"));
+        gruppo.setDescrizione(request.getParameter("descrizione"));
+        
+
+        Map data = new HashMap<>();
+        data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));
+    
+        data.put("outline_tpl", "outline_with_login.ftl.html");
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -273,6 +313,7 @@ public class Administration extends AuleWebBaseController {
                             }
                             break;
                         case 3:
+                            action_gruppi(request, response);
                             break;
                         default:
                             break;
@@ -283,7 +324,10 @@ public class Administration extends AuleWebBaseController {
                     action_modify_aula(request, response);
                 } else if (request.getParameter("export_aula") != null) {
                     action_export_aula(request, response);
+                } else if (request.getParameter("insert_gruppo") != null) {
+                    action_insert_gruppo(request, response);
                 } else {
+
                     action_default(request, response);
                 }
             } else {
