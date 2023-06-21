@@ -13,11 +13,17 @@
         
         <#include "base/select_administration.html">
 
-        <#if mex?has_content && !option?has_content>
+        <#if mex?has_content && !operation?has_content>
         
         <p>${mex}</p>
+        <#list attrezzature as a>
+        <p>${a.key},${a.nome}, ${a.numeroDiSerie}, ${a.version}</p> 
+        </#list>
+    
+        
+        
        
-
+        </#if>
 
         <#include "base/footer.html">
 

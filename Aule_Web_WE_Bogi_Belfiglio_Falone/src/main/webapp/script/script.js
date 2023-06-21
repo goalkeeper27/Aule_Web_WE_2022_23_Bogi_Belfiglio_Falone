@@ -9,8 +9,8 @@
 let input_orario_attuale = document.getElementById('date');
 let button_orario_attuale = document.getElementById('calendar');
 
-
-button_orario_attuale.disabled = true;   //il bottone viene disattivato inizialmente
+if (button_orario_attuale.disabled !== null)
+    button_orario_attuale.disabled = true;   //il bottone viene disattivato inizialmente
 
 input_orario_attuale.addEventListener('input', function (event) {
 
@@ -44,31 +44,6 @@ input_settimana.addEventListener('input', function (event) {
 
 });
 
-function modify_state_button(id_button, ...ids_date) {
-    let button = document.getElementById(id_button);
-    let input_date = [];
-    for (let i = 0; i < ids_date.length; i++) {
-        input_date[i] = document.getElementById(ids_date[i]);
-    }
-    button.disabled = true;
-
-    for (let i = 0; i < ids_date.length; i++) {
-        input_settimana[i].addEventListener('input', function () {
-
-            for (let i = 0; i < ids_date.length; i++) {
-                if (input_settimana[i].value !== "")
-                    return;
-
-            }
-            button.disabled = false;
-
-        });
-
-    }
-
-
-
-}
 
 
 
@@ -92,26 +67,28 @@ function sendInfo() {
     xhr.send();
 }
 
+
 function validateInputs() {
-    var input1 = document.getElementById("input1").value;
-    var input2 = document.getElementById("input2").value;
-    var input3 = document.getElementById("input3").value;
-    var input4 = document.getElementById("input4").value;
-    var input5 = document.getElementById("input5").value;
-    var input6 = document.getElementById("input6").value;
-    var input7 = document.getElementById("input7").value;
-    var input8 = document.getElementById("input8").value;
-    var input9 = document.getElementById("input9").value;
-    var input10 = document.getElementById("input10").value;
-    var input11 = document.getElementsByClassName("input11");
-    var input12 = document.getElementsByClassName("input12");
-    var button = document.getElementById("button");
+    
+    let input1 = document.getElementById("input1").value;
+    let input2 = document.getElementById("input2").value;
+    let input3 = document.getElementById("input3").value;
+    let input4 = document.getElementById("input4").value;
+    let input5 = document.getElementById("input5").value;
+    let input6 = document.getElementById("input6").value;
+    let input7 = document.getElementById("input7").value;
+    let input8 = document.getElementById("input8").value;
+    let input9 = document.getElementById("input9").value;
+    let input10 = document.getElementById("input10").value;
+    let input11 = document.getElementsByClassName("input11");
+    let input12 = document.getElementsByClassName("input12");
+    let button = document.getElementById("button");
 
     if (input1 && input2 && input3 && input4 && input5 && input6 && input7 && input8 && input9 && input10) {
         for (var i = 0; i < input11.length; i++) {
             var select = input11[i];
             var selectedOption = select.options[select.selectedIndex];
-            if (selectedOption.value === "null") {
+            if (selectedOption.value === "0") {
                 button.disabled = true;
                 return;
             }
@@ -130,31 +107,70 @@ function validateInputs() {
     }
 
 }
-/**/
-/*
- 
- */
+
+
+function searchAula() {
+    let xhr = new XMLHttpRequest();
+    let input = document.getElementById("ricerca_aula");
+    let str = input.value;
+
+    let url = "administration?operation=2&search=" + str;
+
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var rispostaDiv = document.getElementById("table_aule");
+            rispostaDiv.innerHTML = xhr.responseText;
+        }
+    };
+    xhr.send();
+
+}
+
+
+function checkAula() {
+    let xhr = new XMLHttpRequest();
+    let radio = document.querySelector('input[name="IDaula"]:checked');
+
+    let id = radio.value;
+    alert(id);
+
+    let url = "administration?operation=2&IDaula=" + id;
+
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var rispostaDiv = document.getElementById("aula_update");
+            rispostaDiv.innerHTML = xhr.responseText;
+        }
+    };
+    xhr.send();
+}
 
 
 
+function exportCSVAula() {
 
-/*
- * function checked(){
- 
- var items=getElementsByname('checkbox');
- 
- var selectedlist=[];
- 
- for(var i=0; i<items.length; i++)       
- {
- if(items[i].type=='checkbox' && items[i].checked==true)                 
- selectedlist+=items[i].value+"\n";
- }
- 
- alert(selectedlist);
- }
- * 
- */
+    let xhr = new XMLHttpRequest();
+    let radio = document.querySelector('input[name="IDaula"]:checked');
+
+    let id = radio.value;
+
+
+    let url = "administration?operation=2&csv=1&IDaula=" + id;
+    alert(url);
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var rispostaDiv = document.getElementById("contenuto");
+            rispostaDiv.innerHTML = xhr.responseText;
+        }
+    };
+    xhr.send();
+}
 
 
 

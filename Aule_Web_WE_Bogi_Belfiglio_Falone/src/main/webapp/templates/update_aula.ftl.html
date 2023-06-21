@@ -1,0 +1,95 @@
+<form method="get" action="administration">
+    <input type="hidden" name="IDaula" value="${aula.key}" />
+    <label>nome:</label>
+    <input type="text" name="nome" value="${aula.nome}"/>
+    <br>
+    <label>via:</label>
+    <#assign luogo = (aula.luogo)?split(",")>
+    <input type="text" name="via" placeholder="inserire nome via" value="${luogo[0]}"/>
+    <br>
+    <label>n.civico:</label>
+    <input type="number" name="civico" value="${luogo[1]?number}"/>
+    <br>
+    <label>edificio</label>
+    <input type="text" name="edificio" value="${aula.edificio}"/>
+    <br>
+    <label>piano</label>
+    <input type="number" name="piano" min="1" value="${aula.piano?number}" />
+    <br>
+    <label>capienza</label>
+    <input type="number" name="capienza" min="1" value="${aula.capienza?number}" />
+    <br>
+    <label>prese elettriche</label>
+    <input type="number" name="prese_elettriche" min="1" value="${aula.numeroPreseElettriche?number}" />
+    <br>
+    <label>prese di rete</label>
+    <input type="number" name="prese_di_rete" min="1" value="${aula.numeroPreseDiRete?number}"/>
+    <br>
+    <label>note</label><br>
+    <textarea name="note">${aula.noteGeneriche}</textarea>
+    <h3>Responsabile</h3>
+    <table class="responsabile">
+        <#list responsabili as responsabile>
+        <#if responsabile.key == aula.responsabile.key>
+        <tr>
+            <td class="radio"><input type="radio" name="responsabile" id="input10" value="${responsabile.key}" checked/></td>
+            <td>${responsabile.email}</td>     
+        </tr>
+        <#else>
+        <tr>
+            <td class="radio"><input type="radio" name="responsabile" id="input10" value="${responsabile.key}"/></td>
+            <td>${responsabile.email}</td>     
+        </tr>
+        </#if>
+        </#list>
+    </table>
+
+    <h3>Gruppi</h3>
+    <p class="info">selezionare solo in caso di aggiornamento</p>
+    <#assign i=1>
+    <#list tipi_gruppo as tipo>
+    <#assign name="gruppo"+i>
+    <label>${tipo}:</label>
+    <select name="${name}">
+        <option value="0">nessuno</option>
+        <#list gruppi as gruppo>
+        <#if gruppo.tipoGruppo == tipo>
+        <option value="${gruppo.key}">${gruppo.nome}</option>
+        </#if>
+        </#list>
+
+
+    </select>
+    <br>
+    <#assign i=i+1>
+    </#list>
+
+    <h3>Attrezzature</h3>
+    <table class="attrezzatura">
+
+        <#assign i=1>
+        <#list attrezzature as attrezzatura>
+        <#assign name="attrezzatura"+i>
+        <#if attrezzatura.aulaKey == aula.key>
+        <tr>
+            <td class="checkbox"><input type="checkbox" name="${name}" value="${attrezzatura.key}" checked/></td>
+            <td class="extend">${attrezzatura.nome?lower_case}</td>
+            <td class="extend">${attrezzatura.numeroDiSerie?lower_case}</td>
+        </tr>
+        <#else>
+        <tr>
+            <td class="checkbox"><input type="checkbox" name="${name}" value="${attrezzatura.key}"/></td>
+            <td class="extend">${attrezzatura.nome?lower_case}</td>
+            <td class="extend">${attrezzatura.numeroDiSerie?lower_case}</td>
+        </tr>
+        </#if>
+        <#assign i=i+1>
+        </#list>
+
+    </table>
+
+    <button type="submit" name="modify_aula" value="1">inserisci</button>
+    <button type="submit" id="export_button" name="export_aula" value="1">esporta</button>
+    
+</form>
+

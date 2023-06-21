@@ -924,11 +924,22 @@ input[type="date"]{
 
 ********************************/
 
+
+
+.aule.administration .columns.center{
+
+    border-left:1px solid black;
+    padding-left: 2%;
+}
+
+
+
 .aule.administration p{
     font-size: xx-large;
     text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
     color: #add8e6;
     padding-top:0.5%;
+    text-align:left;
 }
 
 .aule.administration input{
@@ -1010,6 +1021,33 @@ input[type="date"]{
 .aule.administration button:disabled{
     color: #696969;
     pointer-events: none;
+}
+
+.aule.administration table.aula{
+    max-height: 200px;
+    overflow:auto;
+    margin-bottom: 3%;
+}
+
+.aule.administration table.aula td{
+    text-align: left;
+    
+}
+
+.aule.administration table.aula td.radio{
+    background-color: #add8e6;
+}
+
+.aule.administration table.aula td.extend{
+    padding: 4px;
+    
+}
+
+.aule.administration p.info{
+    font-style: italic;
+    font-size: small;
+    color: black;
+    text-shadow:none;
 }
 
 

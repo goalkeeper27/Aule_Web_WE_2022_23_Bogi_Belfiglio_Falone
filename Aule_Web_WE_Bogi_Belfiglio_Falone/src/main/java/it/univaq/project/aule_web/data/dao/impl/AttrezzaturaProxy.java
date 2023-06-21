@@ -22,7 +22,7 @@ public class AttrezzaturaProxy extends AttrezzaturaImpl implements DataItemProxy
     private boolean modified;
     protected DataLayer dataLayer;
 
-    protected int aulaKey;
+    protected Integer aulaKey;
 
     protected AttrezzaturaProxy(DataLayer d) {
         super();
@@ -30,46 +30,45 @@ public class AttrezzaturaProxy extends AttrezzaturaImpl implements DataItemProxy
         this.aulaKey = 0;
         this.dataLayer = d;
     }
-    
+
     @Override
-    public void setKey(Integer key){
+    public void setKey(Integer key) {
         super.setKey(key);
         this.modified = true;
     }
 
     @Override
     public Aula getAula() {
-        if (super.getAula() == null && this.aulaKey > 0) {
-            try {
-                super.setAula(((AulaDAO) dataLayer.getDAO(Aula.class)).getAula(aulaKey));
-            } catch (DataException ex) {
-                Logger.getLogger(AulaProxy.class.getName()).log(Level.SEVERE, null, ex);
+            if (super.getAula() == null && this.aulaKey > 0) {
+                try {
+                    super.setAula(((AulaDAO) dataLayer.getDAO(Aula.class)).getAula(aulaKey));
+                } catch (DataException ex) {
+                    Logger.getLogger(AulaProxy.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        }
         return super.getAula();
     }
-    
+
     @Override
-    public void setAula(Aula aula){
+    public void setAula(Aula aula) {
         super.setAula(aula);
-        if(aula != null){
+        if (aula != null) {
             this.aulaKey = aula.getKey();
-        }
-        else{
+        } else {
             this.aulaKey = 0;
         }
-        
+
         this.modified = true;
     }
-    
+
     @Override
-    public void setNome(String nome){
+    public void setNome(String nome) {
         super.setNome(nome);
         this.modified = true;
     }
-    
+
     @Override
-    public void setNumeroDiSerie(String numero){
+    public void setNumeroDiSerie(String numero) {
         super.setNumeroDiSerie(numero);
         this.modified = true;
     }
@@ -83,13 +82,13 @@ public class AttrezzaturaProxy extends AttrezzaturaImpl implements DataItemProxy
     public void setModified(boolean dirty) {
         this.modified = dirty;
     }
-    
-    public void setAulaKey(int key){
+
+    public void setAulaKey(Integer key) {
         this.aulaKey = key;
         super.setAula(null);
     }
-    
-    public int getAulaKey(){
+
+    public int getAulaKey() {
         return this.aulaKey;
     }
 

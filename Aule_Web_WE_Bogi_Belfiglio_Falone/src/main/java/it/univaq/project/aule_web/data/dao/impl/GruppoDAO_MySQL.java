@@ -10,6 +10,7 @@ import it.univaq.project.aule_web.framework.data.DataException;
 import it.univaq.project.aule_web.framework.data.DataItemProxy;
 import it.univaq.project.aule_web.framework.data.DataLayer;
 import it.univaq.project.aule_web.data.dao.GruppoDAO;
+import it.univaq.project.aule_web.data.model.Aula;
 import it.univaq.project.aule_web.framework.data.OptimisticLockException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,7 +27,7 @@ import java.util.logging.Logger;
  */
 public class GruppoDAO_MySQL extends DAO implements GruppoDAO {
 
-    private PreparedStatement sGruppoByTipoAndNome, sTipiGruppo, sAllGruppi;
+    private PreparedStatement sGruppoByTipoAndNome, sTipiGruppo, sAllGruppi, sGruppiByAula;
     private PreparedStatement iGruppo;
     private PreparedStatement uGruppo;
     private PreparedStatement dGruppo;
@@ -43,6 +44,7 @@ public class GruppoDAO_MySQL extends DAO implements GruppoDAO {
             sGruppoByTipoAndNome = connection.prepareStatement("SELECT * FROM Gruppo WHERE tipo = ? AND nome=?;");
             sTipiGruppo = connection.prepareStatement("SELECT DISTINCT tipo FROM gruppo; ");
             sAllGruppi = connection.prepareStatement("SELECT * FROM Gruppo;");
+            sGruppiByAula = connection.prepareStatement("SELECT G.* FROM gruppo G, associazione_aula_gruppo AG WHERE G.ID=AG.ID_gruppo and AG.ID_aula = ?");
             iGruppo = connection.prepareStatement("INSERT INTO gruppo (nome,tipo,descrizione) VALUES(?,?,?);", Statement.RETURN_GENERATED_KEYS);
             uGruppo = connection.prepareStatement("UPDATE gruppo SET nome=?,tipo=?,descrizione=?, versione=? WHERE ID=? AND versione=?;");
             dGruppo = connection.prepareStatement("DELETE FROM gruppo WHERE ID=?;");
@@ -56,6 +58,7 @@ public class GruppoDAO_MySQL extends DAO implements GruppoDAO {
             sGruppoByTipoAndNome.close();
             sTipiGruppo.close();
             sAllGruppi.close();
+            sGruppiByAula.close();
             iGruppo.close();
             uGruppo.close();
             dGruppo.close();
@@ -206,6 +209,25 @@ public class GruppoDAO_MySQL extends DAO implements GruppoDAO {
             while (rs.next()) {
                 Gruppo gruppo = createGruppo(rs);
                 gruppi.add(gruppo);
+            }
+
+        } catch (SQLException ex) {
+            throw new DataException("error DB", ex);
+        }
+
+        return gruppi;
+    }
+
+    @Override
+    public List<Gruppo> getGruppiByAula(Aula aula) throws DataException {
+        List<Gruppo> gruppi = new ArrayList<>();
+        try {
+            sGruppiByAula.setInt(1, aula.getKey());
+            try ( ResultSet rs = sGruppiByAula.executeQuery()) {
+                while (rs.next()) {
+                    Gruppo gruppo = createGruppo(rs);
+                    gruppi.add(gruppo);
+                }
             }
 
         } catch (SQLException ex) {

@@ -17,6 +17,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -26,6 +28,8 @@ public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO {
 
     private PreparedStatement sAttrezzaturaByAula, sAttrezzaturaDisponibile, sAttrezzaturaByID;
     private PreparedStatement iAttrezzatura, dAttrezzaturaByID, uAttrezzatura;
+    
+    private static final Logger LOGGER = Logger.getLogger(AttrezzaturaDAO_MySQL.class.getName());
 
     public AttrezzaturaDAO_MySQL(DataLayer d) {
         super(d);
@@ -77,6 +81,7 @@ public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO {
             attrezzatura.setAulaKey(rs.getInt("ID_aula"));
             attrezzatura.setNome(rs.getString("nome"));
             attrezzatura.setNumeroDiSerie(rs.getString("numero_di_serie"));
+            attrezzatura.setVersion(rs.getInt("versione"));
         } catch (SQLException ex) {
             throw new DataException("Impossibile creare l'oggetto Attrezzatura", ex);
         }
@@ -176,7 +181,8 @@ public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO {
             }
 
         } catch (SQLException | OptimisticLockException ex) {
-            throw new DataException("Non è stato possibile memorizzare l'attrezzatura", ex);
+            //throw new DataException("Non è stato possibile memorizzare l'attrezzatura", ex);
+            LOGGER.log(Level.SEVERE, "Si è verificata un'eccezione:");
         }
     }
 

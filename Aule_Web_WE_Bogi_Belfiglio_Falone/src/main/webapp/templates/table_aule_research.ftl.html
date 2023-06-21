@@ -1,0 +1,16 @@
+
+<table class="aula">
+    <tr>
+        <td></td>
+        <td class="extend">nome</td>
+    </tr>
+    <#assign i=1>
+    <#list aule as aula>
+    <#assign ID = "IDaula"+i>
+    <tr>
+        <td class="radio"><input type="radio" name="IDaula" value="${aula.key}"  onchange="checkAula()"/></td>
+        <td class="extend">${aula.nome}</td>     
+    </tr>
+    <#assign i=i+1>
+    </#list>
+</table>   

@@ -23,6 +23,10 @@ public interface AulaDAO {
     
     public List<Aula> getAuleByGruppoID(int gruppo_key) throws DataException;
     
+    public List<Aula> getAllAule() throws DataException;
+    
+    public List<Aula> getAuleByPartialName(String search) throws DataException;
+    
     // public List<Aula> getAuleByIDs(Aula aula) throws DataException;
     
     Integer storeAula(Aula aula, List<Integer> gruppi_keys)throws DataException;

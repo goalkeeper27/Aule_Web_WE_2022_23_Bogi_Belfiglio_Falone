@@ -28,10 +28,10 @@ import java.util.logging.Logger;
  */
 public class AulaDAO_MySQL extends DAO implements AulaDAO {
 
-    private PreparedStatement sAulaByID, sAuleByIDs, sAulaByNomeAndPosizione, sAuleByGruppoID;
+    private PreparedStatement sAulaByID, sAuleByIDs, sAulaByNomeAndPosizione, sAuleByGruppoID, sAllAule, sAuleByPartialName;
     private PreparedStatement iAula, iAssociationAulaGruppo;
     private PreparedStatement uAula;
-    private PreparedStatement dAula;
+    private PreparedStatement dAula, dAssociationAulaGruppo;
 
     public AulaDAO_MySQL(DataLayer d) {
         super(d);
@@ -43,17 +43,20 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
             super.init();
 
             sAulaByID = connection.prepareStatement("SELECT * FROM aula WHERE ID=?");
+            sAllAule = connection.prepareStatement("SELECT * FROM Aula");
             // sAuleByIDs =  connection.prepareStatement("SELECT ID FROM aula");
             // sAulaByID = connection.prepareStatement("SELECT * FROM aula WHERE GRUPPO=?");
             sAulaByNomeAndPosizione = connection.prepareStatement("SELECT * FROM aula WHERE nome=?, luogo=?,edificio=?,piano =?");
 
             sAuleByGruppoID = connection.prepareStatement("SELECT A.* FROM aula A, associazione_aula_gruppo AG, gruppo G WHERE "
                     + "G.ID = ? AND AG.ID_gruppo = G.ID AND A.ID = AG.ID_aula");
+            sAuleByPartialName = connection.prepareStatement("SELECT * FROM Aula A WHERE substring(A.nome,1,?) = ?");
 
             iAula = connection.prepareStatement("INSERT INTO aula (nome,luogo,edificio,piano,capienza,numero_prese_elettriche,numero_prese_di_rete,note_generiche,ID_responsabile) VALUES(?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             iAssociationAulaGruppo = connection.prepareStatement("INSERT INTO associazione_aula_gruppo(ID_aula, ID_gruppo) values (?,?)");
             uAula = connection.prepareStatement("UPDATE aula SET nome=?,luogo=?,edificio=?,piano=?,capienza=?,numero_prese_elettriche=?,numero_prese_di_rete=?,note_generiche = ?,ID_responsabile =?, versione=? WHERE ID=? and versione=?");
             dAula = connection.prepareStatement("DELETE FROM aula WHERE ID=?");
+            dAssociationAulaGruppo = connection.prepareStatement("DELETE FROM associazione_aula_gruppo WHERE ID_aula = ? and ID_gruppo = ?");
         } catch (SQLException ex) {
             throw new DataException("Errore durante l'inizializzazione del data layer", ex);
         }
@@ -68,6 +71,7 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
             iAssociationAulaGruppo.close();
             uAula.close();
             dAula.close();
+            dAssociationAulaGruppo.close();
 
         } catch (SQLException ex) {
 
@@ -139,7 +143,20 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
         return aula;
     }
 
-    private void storeAssociationAulaGruppi(int aula_key, List<Integer> gruppi_keys) throws DataException {
+    @Override
+    public List<Aula> getAllAule() throws DataException {
+        List<Aula> aule = new ArrayList<>();
+        try ( ResultSet rs = sAllAule.executeQuery()) {
+            while (rs.next()) {
+                aule.add(createAula(rs));
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Impossibile caricare Aula dal nome e dalla posizione digitati", ex);
+        }
+        return aule;
+    }
+
+    private void storeAssociationAulaGruppo(int aula_key, List<Integer> gruppi_keys) throws DataException {
         Aula aula = null;
         try {
             for (Integer gk : gruppi_keys) {
@@ -148,9 +165,21 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
                 iAssociationAulaGruppo.executeUpdate();
             }
         } catch (SQLException ex) {
-            throw new DataException("Impossibile caricare Aula dal nome e dalla posizione digitati", ex);
+            throw new DataException("Error DB", ex);
         }
 
+    }
+
+    private void deleteAssociationAulaGruppo(int aula_key, List<Integer> gruppi_keys) throws DataException {
+        try {
+            for (Integer gk : gruppi_keys) {
+                dAssociationAulaGruppo.setInt(1, aula_key);
+                dAssociationAulaGruppo.setInt(2, gk);
+                dAssociationAulaGruppo.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Error DB", ex);
+        }
     }
 
     @Override
@@ -188,6 +217,11 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
                 } else {
                     aula.setVersion(versioneSuccessiva);
                 }
+                if (!gruppi_keys.isEmpty()) {
+                    deleteAssociationAulaGruppo(aula.getKey(), gruppi_keys);
+                    storeAssociationAulaGruppo(aula.getKey(), gruppi_keys);
+                } 
+                return aula.getKey();
             } else { //insert
                 iAula.setString(1, aula.getNome());
                 iAula.setString(2, aula.getLuogo());
@@ -222,7 +256,7 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
                             //aggiornaimo la chiave in caso di inserimento
                             //after an insert, uopdate the object key
                             aula.setKey(key);
-                            storeAssociationAulaGruppi(key, gruppi_keys);
+                            storeAssociationAulaGruppo(key, gruppi_keys);
                             return key;
                             //inseriamo il nuovo oggetto nella cache
                             //add the new object to the cache
@@ -286,6 +320,24 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
         }
 
         return aule;
+    }
+
+    @Override
+    public List<Aula> getAuleByPartialName(String search) throws DataException {
+        List<Aula> aule = new ArrayList<>();
+        try {
+            sAuleByPartialName.setInt(1, search.length());
+            sAuleByPartialName.setString(2, search);
+            try ( ResultSet rs = sAuleByPartialName.executeQuery()) {
+                while (rs.next()) {
+                    aule.add(createAula(rs));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("error DB", ex);
+        }
+        return aule;
+
     }
 
 }

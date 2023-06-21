@@ -1,8 +1,8 @@
 <div class="aule administration">
     <div class="container">
-        <div class="three columns">
+        <div class="five columns">
             <p>Inserimento aule</p> 
-            <form method="GET" action="administration">
+            <form method="GET" action="administration" id="form_insert">
                 <input type="hidden" name="insert_aula" value="1" />
                 <label for="input1">nome:</label>
                 <input type="text" name="nome" id="input1" oninput="validateInputs()"/>
@@ -47,13 +47,13 @@
                 <#assign name="gruppo"+i>
                 <label>${tipo}:</label>
                 <select class="input11" name="${name}" onchange="validateInputs()">
-                    <option value="null">nessuno</option>
+                    <option value="0">nessuno</option>
                     <#list gruppi as gruppo>
                     <#if gruppo.tipoGruppo == tipo>
                     <option value="${gruppo.key}">${gruppo.nome}</option>
                     </#if>
                     </#list>
-                    
+
 
                 </select>
                 <br>
@@ -71,15 +71,38 @@
                         <td class="extend">${attrezzatura.nome?lower_case}</td>
                         <td class="extend">${attrezzatura.numeroDiSerie?lower_case}</td>
                     </tr>
-                     <#assign i=i+1>
+                    <#assign i=i+1>
                     </#list>
-                   
+
                 </table>
 
                 <button type="submit" id="button" disabled>inserisci</button>
-
-
+                <button id="import_button" onclick="">importa</button>
             </form> 
+        </div>
+
+        <div class="four columns center">
+            <p>Aggiornamento aule</p>
+            <form method="GET" action="administration">
+                <div class="ricercaForm">
+                    <label for="ricerca">Aula specifica:</label>
+                    <input type="text"  id="ricerca_aula" placeholder="nome aula" oninput="searchAula()"" />
+                    <!--<button type="submit" id="button_ricerca">cerca</button>-->
+                </div> 
+                <div id="table_aule"><table class="aula">
+                        <tr>
+                            <td></td>
+                            <td class="extend">nome</td>
+                        </tr>
+                        <#list aule as aula>
+                        <tr>
+                            <td class="radio"><input type="radio" name="IDaula" value="${aula.key}"  id="IDaula" onchange="checkAula()"/></td>
+                            <td class="extend">${aula.nome}</td>     
+                        </tr>
+                        </#list>
+                    </table></div>
+            </form>          
+            <div id="aula_update"></div>
         </div>
     </div>
 </div>
