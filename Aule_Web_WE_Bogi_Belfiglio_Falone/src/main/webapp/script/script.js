@@ -45,6 +45,51 @@ input_settimana.addEventListener('input', function (event) {
 });
 
 
+function showFineRicorrenza(){
+    let radioButtons = document.getElementsByName('ricorrenza');
+    let data_fine_ricorrenza = document.getElementsByClassName('fine_ricorrenza');
+    
+    let ultimoRadio = radioButtons[radioButtons.length - 1];
+    
+    if (ultimoRadio.checked) {
+        for(let i = 0; i < data_fine_ricorrenza.length; i++){
+            data_fine_ricorrenza[i].style.display = 'none';
+        }
+    } else {
+        for(let i = 0; i < data_fine_ricorrenza.length; i++){
+            data_fine_ricorrenza[i].style.display = 'block';
+        }
+    }
+}
+
+
+
+function modify_state_button(id_button, ...ids_date) {
+    let button = document.getElementById(id_button);
+    let input_date = [];
+    for (let i = 0; i < ids_date.length; i++) {
+        input_date[i] = document.getElementById(ids_date[i]);
+    }
+    button.disabled = true;
+
+    for (let i = 0; i < ids_date.length; i++) {
+        input_settimana[i].addEventListener('input', function () {
+
+            for (let i = 0; i < ids_date.length; i++) {
+                if (input_settimana[i].value !== "")
+                    return;
+
+            }
+            button.disabled = false;
+
+        });
+
+    }
+
+
+
+}
+
 
 
 
@@ -148,6 +193,69 @@ function checkAula() {
     };
     xhr.send();
 }
+
+function validateEventsInputs() {
+    var input1 = document.getElementById("input1Ev").value;
+    var input2 = document.getElementById("input2Ev").value;
+    var input4 = document.getElementById("input4Ev").value;
+    var input5 = document.getElementById("input5Ev").value;
+    var input6 = document.getElementById("input6Ev").value;
+    var inputTipologia = document.getElementsByTagName("input[name='tipologia']");
+    var inputRicorrenza = document.getElementsByTagName("input[name='ricorrenza']");
+    var inputCorsi = document.getElementsByTagName("input[name='corsi']");
+    var inputAule = document.getElementsByTagName("input[name='aule']");
+    var inputResponsabili = document.getElementsByTagName("input[name='responsabile']");
+    var button = document.getElementById("buttonEvents");
+    
+    let selezionatiTipologia = false;
+    let selezionatiRicorrenza = false;
+    let selezionatiCorso = false;
+    let selezionatiAula = false;
+    let selezionatiResponsabile = false;
+
+    for (let i = 0; i < inputTipologia.length; i++) {
+        if (inputTipologia[i].checked) {
+          selezionatiTipologia = true;
+          break;
+        }
+      }
+      
+    for (let i = 0; i < inputRicorrenza.length; i++) {
+        if (inputRicorrenza[i].checked) {
+          selezionatiRicorrenza = true;
+          break;
+        }
+    }
+    
+    for (let i = 0; i < inputCorsi.length; i++) {
+        if (inputCorsi[i].checked) {
+          selezionatiCorso = true;
+          break;
+        }
+    }
+    
+    for (let i = 0; i < inputAule.length; i++) {
+        if (inputAule[i].checked) {
+          selezionatiAula = true;
+          break;
+        }
+    }
+    
+    for (let i = 0; i < inputResponsabili.length; i++) {
+        if (inputResponsabili[i].checked) {
+          selezionatiResponsabile = true;
+          break;
+        }
+    }
+    
+    if (selezionatiTipologia && selezionatiRicorrenza && selezionatiCorso && selezionatiAula &&
+            selezionatiResponsabile && input1.checked && input2.checked && input4.checked && input5.checked && input6.checked) {
+        button.disabled = false;
+    } else {
+        button.disabled = true;
+    }
+}
+
 
 
 

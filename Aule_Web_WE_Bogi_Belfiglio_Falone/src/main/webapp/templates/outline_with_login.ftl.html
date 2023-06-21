@@ -16,14 +16,13 @@
         <#if mex?has_content && !operation?has_content>
         
         <p>${mex}</p>
+
         <#list attrezzature as a>
         <p>${a.key},${a.nome}, ${a.numeroDiSerie}, ${a.version}</p> 
         </#list>
-    
-        
-        
-       
+
         </#if>
+
 
         <#include "base/footer.html">
 

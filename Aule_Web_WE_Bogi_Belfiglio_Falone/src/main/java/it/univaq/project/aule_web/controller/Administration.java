@@ -9,10 +9,16 @@ import it.univaq.project.aule_web.data.comparator.EventoComparator;
 import it.univaq.project.aule_web.data.dao.impl.AttrezzaturaProxy;
 import it.univaq.project.aule_web.data.dao.impl.AulaProxy;
 import it.univaq.project.aule_web.data.dao.impl.AuleWebDataLayer;
+import it.univaq.project.aule_web.data.dao.impl.EventoProxy;
 import it.univaq.project.aule_web.data.dao.impl.GruppoProxy;
 import it.univaq.project.aule_web.data.impl.AulaImpl;
 import it.univaq.project.aule_web.data.model.Attrezzatura;
 import it.univaq.project.aule_web.data.model.Aula;
+import it.univaq.project.aule_web.data.model.Evento;
+import it.univaq.project.aule_web.data.model.EventoRicorrente;
+import it.univaq.project.aule_web.data.model.Gruppo;
+import it.univaq.project.aule_web.data.model.enumerable.Ricorrenza;
+import it.univaq.project.aule_web.data.model.enumerable.Tipologia;
 import it.univaq.project.aule_web.framework.data.DataException;
 import it.univaq.project.aule_web.framework.result.TemplateResult;
 import it.univaq.project.aule_web.framework.security.SecurityHelpers;
@@ -35,7 +41,15 @@ import it.univaq.project.aule_web.framework.security.SecurityHelpers;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import java.time.LocalDate;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -283,6 +297,100 @@ public class Administration extends AuleWebBaseController {
         data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));
     
         data.put("outline_tpl", "outline_with_login.ftl.html");
+        data.put("gruppo", gruppo);
+        data.put("mex", "inserimento gruppo avvenuto con successo");
+        TemplateResult res = new TemplateResult(getServletContext());
+        res.activate("", data, response);
+
+    }
+    private void action_eventi(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
+        Map data = new HashMap<>();
+        data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));
+        data.put("outline_tpl", "");
+        
+        data.put("corsi", ((AuleWebDataLayer) request.getAttribute("datalayer")).getCorsoDAO().getAllCorsi());
+        data.put("aule", ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().getAllAule());
+        data.put("responsabili", ((AuleWebDataLayer) request.getAttribute("datalayer")).getResponsabileDAO().getAllResponsabili());
+        
+        TemplateResult res = new TemplateResult(getServletContext());
+        res.activate("eventi_administration.ftl.html", data, response);
+    }
+    
+    private void action_insert_evento(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
+        Evento evento = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().createEvento();
+        EventoRicorrente eventoRicorrente;
+        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
+        evento.setKey(null);
+        evento.setNome(request.getParameter("nome"));
+        evento.setDescrizione(request.getParameter("descrizione"));
+        int scelta_tipologia = SecurityHelpers.checkNumeric(request.getParameter("tipologia"));
+        switch(scelta_tipologia){
+            case 1:
+                evento.setTipologia(Tipologia.LEZIONE);
+                ((EventoProxy) evento).setCorsoKey(SecurityHelpers.checkNumeric(request.getParameter("corsi")));
+                break;
+            case 2:
+                evento.setTipologia(Tipologia.ESAME);
+                ((EventoProxy) evento).setCorsoKey(SecurityHelpers.checkNumeric(request.getParameter("corsi")));
+                break; 
+            case 3:
+                evento.setTipologia(Tipologia.SEMINARIO);
+                ((EventoProxy) evento).setCorsoKey(0);
+                break;
+            case 4:
+                evento.setTipologia(Tipologia.PARZIALE);
+                ((EventoProxy) evento).setCorsoKey(SecurityHelpers.checkNumeric(request.getParameter("corsi")));
+                break;
+            case 5:
+                evento.setTipologia(Tipologia.RIUNIONE);
+                ((EventoProxy) evento).setCorsoKey(0);
+                break;
+            case 6:
+                evento.setTipologia(Tipologia.LAUREE);
+                ((EventoProxy) evento).setCorsoKey(0);
+                break;
+            case 7:
+                evento.setTipologia(Tipologia.ALTRO);
+                ((EventoProxy) evento).setCorsoKey(0);
+                break;
+        }
+        evento.setDataEvento(LocalDate.parse(request.getParameter("data"),formatterDate));
+        evento.setOraInizio(LocalTime.parse(request.getParameter("ora_inizio"),formatterTime));
+        evento.setOraFine(LocalTime.parse(request.getParameter("ora_fine"),formatterTime));
+        int scelta_ricorrenza = SecurityHelpers.checkNumeric(request.getParameter("ricorrenza"));
+        switch(scelta_ricorrenza){
+            case 8:
+                evento.setRicorrenza(Ricorrenza.GIORNALIERA);
+                evento.setDataFineRicorrenza(LocalDate.parse(request.getParameter("data_fine_ricorrenza"),formatterDate));
+                break;
+            case 9:
+                evento.setRicorrenza(Ricorrenza.SETTIMANALE);
+                evento.setDataFineRicorrenza(LocalDate.parse(request.getParameter("data_fine_ricorrenza"),formatterDate));
+                break;
+            case 10:
+                evento.setRicorrenza(Ricorrenza.MENSILE);
+                evento.setDataFineRicorrenza(LocalDate.parse(request.getParameter("data_fine_ricorrenza"),formatterDate));
+                break;
+            case 11:
+                evento.setRicorrenza(Ricorrenza.NESSUNA);
+                evento.setDataFineRicorrenza(LocalDate.now());
+                break;
+        }
+
+        ((EventoProxy) evento).setAulaKey(SecurityHelpers.checkNumeric(request.getParameter("aule")));
+        ((EventoProxy) evento).setResponsabileKey(SecurityHelpers.checkNumeric(request.getParameter("responsabile")));
+
+        ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().storeEvento(evento);
+        
+        Map data = new HashMap<>();
+        data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));
+        data.put("outline_tpl", "outline_with_login.ftl.html");
+        data.put("evento", evento);
+        data.put("mex", "inserimento aula avvenuto con successo");
+        TemplateResult res = new TemplateResult(getServletContext());
+        res.activate("", data, response);
+
     }
 
     /**
@@ -302,6 +410,7 @@ public class Administration extends AuleWebBaseController {
                 if (request.getParameter("operation") != null) {
                     switch (Integer.parseInt(request.getParameter("operation"))) {
                         case 1:
+                            action_eventi(request, response);
                             break;
                         case 2:
                             if (request.getParameter("search") != null) {
@@ -326,8 +435,9 @@ public class Administration extends AuleWebBaseController {
                     action_export_aula(request, response);
                 } else if (request.getParameter("insert_gruppo") != null) {
                     action_insert_gruppo(request, response);
-                } else {
-
+                }else if (request.getParameter("insert_eventi") != null) {
+                    action_insert_evento(request, response);
+                }else {
                     action_default(request, response);
                 }
             } else {
