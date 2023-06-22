@@ -28,7 +28,6 @@ import java.util.logging.Logger;
  */
 public class AulaDAO_MySQL extends DAO implements AulaDAO {
 
-
     private PreparedStatement sAulaByID, sAuleByIDs, sAulaByNomeAndPosizione, sAuleByGruppoID, sAllAule, sAuleByPartialName;
     private PreparedStatement iAula, iAssociationAulaGruppo;
     private PreparedStatement uAula;
@@ -48,7 +47,7 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
             // sAuleByIDs =  connection.prepareStatement("SELECT ID FROM aula");
             // sAulaByID = connection.prepareStatement("SELECT * FROM aula WHERE GRUPPO=?");
             sAulaByNomeAndPosizione = connection.prepareStatement("SELECT * FROM aula WHERE nome=?, luogo=?,edificio=?,piano =?");
-            sAllAule = connection.prepareStatement("SELECT * FROM aula");
+
             sAuleByGruppoID = connection.prepareStatement("SELECT A.* FROM aula A, associazione_aula_gruppo AG, gruppo G WHERE "
                     + "G.ID = ? AND AG.ID_gruppo = G.ID AND A.ID = AG.ID_aula");
             sAuleByPartialName = connection.prepareStatement("SELECT * FROM Aula A WHERE substring(A.nome,1,?) = ?");
@@ -68,7 +67,6 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
             sAulaByID.close();
             sAulaByNomeAndPosizione.close();
             sAuleByGruppoID.close();
-            sAllAule.close();
             iAula.close();
             iAssociationAulaGruppo.close();
             uAula.close();
@@ -143,6 +141,19 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
             throw new DataException("Impossibile caricare Aula dal nome e dalla posizione digitati", ex);
         }
         return aula;
+    }
+
+    @Override
+    public List<Aula> getAllAule() throws DataException {
+        List<Aula> aule = new ArrayList<>();
+        try ( ResultSet rs = sAllAule.executeQuery()) {
+            while (rs.next()) {
+                aule.add(createAula(rs));
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Impossibile caricare Aula dal nome e dalla posizione digitati", ex);
+        }
+        return aule;
     }
 
     private void storeAssociationAulaGruppo(int aula_key, List<Integer> gruppi_keys) throws DataException {
@@ -326,21 +337,7 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
             throw new DataException("error DB", ex);
         }
         return aule;
-    }
-   
-    @Override
-    public List<Aula> getAllAule() throws DataException {
-        List<Aula> aule = new ArrayList<>();
-        try{
-            try ( ResultSet rs = sAllAule.executeQuery()) {
-                while(rs.next()) {
-                    aule.add(createAula(rs));
-                }
-            }
-        }catch (SQLException ex) {
-            throw new DataException("Errore nella visualizzazione di tutte le aule", ex);
-        }
-        return aule;
+
     }
 
 }

@@ -45,61 +45,16 @@ input_settimana.addEventListener('input', function (event) {
 });
 
 
-function showFineRicorrenza(){
-    let radioButtons = document.getElementsByName('ricorrenza');
-    let data_fine_ricorrenza = document.getElementsByClassName('fine_ricorrenza');
-    
-    let ultimoRadio = radioButtons[radioButtons.length - 1];
-    
-    if (ultimoRadio.checked) {
-        for(let i = 0; i < data_fine_ricorrenza.length; i++){
-            data_fine_ricorrenza[i].style.display = 'none';
-        }
-    } else {
-        for(let i = 0; i < data_fine_ricorrenza.length; i++){
-            data_fine_ricorrenza[i].style.display = 'block';
-        }
-    }
-}
-
-
-
-function modify_state_button(id_button, ...ids_date) {
-    let button = document.getElementById(id_button);
-    let input_date = [];
-    for (let i = 0; i < ids_date.length; i++) {
-        input_date[i] = document.getElementById(ids_date[i]);
-    }
-    button.disabled = true;
-
-    for (let i = 0; i < ids_date.length; i++) {
-        input_settimana[i].addEventListener('input', function () {
-
-            for (let i = 0; i < ids_date.length; i++) {
-                if (input_settimana[i].value !== "")
-                    return;
-
-            }
-            button.disabled = false;
-
-        });
-
-    }
-
-
-
-}
-
 
 
 
 function sendInfo() {
 
-    var xhr = new XMLHttpRequest();
-    var form = document.getElementById("select_form");
+    let xhr = new XMLHttpRequest();
+    let form = document.getElementById("select_form");
 
     let id = form.operation.value;
-    var url = "administration?operation=" + id;
+    let url = "administration?operation=" + id;
 
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -154,47 +109,23 @@ function validateInputs() {
 }
 
 
-function searchAula() {
-    let xhr = new XMLHttpRequest();
-    let input = document.getElementById("ricerca_aula");
-    let str = input.value;
-
-    let url = "administration?operation=2&search=" + str;
-
-    xhr.open("GET", url, true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            var rispostaDiv = document.getElementById("table_aule");
-            rispostaDiv.innerHTML = xhr.responseText;
+function showFineRicorrenza(){
+    let radioButtons = document.getElementsByName('ricorrenza');
+    let data_fine_ricorrenza = document.getElementsByClassName('fine_ricorrenza');
+    
+    let ultimoRadio = radioButtons[radioButtons.length - 1];
+    
+    if (ultimoRadio.checked) {
+        for(let i = 0; i < data_fine_ricorrenza.length; i++){
+            data_fine_ricorrenza[i].style.display = 'none';
         }
-    };
-    xhr.send();
-
+    } else {
+        for(let i = 0; i < data_fine_ricorrenza.length; i++){
+            data_fine_ricorrenza[i].style.display = 'block';
+        }
+    }
 }
 
-
-function checkAula() {
-    let xhr = new XMLHttpRequest();
-    let radio = document.querySelector('input[name="IDaula"]:checked');
-
-    let id = radio.value;
-    //alert(id);
-
-    let url = "administration?operation=2&IDaula=" + id;
-
-    xhr.open("GET", url, true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function () {
-      alert("ok");  
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            
-            var rispostaDiv = document.getElementById("aula_update");
-            rispostaDiv.innerHTML = xhr.responseText;
-        }
-    };
-    xhr.send();
-}
 
 function validateEventsInputs() {
     var input1 = document.getElementById("input1Ev").value;
@@ -258,6 +189,46 @@ function validateEventsInputs() {
     }
 }
 
+
+function searchAula() {
+    let xhr = new XMLHttpRequest();
+    let input = document.getElementById("ricerca_aula");
+    let str = input.value;
+
+    let url = "administration?operation=2&search=" + str;
+
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            let rispostaDiv = document.getElementById("table_aule");
+            rispostaDiv.innerHTML = xhr.responseText;
+        }
+    };
+    xhr.send();
+
+}
+
+
+function checkAula() {
+    let xhr = new XMLHttpRequest();
+    let radio = document.querySelector('input[name="IDaula"]:checked');
+
+    let id = radio.value;
+    //alert(id);
+
+    let url = "administration?operation=2&IDaula=" + id;
+
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () { 
+        if (xhr.readyState === 4 && xhr.status === 200) {   
+            let rispostaDiv = document.getElementById("aula_update");
+            rispostaDiv.innerHTML = xhr.responseText;
+        }
+    };
+    xhr.send();
+}
 
 
 
