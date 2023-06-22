@@ -19,11 +19,11 @@ public interface AulaDAO {
     
     public Aula getAula(int key) throws DataException;
     
+    public List<Aula> getAllAule() throws DataException;
+    
     public Aula getAulaByNomeAndPosizione(String nome, String luogo, String edificio, int piano) throws DataException;
     
     public List<Aula> getAuleByGruppoID(int gruppo_key) throws DataException;
-    
-    public List<Aula> getAllAule() throws DataException;
     
     public List<Aula> getAuleByPartialName(String search) throws DataException;
     
