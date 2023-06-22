@@ -69,7 +69,7 @@ function sendInfo() {
 
 
 function validateInputs() {
-    
+
     let input1 = document.getElementById("input1").value;
     let input2 = document.getElementById("input2").value;
     let input3 = document.getElementById("input3").value;
@@ -109,21 +109,65 @@ function validateInputs() {
 }
 
 
-function showFineRicorrenza(){
+
+function showFineRicorrenza() {
     let radioButtons = document.getElementsByName('ricorrenza');
     let data_fine_ricorrenza = document.getElementsByClassName('fine_ricorrenza');
-    
+
     let ultimoRadio = radioButtons[radioButtons.length - 1];
-    
+
     if (ultimoRadio.checked) {
-        for(let i = 0; i < data_fine_ricorrenza.length; i++){
+        for (let i = 0; i < data_fine_ricorrenza.length; i++) {
             data_fine_ricorrenza[i].style.display = 'none';
         }
     } else {
-        for(let i = 0; i < data_fine_ricorrenza.length; i++){
+        for (let i = 0; i < data_fine_ricorrenza.length; i++) {
             data_fine_ricorrenza[i].style.display = 'block';
         }
     }
+}
+
+function searchAula() {
+    let xhr = new XMLHttpRequest();
+    let input = document.getElementById("ricerca_aula");
+    let str = input.value;
+
+    let url = "administration?operation=2&search=" + str;
+
+
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var rispostaDiv = document.getElementById("table_aule");
+            rispostaDiv.innerHTML = xhr.responseText;
+        }
+    };
+    xhr.send();
+
+
+}
+
+
+function checkAula() {
+    let xhr = new XMLHttpRequest();
+    let radio = document.querySelector('input[name="IDaula"]:checked');
+
+    let id = radio.value;
+    //alert(id);
+
+    let url = "administration?operation=2&IDaula=" + id;
+    alert(url);
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            alert("ciao");
+            var rispostaDiv = document.getElementById("aula_update");
+            rispostaDiv.innerHTML = xhr.responseText;
+        }
+    };
+    xhr.send();
 }
 
 
@@ -139,7 +183,7 @@ function validateEventsInputs() {
     var inputAule = document.getElementsByTagName("input[name='aule']");
     var inputResponsabili = document.getElementsByTagName("input[name='responsabile']");
     var button = document.getElementById("buttonEvents");
-    
+
     let selezionatiTipologia = false;
     let selezionatiRicorrenza = false;
     let selezionatiCorso = false;
@@ -148,39 +192,39 @@ function validateEventsInputs() {
 
     for (let i = 0; i < inputTipologia.length; i++) {
         if (inputTipologia[i].checked) {
-          selezionatiTipologia = true;
-          break;
+            selezionatiTipologia = true;
+            break;
         }
-      }
-      
+    }
+
     for (let i = 0; i < inputRicorrenza.length; i++) {
         if (inputRicorrenza[i].checked) {
-          selezionatiRicorrenza = true;
-          break;
+            selezionatiRicorrenza = true;
+            break;
         }
     }
-    
+
     for (let i = 0; i < inputCorsi.length; i++) {
         if (inputCorsi[i].checked) {
-          selezionatiCorso = true;
-          break;
+            selezionatiCorso = true;
+            break;
         }
     }
-    
+
     for (let i = 0; i < inputAule.length; i++) {
         if (inputAule[i].checked) {
-          selezionatiAula = true;
-          break;
+            selezionatiAula = true;
+            break;
         }
     }
-    
+
     for (let i = 0; i < inputResponsabili.length; i++) {
         if (inputResponsabili[i].checked) {
-          selezionatiResponsabile = true;
-          break;
+            selezionatiResponsabile = true;
+            break;
         }
     }
-    
+
     if (selezionatiTipologia && selezionatiRicorrenza && selezionatiCorso && selezionatiAula &&
             selezionatiResponsabile && input1.checked && input2.checked && input4.checked && input5.checked && input6.checked) {
         button.disabled = false;
@@ -221,8 +265,8 @@ function checkAula() {
 
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function () { 
-        if (xhr.readyState === 4 && xhr.status === 200) {   
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
             let rispostaDiv = document.getElementById("aula_update");
             rispostaDiv.innerHTML = xhr.responseText;
         }

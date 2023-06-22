@@ -41,7 +41,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+
 import java.security.MessageDigest;
+
+
+import java.security.MessageDigest;
+
+import java.time.LocalDate;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -61,12 +71,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
- 
 
 /**
-*
-* @author acer
-*/
+ *
+ * @author acer
+ */
+
 @MultipartConfig
 public class Administration extends AuleWebBaseController {
 
@@ -167,6 +177,37 @@ public class Administration extends AuleWebBaseController {
 
  
 
+    }
+    
+    private void action_import_aula(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException, TemplateManagerException, DataException {
+        Part file_to_upload = request.getPart("file_to_upload");
+        
+        //create a file (with a unique name) and copy the uploaded file to it
+        //creiamo un nuovo file (con nome univoco) e copiamoci il file scaricato
+        File uploaded_file = File.createTempFile("import_","",new File(getServletContext().getRealPath("CSV")));
+        try ( InputStream is = file_to_upload.getInputStream();  OutputStream os = new FileOutputStream(uploaded_file)) {
+            byte[] buffer = new byte[1024];
+            int read;
+            while ((read = is.read(buffer)) > 0) {
+                os.write(buffer, 0, read);
+            }
+        }
+        Map data = new HashMap<>();
+        data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));
+        data.put("outline_tpl", "outline_with_login.ftl.html");
+        data.put("mex","aoooooooooooooooo");
+        Map<String,String> input = CSVResult.readCSVAulaFile(uploaded_file);
+        Aula aula = ((AuleWebDataLayer)request.getAttribute("datalayer")).getAulaDAO().createAula();
+        aula.setNome(input.get("nome"));
+        aula.setLuogo(input.get("luogo"));
+        aula.setEdificio(input.get("edificio"));
+        aula.setPiano(SecurityHelpers.checkNumeric(input.get("piano")));
+        aula.setCapienza(SecurityHelpers.checkNumeric(input.get("capienza")));
+        aula.setNumeroPreseElettriche(SecurityHelpers.checkNumeric(input.get("prese_elettriche")));
+        aula.setNumeroPreseDiRete(SecurityHelpers.checkNumeric(input.get("prese_di_rete")));
+        aula.setNoteGeneriche(input.get("note"));
+        TemplateResult res = new TemplateResult(getServletContext());
+        res.activate("", data, response);
     }
 
  /*   private void action_import_aula(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException, TemplateManagerException, DataException {
@@ -522,7 +563,7 @@ public class Administration extends AuleWebBaseController {
                 } else if (request.getParameter("export_aula") != null) {
                     action_export_aula(request, response);
                 } else if(request.getContentType() != null && request.getContentType().startsWith("multipart/form-data")){
-     //               action_import_aula(request, response);
+                    action_import_aula(request, response);
                 }else if (request.getParameter("insert_gruppo") != null) {
                     action_insert_gruppo(request, response);
                 }else if (request.getParameter("insert_evento") != null) {
@@ -556,10 +597,6 @@ public class Administration extends AuleWebBaseController {
         return "Short description";
     }// </editor-fold>
 
- 
-
-    
-
- 
 
 }
+

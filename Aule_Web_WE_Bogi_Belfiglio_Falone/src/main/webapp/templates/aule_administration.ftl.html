@@ -1,7 +1,11 @@
 <div class="aule administration">
     <div class="container">
         <div class="five columns">
+            <<<<<<< HEAD
             <p>Inserimento aule</p>
+            =======
+            <p>Inserimento aule</p> 
+            >>>>>>> af382b92b72a276ce17583613ac19ee4decaed57
             <form method="post" action="administration" id="form_insert" >
                 <label for="input1">nome:</label>
                 <input type="text" name="nome" id="input1" oninput="validateInputs()"/>
@@ -76,12 +80,17 @@
                 </table>
 
                 <button type="submit" name="insert_aula" value="1" id="button" disabled>inserisci</button><br>
+
             </form>
+
+
             <form method="post" action="administration" enctype='multipart/form-data'>
                 <input type="file" name="file_to_upload" /><br>
                 <input type="hidden" name="import_aula" value="1" />
                 <button type="submit"  id="import_button">importa</button>
-            </form>
+
+            </form> 
+
         </div>
 
         <div class="four columns center">
@@ -91,6 +100,7 @@
                     <label for="ricerca">Aula specifica:</label>
                     <input type="text"  id="ricerca_aula" placeholder="nome aula" oninput="searchAula()" />
                 </div>
+
                 <div id="table_aule"><table class="aula">
                         <tr>
                             <td></td>
