@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  */
 public class GruppoDAO_MySQL extends DAO implements GruppoDAO {
 
-    private PreparedStatement sGruppoByTipoAndNome, sTipiGruppo, sAllGruppi, sGruppiByAula;
+    private PreparedStatement sGruppoByTipoAndNome, sTipiGruppo, sAllGruppi, sGruppiByAula,sGruppobyID;
     private PreparedStatement iGruppo;
     private PreparedStatement uGruppo;
     private PreparedStatement dGruppo;
@@ -40,7 +40,7 @@ public class GruppoDAO_MySQL extends DAO implements GruppoDAO {
 
         try {
             super.init();
-
+            sGruppobyID = connection.prepareStatement("SELECT * FROM Gruppo WHERE id=?;");
             sGruppoByTipoAndNome = connection.prepareStatement("SELECT * FROM Gruppo WHERE tipo = ? AND nome=?;");
             sTipiGruppo = connection.prepareStatement("SELECT DISTINCT tipo FROM gruppo; ");
             sAllGruppi = connection.prepareStatement("SELECT * FROM Gruppo;");
@@ -235,6 +235,24 @@ public class GruppoDAO_MySQL extends DAO implements GruppoDAO {
         }
 
         return gruppi;
+    }
+
+    @Override
+    public Gruppo getGruppo(int key) throws DataException {
+        Gruppo gruppo = null;
+        try {
+
+            sGruppobyID.setInt(1, key);
+
+            try ( ResultSet rs = sGruppobyID.executeQuery()) {
+                if (rs.next()) {
+                    gruppo = createGruppo(rs);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Impossibile caricareGruppo da ID", ex);
+        }
+        return gruppo;
     }
 
 }

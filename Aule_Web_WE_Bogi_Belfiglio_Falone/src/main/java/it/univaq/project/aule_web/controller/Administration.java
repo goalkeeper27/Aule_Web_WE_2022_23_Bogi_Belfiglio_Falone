@@ -342,6 +342,34 @@ public class Administration extends AuleWebBaseController {
         res.activate("", data, response);
 
     }
+    private void action_modify_gruppo(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
+        Gruppo gruppo = ((AuleWebDataLayer) request.getAttribute("datalayer")).getGruppoDAO().getGruppo(SecurityHelpers.checkNumeric(request.getParameter("IDaula")));
+
+        if (!gruppo.getNome().equals(request.getParameter("nome"))) {
+            gruppo.setNome(request.getParameter("nome"));
+        }
+        if (!gruppo.getTipoGruppo().equals(request.getParameter("tipo"))) {
+            gruppo.setTipoGruppo(request.getParameter("tipo"));
+        }
+        if (!gruppo.getDescrizione().equals(request.getParameter("descrizione"))) {
+            gruppo.setDescrizione(request.getParameter("descrizione"));
+        }
+        
+        Map data = new HashMap<>();
+        data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));
+        data.put("outline_tpl", "outline_with_login.ftl.html");
+        data.put("gruppo", gruppo);
+        data.put("mex", "aggiornamento gruppo avvenuto con successo");
+        TemplateResult res = new TemplateResult(getServletContext());
+        res.activate("", data, response);
+    }
+    
+    
+    
+    
+    
+    
+    
     private void action_eventi(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
         Map data = new HashMap<>();
         data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));
@@ -476,9 +504,16 @@ public class Administration extends AuleWebBaseController {
                     action_import_aula(request, response);
                 }else if (request.getParameter("insert_gruppo") != null) {
                     action_insert_gruppo(request, response);
+                    
+                }else if (request.getParameter("modify_gruppo") != null) {
+                    action_modify_gruppo(request, response);
+                    
                 }else if (request.getParameter("insert_eventi") != null) {
                     action_insert_evento(request, response);
-                }else {
+                }
+                
+                
+                else {
                     action_default(request, response);
                 }
             } else {

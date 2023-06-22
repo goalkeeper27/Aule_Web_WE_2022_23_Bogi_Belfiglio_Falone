@@ -16,6 +16,8 @@ import java.util.List;
 public interface GruppoDAO {
     
     public Gruppo createGruppo();
+     
+    public Gruppo getGruppo(int key) throws DataException;
     
     public Gruppo getGruppoByTipoAndNome(String tipo, String nome) throws DataException;
     
