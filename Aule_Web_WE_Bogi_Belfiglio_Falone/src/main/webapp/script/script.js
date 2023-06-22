@@ -50,11 +50,11 @@ input_settimana.addEventListener('input', function (event) {
 
 function sendInfo() {
 
-    var xhr = new XMLHttpRequest();
-    var form = document.getElementById("select_form");
+    let xhr = new XMLHttpRequest();
+    let form = document.getElementById("select_form");
 
     let id = form.operation.value;
-    var url = "administration?operation=" + id;
+    let url = "administration?operation=" + id;
 
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -115,6 +115,7 @@ function searchAula() {
     let str = input.value;
 
     let url = "administration?operation=2&search=" + str;
+    
 
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -134,14 +135,15 @@ function checkAula() {
     let radio = document.querySelector('input[name="IDaula"]:checked');
 
     let id = radio.value;
-    alert(id);
+    //alert(id);
 
     let url = "administration?operation=2&IDaula=" + id;
-
+    alert(url);
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
+            alert("ciao");
             var rispostaDiv = document.getElementById("aula_update");
             rispostaDiv.innerHTML = xhr.responseText;
         }

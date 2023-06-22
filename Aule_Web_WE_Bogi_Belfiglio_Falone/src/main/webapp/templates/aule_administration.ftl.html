@@ -2,8 +2,7 @@
     <div class="container">
         <div class="five columns">
             <p>Inserimento aule</p> 
-            <form method="GET" action="administration" id="form_insert">
-                <input type="hidden" name="insert_aula" value="1" />
+            <form method="post" action="administration" id="form_insert" >
                 <label for="input1">nome:</label>
                 <input type="text" name="nome" id="input1" oninput="validateInputs()"/>
                 <br>
@@ -76,8 +75,12 @@
 
                 </table>
 
-                <button type="submit" id="button" disabled>inserisci</button>
-                <button id="import_button" onclick="">importa</button>
+                <button type="submit" name="insert_aula" value="1" id="button" disabled>inserisci</button><br>
+            </form>    
+            <form method="post" action="administration" enctype='multipart/form-data'>
+                <input type="file" name="file_to_upload" /><br>
+                <input type="hidden" name="import_aula" value="1" />
+                <button type="submit"  id="import_button">importa</button>
             </form> 
         </div>
 
@@ -87,7 +90,6 @@
                 <div class="ricercaForm">
                     <label for="ricerca">Aula specifica:</label>
                     <input type="text"  id="ricerca_aula" placeholder="nome aula" oninput="searchAula()"" />
-                    <!--<button type="submit" id="button_ricerca">cerca</button>-->
                 </div> 
                 <div id="table_aule"><table class="aula">
                         <tr>
