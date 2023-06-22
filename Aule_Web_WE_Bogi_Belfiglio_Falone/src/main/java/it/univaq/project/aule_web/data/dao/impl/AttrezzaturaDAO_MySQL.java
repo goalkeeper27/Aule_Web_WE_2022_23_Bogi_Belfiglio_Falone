@@ -59,6 +59,7 @@ public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO {
 
             sAttrezzaturaByAula.close();
             sAttrezzaturaByID.close();
+            sAttrezzaturaDisponibile.close();
             iAttrezzatura.close();
             uAttrezzatura.close();
             dAttrezzaturaByID.close();

@@ -179,14 +179,16 @@ function checkAula() {
     let radio = document.querySelector('input[name="IDaula"]:checked');
 
     let id = radio.value;
-    alert(id);
+    //alert(id);
 
     let url = "administration?operation=2&IDaula=" + id;
 
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
+      alert("ok");  
         if (xhr.readyState === 4 && xhr.status === 200) {
+            
             var rispostaDiv = document.getElementById("aula_update");
             rispostaDiv.innerHTML = xhr.responseText;
         }

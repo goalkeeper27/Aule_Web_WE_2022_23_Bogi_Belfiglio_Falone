@@ -49,7 +49,6 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
             // sAulaByID = connection.prepareStatement("SELECT * FROM aula WHERE GRUPPO=?");
             sAulaByNomeAndPosizione = connection.prepareStatement("SELECT * FROM aula WHERE nome=?, luogo=?,edificio=?,piano =?");
             sAllAule = connection.prepareStatement("SELECT * FROM aula");
-
             sAuleByGruppoID = connection.prepareStatement("SELECT A.* FROM aula A, associazione_aula_gruppo AG, gruppo G WHERE "
                     + "G.ID = ? AND AG.ID_gruppo = G.ID AND A.ID = AG.ID_aula");
             sAuleByPartialName = connection.prepareStatement("SELECT * FROM Aula A WHERE substring(A.nome,1,?) = ?");

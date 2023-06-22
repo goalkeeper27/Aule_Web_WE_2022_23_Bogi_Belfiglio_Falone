@@ -5,31 +5,14 @@
 package it.univaq.project.aule_web.controller;
 
 import it.univaq.f4i.iw.framework.result.TemplateManagerException;
-import it.univaq.project.aule_web.data.comparator.EventoComparator;
 import it.univaq.project.aule_web.data.dao.impl.AttrezzaturaProxy;
 import it.univaq.project.aule_web.data.dao.impl.AulaProxy;
 import it.univaq.project.aule_web.data.dao.impl.AuleWebDataLayer;
 import it.univaq.project.aule_web.data.dao.impl.EventoProxy;
-import it.univaq.project.aule_web.data.dao.impl.GruppoProxy;
-import it.univaq.project.aule_web.data.impl.AulaImpl;
 import it.univaq.project.aule_web.data.model.Attrezzatura;
 import it.univaq.project.aule_web.data.model.Aula;
-import it.univaq.project.aule_web.data.model.Evento;
-import it.univaq.project.aule_web.data.model.EventoRicorrente;
-import it.univaq.project.aule_web.data.model.Gruppo;
 import it.univaq.project.aule_web.data.model.enumerable.Ricorrenza;
 import it.univaq.project.aule_web.data.model.enumerable.Tipologia;
-import it.univaq.project.aule_web.framework.data.DataException;
-import it.univaq.project.aule_web.framework.result.TemplateResult;
-import it.univaq.project.aule_web.framework.security.SecurityHelpers;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-
 import it.univaq.project.aule_web.data.model.Evento;
 import it.univaq.project.aule_web.data.model.EventoRicorrente;
 import it.univaq.project.aule_web.data.model.Gruppo;
@@ -40,27 +23,17 @@ import it.univaq.project.aule_web.framework.result.TemplateResult;
 import it.univaq.project.aule_web.framework.security.SecurityHelpers;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-
-import java.time.LocalDate;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -410,7 +383,6 @@ public class Administration extends AuleWebBaseController {
                 if (request.getParameter("operation") != null) {
                     switch (Integer.parseInt(request.getParameter("operation"))) {
                         case 1:
-                            action_eventi(request, response);
                             break;
                         case 2:
                             if (request.getParameter("search") != null) {
@@ -433,16 +405,21 @@ public class Administration extends AuleWebBaseController {
                     action_modify_aula(request, response);
                 } else if (request.getParameter("export_aula") != null) {
                     action_export_aula(request, response);
-                } else if (request.getParameter("insert_gruppo") != null) {
+                } else if(request.getContentType() != null && request.getContentType().startsWith("multipart/form-data")){
+               //   action_import_aula(request, response);
+                }else if (request.getParameter("insert_gruppo") != null) {
                     action_insert_gruppo(request, response);
-                }else if (request.getParameter("insert_eventi") != null) {
-                    action_insert_evento(request, response);
-                }else {
+                } else {
+
+ 
+
                     action_default(request, response);
                 }
             } else {
                 response.sendRedirect("homepage");
             }
+
+ 
 
         } catch (IOException | TemplateManagerException ex) {
             handleError(ex, request, response);

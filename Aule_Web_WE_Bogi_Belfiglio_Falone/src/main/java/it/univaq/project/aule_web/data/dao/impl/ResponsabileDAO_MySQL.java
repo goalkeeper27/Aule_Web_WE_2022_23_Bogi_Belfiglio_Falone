@@ -48,6 +48,7 @@ public class ResponsabileDAO_MySQL extends DAO implements ResponsabileDAO {
         try {
             sResponsabileByID.close();
             sResponsabileByEmail.close();
+            sAllResponsabili.close();
             iResponsabile.close();
             dResponsabileByEmail.close();
 
