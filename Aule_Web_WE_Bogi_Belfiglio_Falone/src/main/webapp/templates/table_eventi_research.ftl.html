@@ -1,0 +1,16 @@
+
+<table class="evento">
+    <tr>
+        <td></td>
+        <td class="extend">nome</td>
+    </tr>
+    <#assign i=1>
+    <#list eventi as evento>
+    <#assign ID = "IDevento"+i>
+    <tr>
+        <td class="interno"><input type="radio" name="IDevento" value="${evento.key}"  onchange="checkEvento()"/></td>
+        <td class="esteso">${evento.nome}</td>     
+    </tr>
+    <#assign i=i+1>
+    </#list>
+</table>   

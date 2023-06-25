@@ -127,6 +127,25 @@ function showFineRicorrenza() {
     }
 }
 
+function showFineRicorrenzaUpdate() {
+    let radioButtons = document.getElementsByName('ricorrenzaUp');
+    let data_fine_ricorrenza = document.getElementsByClassName('fine_ricorrenza_update');
+
+    let ultimoRadio = radioButtons[radioButtons.length - 1];
+
+    if (ultimoRadio.checked) {
+        for (let i = 0; i < data_fine_ricorrenza.length; i++) {
+            data_fine_ricorrenza[i].style.display = 'none';
+        }
+    } else {
+        for (let i = 0; i < data_fine_ricorrenza.length; i++) {
+            data_fine_ricorrenza[i].style.display = 'block';
+        }
+    }
+}
+
+
+
 function searchAula() {
     let xhr = new XMLHttpRequest();
     let input = document.getElementById("ricerca_aula");
@@ -140,6 +159,27 @@ function searchAula() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             var rispostaDiv = document.getElementById("table_aule");
+            rispostaDiv.innerHTML = xhr.responseText;
+        }
+    };
+    xhr.send();
+
+
+}
+
+function searchEvento() {
+    let xhr = new XMLHttpRequest();
+    let input = document.getElementById("ricerca_evento");
+    let str = input.value;
+
+    let url = "administration?operation=1&searchEvento=" + str;
+
+
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var rispostaDiv = document.getElementById("table_eventi");
             rispostaDiv.innerHTML = xhr.responseText;
         }
     };
@@ -170,67 +210,76 @@ function checkAula() {
     xhr.send();
 }
 
+function checkEvento() {
+    let xhr = new XMLHttpRequest();
+    let radio = document.querySelector('input[name="IDevento"]:checked');
+
+    let id = radio.value;
+
+    let url = "administration?operation=1&IDevento=" + id;
+
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var rispostaDiv = document.getElementById("evento_update");
+            rispostaDiv.innerHTML = xhr.responseText;
+        }
+    };
+    xhr.send();
+}
+
 
 function validateEventsInputs() {
-    var input1 = document.getElementById("input1Ev").value;
-    var input2 = document.getElementById("input2Ev").value;
-    var input4 = document.getElementById("input4Ev").value;
-    var input5 = document.getElementById("input5Ev").value;
-    var input6 = document.getElementById("input6Ev").value;
-    var inputTipologia = document.getElementsByTagName("input[name='tipologia']");
-    var inputRicorrenza = document.getElementsByTagName("input[name='ricorrenza']");
-    var inputCorsi = document.getElementsByTagName("input[name='corsi']");
-    var inputAule = document.getElementsByTagName("input[name='aule']");
-    var inputResponsabili = document.getElementsByTagName("input[name='responsabile']");
-    var button = document.getElementById("buttonEvents");
+    let input1 = document.getElementById("input1Ev").value;
+    let input2 = document.getElementById("input2Ev").value;
+    let input4 = document.getElementById("input4Ev").value;
+    let input5 = document.getElementById("input5Ev").value;
+    let input6 = document.getElementById("input6Ev").value;
+    let inputTipologia = document.getElementsByClassName("tipologia");
+    let inputRicorrenza = document.getElementsByClassName("ricorrenza");
+    let inputCorsi = document.getElementsByClassName("corsi");
+    let inputAule = document.getElementsByClassName("aule");
+    let inputResponsabili = document.getElementsByClassName("responsabili");
+    let button = document.getElementById("buttonEvents");
 
-    let selezionatiTipologia = false;
-    let selezionatiRicorrenza = false;
-    let selezionatiCorso = false;
-    let selezionatiAula = false;
-    let selezionatiResponsabile = false;
-
-    for (let i = 0; i < inputTipologia.length; i++) {
-        if (inputTipologia[i].checked) {
-            selezionatiTipologia = true;
-            break;
+    if (input1 && input2 && input4 && input5 && input6) {
+        for (let i = 0; i < inputTipologia.length; i++) {
+            if (inputTipologia[i].checked) {
+                break;
+            }
         }
-    }
 
-    for (let i = 0; i < inputRicorrenza.length; i++) {
-        if (inputRicorrenza[i].checked) {
-            selezionatiRicorrenza = true;
-            break;
+        for (let i = 0; i < inputRicorrenza.length; i++) {
+            if (inputRicorrenza[i].checked) {
+                break;
+            }
         }
-    }
 
-    for (let i = 0; i < inputCorsi.length; i++) {
-        if (inputCorsi[i].checked) {
-            selezionatiCorso = true;
-            break;
+        for (let i = 0; i < inputCorsi.length; i++) {
+            if (inputCorsi[i].checked) {
+                break;
+            }
         }
-    }
 
-    for (let i = 0; i < inputAule.length; i++) {
-        if (inputAule[i].checked) {
-            selezionatiAula = true;
-            break;
+        for (let i = 0; i < inputAule.length; i++) {
+            if (inputAule[i].checked) {
+                break;
+            }
         }
-    }
 
-    for (let i = 0; i < inputResponsabili.length; i++) {
-        if (inputResponsabili[i].checked) {
-            selezionatiResponsabile = true;
-            break;
+        for (let i = 0; i < inputResponsabili.length; i++) {
+            if (inputResponsabili[i].checked) {
+                button.disabled = false;
+                return;
+            }
         }
-    }
+        button.disabled = true;
 
-    if (selezionatiTipologia && selezionatiRicorrenza && selezionatiCorso && selezionatiAula &&
-            selezionatiResponsabile && input1.checked && input2.checked && input4.checked && input5.checked && input6.checked) {
-        button.disabled = false;
     } else {
         button.disabled = true;
     }
+
 }
 
 

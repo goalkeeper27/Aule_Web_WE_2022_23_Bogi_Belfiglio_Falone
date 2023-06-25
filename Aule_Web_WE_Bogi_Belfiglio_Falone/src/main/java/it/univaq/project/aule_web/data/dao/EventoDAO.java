@@ -37,6 +37,9 @@ public interface EventoDAO {
     // Metodo che serirà per il contenuto del file csv
     public List<Evento> getEventiByPeriodo(LocalDate inizio, LocalDate fine)throws DataException;
     
+    public List<Evento> getAllEventi() throws DataException;
+    
+    public List<Evento> getEventiByPartialName(String search) throws DataException;
     
     public void storeEvento(Evento evento)throws DataException;
     

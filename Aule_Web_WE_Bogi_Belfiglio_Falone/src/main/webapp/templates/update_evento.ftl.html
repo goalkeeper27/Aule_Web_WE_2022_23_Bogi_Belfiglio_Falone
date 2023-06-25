@@ -1,0 +1,208 @@
+<form method="get" action="administration">
+    <input type="hidden" name="IDevento" value="${evento.key}" />
+    <label>nome:</label>
+    <input type="text" name="nome" value="${evento.nome}" />
+    <br>
+    <label>descrizione:</label><br>
+    <textarea name="descrizione">${evento.descrizione}</textarea>
+    <br>
+    <label>tipologia:</label>
+    <table class="tabella_insert">
+        <#if evento.tipologia?string == "LEZIONE">
+        <tr>
+            <td class="radio"><input type="radio" name="tipologia" value="LEZIONE" checked/></td>
+            <td>Lezione</td>
+        </tr>
+        <#else>
+        <tr>
+            <td class="radio"><input type="radio" name="tipologia" value="LEZIONE" /></td>
+            <td>Lezione</td>
+        </tr>
+        </#if>
+        <#if evento.tipologia?string == "ESAME">
+        <tr>
+            <td class="radio"><input type="radio" name="tipologia"  value="ESAME" checked/></td>
+            <td>Esame</td>
+        </tr>
+        <#else>
+        <tr>
+            <td class="radio"><input type="radio" name="tipologia"  value="ESAME" /></td>
+            <td>Esame</td>
+        </tr>
+        </#if>
+        <#if evento.tipologia?string == "SEMINARIO">
+        <tr> 
+            <td class="radio"><input type="radio" name="tipologia"  value="SEMINARIO" checked/></td>
+            <td>Seminario</td>    
+        </tr>
+        <#else>
+        <tr> 
+            <td class="radio"><input type="radio" name="tipologia"  value="SEMINARIO" /></td>
+            <td>Seminario</td>    
+        </tr>
+        </#if>
+        <#if evento.tipologia?string == "PARZIALE">
+        <tr>
+            <td class="radio"><input type="radio" name="tipologia"  value="PARZIALE" checked/></td>
+            <td>Parziale</td>
+        </tr>
+        <#else>
+        <tr>
+            <td class="radio"><input type="radio" name="tipologia"  value="PARZIALE" /></td>
+            <td>Parziale</td>
+        </tr>
+        </#if>
+        <#if evento.tipologia?string == "RIUNIONE">
+        <tr>
+            <td class="radio"><input type="radio" name="tipologia"  value="RIUNIONE" checked/></td>
+            <td>Riunione</td>
+        </tr>
+        <#else>
+        <tr>
+            <td class="radio"><input type="radio" name="tipologia"  value="RIUNIONE" /></td>
+            <td>Riunione</td>
+        </tr>
+        </#if>
+        <#if evento.tipologia?string == "LAUREE">
+        <tr>
+            <td class="radio"><input type="radio" name="tipologia"  value="LAUREE" checked/></td>
+            <td>Laurea</td>
+        </tr>
+        <#else>
+        <tr>
+            <td class="radio"><input type="radio" name="tipologia"  value="LAUREE" /></td>
+            <td>Laurea</td>
+        </tr>
+        </#if>
+        <#if evento.tipologia?string == "ALTRO">
+        <tr>
+            <td class="radio"><input type="radio" name="tipologia"  value="ALTRO" checked/></td>
+            <td>Altro</td>
+        </tr>
+        <#else>
+        <tr>
+            <td class="radio"><input type="radio" name="tipologia"  value="ALTRO" /></td>
+            <td>Altro</td>
+        </tr>
+        </#if>
+    </table>
+    <br>
+    <label>modifica la data:</label>
+    <input type="date" name="data" value="${evento.dataEvento}"/>
+    <br>
+    <label>modifica l'ora inizio:</label>
+    <input type="time" step="900" name="ora_inizio" class="orario" value="${evento.oraInizio}" />
+    <br>
+    <label>modifica l'ora fine:</label>
+    <input type="time" step="900" name="ora_fine" class="orario" value="${evento.oraFine}"/>
+    <br>
+    <label>ricorrenza:</label>
+    <table class="tabella_insert">
+        <#if evento.ricorrenza?string == "GIORNALIERA">
+        <tr>
+            <td class="radio"><input type="radio" name="ricorrenzaUp" class="ricorrenza" value="GIORNALIERA" onclick="showFineRicorrenzaUpdate()" checked/></td>
+            <td>Giornaliera</td>
+        </tr>
+        <#else>
+        <tr>
+            <td class="radio"><input type="radio" name="ricorrenzaUp" class="ricorrenza" value="GIORNALIERA" onclick="showFineRicorrenzaUpdate()" /></td>
+            <td>Giornaliera</td>
+        </tr>
+        </#if>
+        <#if evento.ricorrenza?string == "SETTIMANALE">
+        <tr>
+            <td class="radio"><input type="radio" name="ricorrenzaUp" class="ricorrenza" value="SETTIMANALE" onclick="showFineRicorrenzaUpdate()" checked/></td>
+            <td>Settimanale</td>
+        </tr>
+        <#else>
+        <tr>
+            <td class="radio"><input type="radio" name="ricorrenzaUp" class="ricorrenza" value="SETTIMANALE" onclick="showFineRicorrenzaUpdate()" /></td>
+            <td>Settimanale</td>
+        </tr>
+        </#if>
+        <#if evento.ricorrenza?string == "MENSILE">
+        <tr>
+            <td class="radio"><input type="radio" name="ricorrenzaUp" class="ricorrenza" value="MENSILE" onclick="showFineRicorrenzaUpdate()" checked/></td>
+            <td>Mensile</td>
+        </tr>
+        <#else>
+        <tr>
+            <td class="radio"><input type="radio" name="ricorrenzaUp" class="ricorrenza" value="MENSILE" onclick="showFineRicorrenzaUpdate()" /></td>
+            <td>Mensile</td>
+        </tr>
+        </#if>
+        <#if evento.ricorrenza?string == "NESSUNA">
+        <tr>
+            <td class="radio"><input type="radio" name="ricorrenzaUp" class="ricorrenza" value="NESSUNA" onclick="showFineRicorrenzaUpdate()" checked/></td>
+            <td>Nessuna</td>
+        </tr>
+        <#else>
+        <tr>
+            <td class="radio"><input type="radio" name="ricorrenzaUp" class="ricorrenza" value="NESSUNA" onclick="showFineRicorrenzaUpdate()" /></td>
+            <td>Nessuna</td>
+        </tr>
+        </#if>
+    </table>
+    <br>
+    <#if evento.ricorrenza?string == "NESSUNA">
+    <label class="fine_ricorrenza_update" style="display: none;">data fine ricorrenza:</label>
+    <input type="date" name="data_fine_ricorrenza" class="fine_ricorrenza_update" style="display: none;" />
+    <#else>
+    <label class="fine_ricorrenza_update">data fine ricorrenza:</label>
+    <input type="date" name="data_fine_ricorrenza" value="${evento.dataFineRicorrenza}" class="fine_ricorrenza_update" />
+    </#if>
+    <br>
+    <label>Corsi di laurea:</label>
+    <table class="tabella_insert">
+        <#list corsi as corso>
+        <#if corso.key == evento.corso.key>
+        <tr>
+            <td class="radio"><input type="radio" name="corsi" class="corsi" value="${corso.key}" checked/></td>
+            <td>${corso.nome}</td>
+        </tr>
+        <#else>
+        <tr>
+            <td class="radio"><input type="radio" name="corsi" class="corsi" value="${corso.key}" /></td>
+            <td>${corso.nome}</td>
+        </tr>
+        </#if>
+        </#list>
+    </table>
+    <br>
+    <label>Aula:</label>
+    <table class="tabella_insert">
+        <#list aule as aula>
+        <#if aula.key == evento.aula.key>
+        <tr>
+            <td class="radio"><input type="radio" name="aule" class="aule" value="${aula.key}" checked/></td>
+            <td>${aula.nome}</td>
+        </tr>
+        <#else>
+        <tr>
+            <td class="radio"><input type="radio" name="aule" class="aule" value="${aula.key}" /></td>
+            <td>${aula.nome}</td>
+        </tr>
+        </#if>
+        </#list>
+    </table>
+    <br>
+    <label>Responsabile</label>
+    <table class="tabella_insert">
+        <#list responsabili as responsabile>
+        <#if responsabile.key == evento.responsabile.key>
+        <tr>
+            <td class="radio"><input type="radio" name="responsabile" class="responsabili" value="${responsabile.key}" checked/></td>
+            <td>${responsabile.email}</td>     
+        </tr>
+        <#else>
+        <tr>
+            <td class="radio"><input type="radio" name="responsabile" class="responsabili" value="${responsabile.key}" /></td>
+            <td>${responsabile.email}</td>     
+        </tr>
+        </#if>
+        </#list>
+    </table>
+    <br>
+
+    <button type="submit" name="modify_evento" value="1">modifica</button>
+</form>
