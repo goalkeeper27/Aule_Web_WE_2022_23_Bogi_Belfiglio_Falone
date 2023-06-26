@@ -1,18 +1,50 @@
-<div class="aule administration">
+<div class="gruppi administration">
     <div class="container">
-        <div class="three columns">
+        <div class="five columns">
             <p>Inserimento gruppi</p> 
             <form method="GET" action="administration">
-                <input type="hidden" name="insert_aula" value="1" />
-                <label for="input1">nome:</label>
-                <input type="text" name="nome" id="input1" oninput="validateInputs()"/>
+                <input type="hidden" name="insert_gruppo" value="1" />
+                <label for="input_gruppo_1">nome:</label>
+                <input type="text" name="nome" id="input_gruppo_1" oninput="validateGruppoInputs(1)"/>
                 <br>
-                <label for="input2">tipo:</label>
-                <input type="text" name="tipo" id="input2" oninput="validateInputs()"/>
+                <input type="radio" name="select_tipo" id="select_tipo" onchange="selectTipoGruppo(1)" value="0" />
+                <label for="select_tipo">seleziona il tipo gruppo</label><br>
+                <input type="radio" name="select_tipo" id="add_tipo" onchange="selectTipoGruppo(1)" value="1" />
+                <label for="add_tipo">aggiungi un nuovo tipo</label>
                 <br>
-                <label for="input3">descrizione:</label>
-                <input type="text" name="descrizione" id="input3" oninput="validateInputs()"/>
+                <div id="tipo_gruppo"></div>
+                
+                <label for="input_gruppo_3">descrizione:</label><br>
+                <textarea name="descrizione" id="input_gruppo_3" oninput="validateGruppoInputs(1)"></textarea>
                 <br>
-              </div>
+                <button type="submit" id="gruppo_button" disabled>inserisci</button>
+            </form>
+        </div>
+        
+        <div class="four columns center">
+            <p>Aggiornamento gruppi</p> 
+            <form method="post" action="administration">
+                <div class="ricercaForm">
+                    <label for="ricerca">Gruppo specifico:</label>
+                    <input type="text"  id="ricerca_gruppo" placeholder="nome gruppo" oninput="searchGruppo()" />
+                </div> 
+                <div id="table_gruppo">
+                    <table class="gruppo">
+                        <tr>
+                            <td></td>
+                            <td class="extend">nome</td>
+                        </tr>
+                        <#list gruppi as gruppo>
+                        <tr>
+                            <td class="radio"><input type="radio" name="IDgruppo" value="${gruppo.key}"  id="IDgruppo" onchange="checkGruppo()"/></td>
+                            <td class="extend">${gruppo.nome}</td>     
+                        </tr>
+                        </#list>
+                    </table>
+                </div>
+            </form>          
+            <div id="gruppo_update"></div>
+        </div>
+        
     </div>
 </div>

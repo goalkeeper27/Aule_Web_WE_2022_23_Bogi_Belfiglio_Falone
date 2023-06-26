@@ -1,0 +1,23 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 23 giu 2023, 11:09:44
+    Author     : acer
+*/
+
+.title{
+    font-size: x-large;
+    text-shadow: -1.5px 0 #000000, 0 1.5px #000000, 1.5px 0 #000000, 0 -1.5px #000000;
+    color: white;
+    padding-top:0.5%;
+}
+
+p{
+    font-size: x-large;
+    font-style: italic;
+    font-weight: bold;
+    
+}
+

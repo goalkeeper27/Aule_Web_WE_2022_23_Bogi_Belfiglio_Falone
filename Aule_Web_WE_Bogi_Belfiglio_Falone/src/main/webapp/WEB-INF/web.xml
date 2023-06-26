@@ -28,6 +28,10 @@
         <servlet-name>Administration</servlet-name>
         <servlet-class>it.univaq.project.aule_web.controller.Administration</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>it.univaq.project.aule_web.controller.Logout</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Homepage</servlet-name>
         <url-pattern>/homepage</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>Administration</servlet-name>
         <url-pattern>/administration</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -99,7 +107,7 @@
     </context-param>
     <context-param>
         <param-name>view.error_template</param-name>
-        <param-value>errore.ftl.html</param-value>
+        <param-value>base/errore.ftl.html</param-value>
     </context-param>
     <resource-ref>
         <res-ref-name>jdbc/aule_web</res-ref-name>

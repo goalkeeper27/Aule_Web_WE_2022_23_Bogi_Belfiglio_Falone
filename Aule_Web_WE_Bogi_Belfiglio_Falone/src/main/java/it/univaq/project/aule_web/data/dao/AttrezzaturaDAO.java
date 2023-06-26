@@ -19,6 +19,8 @@ public interface AttrezzaturaDAO {
     
     Attrezzatura getAttrezzatura(int key) throws DataException;
     
+    Attrezzatura getAttrezzaturaDisponibileByNome(String numeroSerie) throws DataException;
+    
     List<Attrezzatura> getAttrezzatureByAula(Aula aula) throws DataException;
     
     List<Attrezzatura> getAttrezzaturaDisponibile()throws DataException;

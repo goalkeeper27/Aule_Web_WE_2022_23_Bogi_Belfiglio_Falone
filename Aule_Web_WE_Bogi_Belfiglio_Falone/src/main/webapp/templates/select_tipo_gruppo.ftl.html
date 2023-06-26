@@ -1,0 +1,27 @@
+
+<#if select == 0>
+<#if tipi?has_content>
+<table class="gruppo">
+    <tr>
+        <td></td>
+        <td class="extend">nome</td>
+    </tr>
+    <#list tipi as tipo>
+    <tr>
+        <td class="radio"><input type="radio" name="tipo" id="input_gruppo_2" value="${tipo}" onchange="validateGruppoInputs(1); validateGruppoInputs(2); "/></td>
+        <td class="extend">${tipo}</td>     
+    </tr>
+    </#list>
+</table>
+<#else>
+<p class="info">non ci sono gruppi esistenti</p>
+</#if>
+<#else>
+
+<label for="input_gruppo2">tipo gruppo:</label>
+<input type="text" name="tipo" id="input_gruppo_2" oninput="validateGruppoInputs(1); validateGruppoInputs(2);"> 
+
+
+</#if>
+
+

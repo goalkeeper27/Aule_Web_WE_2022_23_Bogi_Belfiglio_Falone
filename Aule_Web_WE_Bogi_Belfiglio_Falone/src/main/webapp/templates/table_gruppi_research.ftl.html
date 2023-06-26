@@ -1,0 +1,21 @@
+
+
+<table class="gruppo">
+    <#if gruppi?has_content>
+    <tr>
+        <td></td>
+        <td class="extend">nome</td>
+    </tr>
+    <#assign i=1>
+    <#list gruppi as gruppo>
+    <#assign ID = "IDgruppo"+i>
+    <tr>
+        <td class="radio"><input type="radio" name="IDgruppo" value="${gruppo.key}"  onchange="checkGruppo()"/></td>
+        <td class="extend">${gruppo.nome}</td>     
+    </tr>
+    <#assign i=i+1>
+    </#list>
+    <#else>
+    <p class="info">nessun gruppo disponibile</p>
+    </#if>
+</table>   

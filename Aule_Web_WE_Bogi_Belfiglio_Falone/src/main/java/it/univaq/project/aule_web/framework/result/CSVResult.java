@@ -31,7 +31,7 @@ public class CSVResult {
 
     private static final String[] HEADERS_EVENTO = {"aula", "evento", "tipo", "data", "ora di inizio", "ora di fine"};
     private static final String[] HEADERS_AULA_EXPORT = {"nome", "luogo", "edificio", "piano", "capienza", "prese elettriche", "prese di rete", "note", "responsabile", "attrezzature", "gruppi"};
-    private static final String[] HEADERS_AULA_IMPORT = {"nome", "via", "civico", "piano", "capienza", "prese elettriche", "prese di rete", "note", "responsabile", "attrezzature", "gruppi"};
+    private static final String[] HEADERS_AULA_IMPORT = {"nome", "via", "civico","edificio", "piano", "capienza", "prese_elettriche", "prese_di_rete", "note", "responsabile", "attrezzature", "gruppi"};
 
     public static File createCSVFile(List<Evento> eventi, String path) {
         CSVFormat csvFormat = CSVFormat.EXCEL.builder().setHeader(HEADERS_EVENTO).build();
@@ -77,7 +77,7 @@ public class CSVResult {
             
 
             CSVFormat csvFormat = CSVFormat.DEFAULT.builder()
-                    .setHeader(HEADERS_AULA_EXPORT)
+                    .setHeader(HEADERS_AULA_IMPORT)
                     .setSkipHeaderRecord(true)
                     .build();
 
@@ -86,16 +86,18 @@ public class CSVResult {
             for (CSVRecord record : records) {
                 input.put("nome",record.get("nome"));
                 input.put("luogo",record.get("via") + "," + record.get("civico"));
+                input.put("edificio", record.get("edificio"));
                 input.put("piano",record.get("piano"));
                 input.put("capienza",record.get("capienza"));
-                input.put("prese_elettriche",record.get("prese elettriche"));
-                input.put("prese_di_rete",record.get("prese di rete"));
+                input.put("prese_elettriche",record.get("prese_elettriche"));
+                input.put("prese_di_rete",record.get("prese_di_rete"));
                 input.put("note",record.get("note"));
                 input.put("responsabile",record.get("responsabile"));
                 input.put("attrezzature",record.get("attrezzature"));
                 input.put("gruppi",record.get("gruppi"));
                 
             }
+            
             return input;
 
         } catch (FileNotFoundException ex) {

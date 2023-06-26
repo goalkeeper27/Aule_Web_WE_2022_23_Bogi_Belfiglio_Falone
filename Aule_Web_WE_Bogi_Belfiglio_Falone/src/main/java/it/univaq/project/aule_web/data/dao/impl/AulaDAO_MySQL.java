@@ -28,7 +28,6 @@ import java.util.logging.Logger;
  */
 public class AulaDAO_MySQL extends DAO implements AulaDAO {
 
-
     private PreparedStatement sAulaByID, sAuleByIDs, sAulaByNomeAndPosizione, sAuleByGruppoID, sAllAule, sAuleByPartialName;
     private PreparedStatement iAula, iAssociationAulaGruppo;
     private PreparedStatement uAula;
@@ -58,7 +57,7 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
             iAssociationAulaGruppo = connection.prepareStatement("INSERT INTO associazione_aula_gruppo(ID_aula, ID_gruppo) values (?,?)");
             uAula = connection.prepareStatement("UPDATE aula SET nome=?,luogo=?,edificio=?,piano=?,capienza=?,numero_prese_elettriche=?,numero_prese_di_rete=?,note_generiche = ?,ID_responsabile =?, versione=? WHERE ID=? and versione=?");
             dAula = connection.prepareStatement("DELETE FROM aula WHERE ID=?");
-            dAssociationAulaGruppo = connection.prepareStatement("DELETE FROM associazione_aula_gruppo WHERE ID_aula = ? and ID_gruppo = ?");
+            dAssociationAulaGruppo = connection.prepareStatement("DELETE FROM associazione_aula_gruppo WHERE ID_aula = ?");
         } catch (SQLException ex) {
             throw new DataException("Errore durante l'inizializzazione del data layer", ex);
         }
@@ -162,11 +161,9 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
 
     private void deleteAssociationAulaGruppo(int aula_key, List<Integer> gruppi_keys) throws DataException {
         try {
-            for (Integer gk : gruppi_keys) {
-                dAssociationAulaGruppo.setInt(1, aula_key);
-                dAssociationAulaGruppo.setInt(2, gk);
-                dAssociationAulaGruppo.executeUpdate();
-            }
+            dAssociationAulaGruppo.setInt(1, aula_key);
+            dAssociationAulaGruppo.executeUpdate();
+
         } catch (SQLException ex) {
             throw new DataException("Error DB", ex);
         }
@@ -210,7 +207,7 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
                 if (!gruppi_keys.isEmpty()) {
                     deleteAssociationAulaGruppo(aula.getKey(), gruppi_keys);
                     storeAssociationAulaGruppo(aula.getKey(), gruppi_keys);
-                } 
+                }
                 return aula.getKey();
             } else { //insert
                 iAula.setString(1, aula.getNome());
@@ -328,17 +325,17 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
         }
         return aule;
     }
-   
+
     @Override
     public List<Aula> getAllAule() throws DataException {
         List<Aula> aule = new ArrayList<>();
-        try{
+        try {
             try ( ResultSet rs = sAllAule.executeQuery()) {
-                while(rs.next()) {
+                while (rs.next()) {
                     aule.add(createAula(rs));
                 }
             }
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw new DataException("Errore nella visualizzazione di tutte le aule", ex);
         }
         return aule;

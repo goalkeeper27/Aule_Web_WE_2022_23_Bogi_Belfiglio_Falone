@@ -71,15 +71,21 @@ public class FailureResult {
 
             //se abbiamo registrato un template per i messaggi di errore, proviamo a usare quello
             //if an error template has been configured, try it
-            if (context.getInitParameter("view.error_template") != null) {
-                request.setAttribute("error", message);
-                request.setAttribute("outline_tpl", "");
-                template.activate(context.getInitParameter("view.error_template"), request, response);
+            if (request.getAttribute("admin") != null) {
+
             } else {
-                //altrimenti, inviamo un errore HTTP
-                //otherwise, use HTTP errors
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message);
+                if (context.getInitParameter("view.error_template") != null) {
+                    request.setAttribute("error", message);
+                    request.setAttribute("outline_tpl", "");
+                    template.activate(context.getInitParameter("view.error_template"), request, response);
+                } else {
+                    //altrimenti, inviamo un errore HTTP
+                    //otherwise, use HTTP errors
+                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message);
+                }
+
             }
+
         } catch (Exception ex) {
             //se qualcosa va male inviamo un errore HTTP
             //if anything goue wrong, sent an HTTP error

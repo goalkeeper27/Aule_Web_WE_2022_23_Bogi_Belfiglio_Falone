@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  */
 public class GruppoDAO_MySQL extends DAO implements GruppoDAO {
 
-    private PreparedStatement sGruppoByTipoAndNome, sTipiGruppo, sAllGruppi, sGruppiByAula;
+    private PreparedStatement sGruppoByID, sGruppoByTipoAndNome, sTipiGruppo, sAllGruppi, sGruppiByAula, sGruppiByPartialName;
     private PreparedStatement iGruppo;
     private PreparedStatement uGruppo;
     private PreparedStatement dGruppo;
@@ -40,10 +40,11 @@ public class GruppoDAO_MySQL extends DAO implements GruppoDAO {
 
         try {
             super.init();
-
-            sGruppoByTipoAndNome = connection.prepareStatement("SELECT * FROM Gruppo WHERE tipo = ? AND nome=?;");
+            sGruppoByID = connection.prepareStatement("SELECT * FROM Gruppo WHERE ID = ?");
+            sGruppoByTipoAndNome = connection.prepareStatement("SELECT * FROM Gruppo WHERE tipo = ? AND nome = ?");
+            sGruppiByPartialName = connection.prepareStatement("SELECT * FROM Gruppo G WHERE substring(G.nome,1,?) = ?");
             sTipiGruppo = connection.prepareStatement("SELECT DISTINCT tipo FROM gruppo; ");
-            sAllGruppi = connection.prepareStatement("SELECT * FROM Gruppo;");
+            sAllGruppi = connection.prepareStatement("SELECT * FROM Gruppo");
             sGruppiByAula = connection.prepareStatement("SELECT G.* FROM gruppo G, associazione_aula_gruppo AG WHERE G.ID=AG.ID_gruppo and AG.ID_aula = ?");
             iGruppo = connection.prepareStatement("INSERT INTO gruppo (nome,tipo,descrizione) VALUES(?,?,?);", Statement.RETURN_GENERATED_KEYS);
             uGruppo = connection.prepareStatement("UPDATE gruppo SET nome=?,tipo=?,descrizione=?, versione=? WHERE ID=? AND versione=?;");
@@ -55,6 +56,8 @@ public class GruppoDAO_MySQL extends DAO implements GruppoDAO {
 
     public void destroy() throws DataException {
         try {
+            sGruppoByID.close();
+            sGruppiByPartialName.close();
             sGruppoByTipoAndNome.close();
             sTipiGruppo.close();
             sAllGruppi.close();
@@ -89,13 +92,31 @@ public class GruppoDAO_MySQL extends DAO implements GruppoDAO {
     }
 
     @Override
+    public Gruppo getGruppo(int key) throws DataException {
+        Gruppo gruppo = null;
+        try {
+
+            sGruppoByID.setInt(1, key);
+
+            try ( ResultSet rs = sGruppoByID.executeQuery()) {
+                if (rs.next()) {
+                    gruppo = createGruppo(rs);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Impossibile caricare Aula da ID", ex);
+        }
+        return gruppo;
+    }
+    
+    @Override
     public Gruppo getGruppoByTipoAndNome(String tipo, String nome) throws DataException {
         Gruppo gruppo = null;
         try {
             sGruppoByTipoAndNome.setString(1, tipo);
             sGruppoByTipoAndNome.setString(2, nome);
             try ( ResultSet rs = sGruppoByTipoAndNome.executeQuery()) {
-                if (rs.next()) {
+                if(rs.next()) {
                     gruppo = createGruppo(rs);
                 }
             }
@@ -234,6 +255,23 @@ public class GruppoDAO_MySQL extends DAO implements GruppoDAO {
             throw new DataException("error DB", ex);
         }
 
+        return gruppi;
+    }
+    
+    @Override
+    public List<Gruppo> getGruppiByPartialName(String search) throws DataException {
+        List<Gruppo> gruppi = new ArrayList<>();
+        try {
+            sGruppiByPartialName.setInt(1, search.length());
+            sGruppiByPartialName.setString(2, search);
+            try ( ResultSet rs = sGruppiByPartialName.executeQuery()) {
+                while (rs.next()) {
+                    gruppi.add(createGruppo(rs));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("error DB", ex);
+        }
         return gruppi;
     }
 

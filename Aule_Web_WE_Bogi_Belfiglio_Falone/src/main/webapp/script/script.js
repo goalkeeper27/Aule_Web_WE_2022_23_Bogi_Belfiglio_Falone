@@ -45,18 +45,18 @@ input_settimana.addEventListener('input', function (event) {
 });
 
 
-function showFineRicorrenza(){
+function showFineRicorrenza() {
     let radioButtons = document.getElementsByName('ricorrenza');
     let data_fine_ricorrenza = document.getElementsByClassName('fine_ricorrenza');
-    
+
     let ultimoRadio = radioButtons[radioButtons.length - 1];
-    
+
     if (ultimoRadio.checked) {
-        for(let i = 0; i < data_fine_ricorrenza.length; i++){
+        for (let i = 0; i < data_fine_ricorrenza.length; i++) {
             data_fine_ricorrenza[i].style.display = 'none';
         }
     } else {
-        for(let i = 0; i < data_fine_ricorrenza.length; i++){
+        for (let i = 0; i < data_fine_ricorrenza.length; i++) {
             data_fine_ricorrenza[i].style.display = 'block';
         }
     }
@@ -114,7 +114,7 @@ function sendInfo() {
 
 
 function validateInputs() {
-    
+
     let input1 = document.getElementById("input1").value;
     let input2 = document.getElementById("input2").value;
     let input3 = document.getElementById("input3").value;
@@ -154,13 +154,159 @@ function validateInputs() {
 }
 
 
+function validateGruppoInputs(choise) {
+
+    let input1;
+    let input2;
+    let input3;
+    let button;
+
+    if (choise === 1) {
+        input1 = document.getElementById("input_gruppo_1").value;
+        input3 = document.getElementById("input_gruppo_3").value;
+        button = document.getElementById("gruppo_button");
+        if (document.getElementById("add_tipo").checked) {
+            let input2 = document.getElementById("input_gruppo_2").value;
+            if (input1 && input2 && input3) {
+                button.disabled = false;
+                return;
+            } else {
+                button.disabled = true;
+                return;
+            }
+        } else if (document.getElementById("select_tipo").checked) {
+            let input2 = document.getElementsByName("tipo");
+            if (input1 && input3) {
+                for (let i = 0; i < input2.length; i++) {
+                    if (input2[i].checked) {
+                        button.disabled = false;
+                        return;
+                    }
+                }
+                button.disabled = true;
+                return;
+            }
+            else{
+                button.disabled = true;
+                return;
+            }
+        }
+    } else if (choise === 2) {
+        let div_update = document.getElementById("gruppo_update");
+        input1 = div_update.querySelector('input[id="input_gruppo_1"]').value;
+        input3 = div_update.querySelector("#input_gruppo_3").value;
+        button = div_update.querySelector("#gruppo_button");
+        if (div_update.querySelector('input[id="add_tipo"]').checked) {
+            let input2 = div_update.querySelector('input[id="input_gruppo_2"]').value;
+            if (input1 && input2 && input3) {
+                button.disabled = false;
+                return;
+            } else {
+                button.disabled = true;
+            }
+        } else if (div_update.querySelector('input[id="select_tipo"]').checked) {
+            let input2 = div_update.querySelectorAll('input[name="tipo"]');
+            if (input1 && input3) {
+                input2.forEach((elemento) => {
+                    if(elemento.checked){
+                        button.disabled = false;
+                        return;
+                    }
+                    else{
+                        button.disabled = true;
+                        return;
+                    }
+                });
+            }
+            else{
+                button.disabled = true;
+                return;
+            }
+
+        }
+    }
+}
+
+
+
+
+function searchGruppo() {
+    let xhr = new XMLHttpRequest();
+    let input = document.getElementById("ricerca_gruppo");
+    let str = input.value;
+
+    let url = "administration?operation=3&search=" + str;
+
+
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var rispostaDiv = document.getElementById("table_gruppo");
+            rispostaDiv.innerHTML = xhr.responseText;
+        }
+    };
+    xhr.send();
+
+
+}
+
+function checkGruppo() {
+    let xhr = new XMLHttpRequest();
+    let radio = document.querySelector('input[name="IDgruppo"]:checked');
+
+    let id = radio.value;
+
+
+    let url = "administration?operation=3&IDgruppo=" + id;
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            alert("ciao");
+            var rispostaDiv = document.getElementById("gruppo_update");
+            rispostaDiv.innerHTML = xhr.responseText;
+        }
+    };
+    xhr.send();
+}
+
+function selectTipoGruppo(choise) {
+    let xhr = new XMLHttpRequest();
+    let radio;
+    let rispostaDiv;
+    let button;
+    if (choise === 1) {
+        radio = document.querySelector('input[name="select_tipo"]:checked');
+        rispostaDiv = document.getElementById("tipo_gruppo");
+        button = document.getElementById("gruppo_button");
+    } else if (choise === 2) {
+        let div_update = document.getElementById("gruppo_update");
+        radio = document.querySelector('input[name="select_tipo2"]:checked');
+        rispostaDiv = document.getElementById("tipo_gruppo2");
+        button = div_update.querySelector("#gruppo_button");
+    }
+    //Ogni volta che modifico il tipo di selezione per il tipo del gruppo, disattivo il bottone di inserimento
+    button.disabled = true;
+    let url = "administration?operation=3&select_tipo_gruppo=" + radio.value;
+
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            rispostaDiv.innerHTML = xhr.responseText;
+        }
+    };
+    xhr.send();
+}
+
 function searchAula() {
     let xhr = new XMLHttpRequest();
     let input = document.getElementById("ricerca_aula");
     let str = input.value;
 
     let url = "administration?operation=2&search=" + str;
-    
+
 
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -208,7 +354,7 @@ function validateEventsInputs() {
     var inputAule = document.getElementsByTagName("input[name='aule']");
     var inputResponsabili = document.getElementsByTagName("input[name='responsabile']");
     var button = document.getElementById("buttonEvents");
-    
+
     let selezionatiTipologia = false;
     let selezionatiRicorrenza = false;
     let selezionatiCorso = false;
@@ -217,39 +363,39 @@ function validateEventsInputs() {
 
     for (let i = 0; i < inputTipologia.length; i++) {
         if (inputTipologia[i].checked) {
-          selezionatiTipologia = true;
-          break;
+            selezionatiTipologia = true;
+            break;
         }
-      }
-      
+    }
+
     for (let i = 0; i < inputRicorrenza.length; i++) {
         if (inputRicorrenza[i].checked) {
-          selezionatiRicorrenza = true;
-          break;
+            selezionatiRicorrenza = true;
+            break;
         }
     }
-    
+
     for (let i = 0; i < inputCorsi.length; i++) {
         if (inputCorsi[i].checked) {
-          selezionatiCorso = true;
-          break;
+            selezionatiCorso = true;
+            break;
         }
     }
-    
+
     for (let i = 0; i < inputAule.length; i++) {
         if (inputAule[i].checked) {
-          selezionatiAula = true;
-          break;
+            selezionatiAula = true;
+            break;
         }
     }
-    
+
     for (let i = 0; i < inputResponsabili.length; i++) {
         if (inputResponsabili[i].checked) {
-          selezionatiResponsabile = true;
-          break;
+            selezionatiResponsabile = true;
+            break;
         }
     }
-    
+
     if (selezionatiTipologia && selezionatiRicorrenza && selezionatiCorso && selezionatiAula &&
             selezionatiResponsabile && input1.checked && input2.checked && input4.checked && input5.checked && input6.checked) {
         button.disabled = false;

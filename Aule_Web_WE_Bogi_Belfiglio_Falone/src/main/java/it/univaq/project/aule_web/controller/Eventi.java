@@ -54,7 +54,7 @@ public class Eventi extends AuleWebBaseController {
             }
 
             data.put("aule", aule);
-            
+
             Collections.sort(eventi, new EventoComparator());
             data.put("eventi", eventi);
 
@@ -102,8 +102,10 @@ public class Eventi extends AuleWebBaseController {
                 if (eventiRicorrenti != null) {
                     for (EventoRicorrente ev : eventiRicorrenti) {
                         Evento e = ev.getEvento();
-                        e.setDataEvento(ev.getDataEvento());
-                        eventi.add(e);
+                        if (e != null) {
+                            e.setDataEvento(ev.getDataEvento());
+                            eventi.add(e);
+                        }
                     }
                 }
 
@@ -164,8 +166,10 @@ public class Eventi extends AuleWebBaseController {
                 if (eventiRicorrenti != null) {
                     for (EventoRicorrente ev : eventiRicorrenti) {
                         Evento e = ev.getEvento();
-                        e.setDataEvento(ev.getDataEvento());
-                        eventi.add(e);
+                        if (e != null) {
+                            e.setDataEvento(ev.getDataEvento());
+                            eventi.add(e);
+                        }
                     }
                 }
 
@@ -221,8 +225,10 @@ public class Eventi extends AuleWebBaseController {
                 List<EventoRicorrente> eventiRicorrenti = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoRicorrenteDAO().EventiRicorrentiByDataAndAula(giorno, aula);
                 for (EventoRicorrente ev : eventiRicorrenti) {
                     Evento e = ev.getEvento();
-                    e.setDataEvento(ev.getDataEvento());
-                    eventi.add(e);
+                    if (e != null) {
+                        e.setDataEvento(ev.getDataEvento());
+                        eventi.add(e);
+                    }
                 }
             }
 

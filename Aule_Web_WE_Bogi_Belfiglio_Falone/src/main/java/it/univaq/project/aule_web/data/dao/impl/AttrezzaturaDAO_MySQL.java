@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  */
 public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO {
 
-    private PreparedStatement sAttrezzaturaByAula, sAttrezzaturaDisponibile, sAttrezzaturaByID;
+    private PreparedStatement sAttrezzaturaByAula, sAttrezzaturaDisponibile, sAttrezzaturaByID, sAttrezzaturaDisponibileByNome;
     private PreparedStatement iAttrezzatura, dAttrezzaturaByID, uAttrezzatura;
     
     private static final Logger LOGGER = Logger.getLogger(AttrezzaturaDAO_MySQL.class.getName());
@@ -43,6 +43,7 @@ public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO {
             sAttrezzaturaByAula = this.connection.prepareStatement("SELECT * FROM attrezzatura WHERE ID_aula=?");
             sAttrezzaturaByID = this.connection.prepareStatement("SELECT * FROM attrezzatura WHERE ID=?");
             sAttrezzaturaDisponibile = this.connection.prepareStatement("SELECT * FROM Attrezzatura WHERE ID_aula IS NULL");
+            sAttrezzaturaDisponibileByNome = this.connection.prepareStatement("SELECT * FROM Attrezzatura WHERE nome = ? AND ID_aula IS NULL LIMIT 1");
             iAttrezzatura = this.connection.prepareStatement("INSERT INTO attrezzatura (nome,numero_di_serie,ID_aula) VALUES(?,?,?)");
             uAttrezzatura = this.connection.prepareStatement("UPDATE attrezzatura SET nome=?,numero_di_serie=?,ID_aula=?, versione=? WHERE ID=? AND versione=?");
             dAttrezzaturaByID = this.connection.prepareStatement("DELETE FROM attrezzatura WHERE ID = ?");
@@ -101,6 +102,23 @@ public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO {
             }
         } catch (SQLException ex) {
             throw new DataException("Impossibile caricare Attrezzatura da ID", ex);
+        }
+        return attrezzatura;
+    }
+    
+    @Override
+    public Attrezzatura getAttrezzaturaDisponibileByNome(String nome) throws DataException{
+        Attrezzatura attrezzatura = null;
+        try {
+            sAttrezzaturaDisponibileByNome.setString(1, nome);
+
+            try ( ResultSet rs = sAttrezzaturaDisponibileByNome.executeQuery()) {
+                if (rs.next()) {
+                    attrezzatura = createAttrezzatura(rs);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Error DB", ex);
         }
         return attrezzatura;
     }

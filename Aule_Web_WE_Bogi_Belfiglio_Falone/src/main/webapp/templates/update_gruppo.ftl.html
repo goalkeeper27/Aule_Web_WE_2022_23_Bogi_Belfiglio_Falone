@@ -1,0 +1,38 @@
+<form method="get" action="administration">
+    <input type="hidden" name="IDgruppo" value="${gruppo.key}" />
+    <label for="input_gruppo_1">nome:</label>
+    <input type="text" name="nome" id="input_gruppo_1" oninput="validateGruppoInputs(2)" value="${gruppo.nome}"/>
+    <br>
+    <input type="radio" name="select_tipo2" id="select_tipo" onchange="selectTipoGruppo(2)" value="0" checked/>
+    <label for="select_tipo2">seleziona il tipo gruppo</label><br>
+    <input type="radio" name="select_tipo2" id="add_tipo" onchange="selectTipoGruppo(2)" value="1" />
+    <label for="add_tipo2">aggiungi un nuovo tipo</label>
+    <br>
+    <div id="tipo_gruppo2">
+        <table class="gruppo">
+            <tr>
+                <td></td>
+                <td class="extend">nome</td>
+            </tr>
+            <#list tipi as tipo>
+            <#if tipo == gruppo.tipoGruppo>
+            <tr>
+                <td class="radio"><input type="radio" name="tipo" id="input_gruppo_2" value="${tipo}" onchange="validateGruppoInputs(2)" checked/></td>
+                <td class="extend">${tipo}</td>     
+            </tr>
+            <#else>
+            <tr>
+                <td class="radio"><input type="radio" name="tipo" id="input_gruppo_2" value="${tipo}" onchange="validateGruppoInputs(2)"/></td>
+                <td class="extend">${tipo}</td>     
+            </tr>
+            </#if>
+            </#list>
+        </table>
+    </div>
+
+    <label for="input_gruppo_3">descrizione:</label><br>
+    <textarea name="descrizione" id="input_gruppo_3" oninput="validateGruppoInputs(2)">${gruppo.descrizione}</textarea>
+    <br>
+    <button type="submit" id="gruppo_button" name="modify_gruppo" value="1">aggiorna</button>
+</form>
+

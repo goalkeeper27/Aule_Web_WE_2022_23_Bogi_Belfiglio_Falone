@@ -1023,6 +1023,10 @@ input[type="date"]{
     pointer-events: none;
 }
 
+.aule.administration button[name="insert_aula"]{
+    margin-bottom: 10%;
+}
+
 .aule.administration table.aula{
     max-height: 200px;
     overflow:auto;
@@ -1127,5 +1131,154 @@ input[type="date"]{
 .eventi.administration .fine_ricorrenza{
     display: none;
 }
+
+
+/********************************
+
+* proprietà per gruppi_administration.ftl.html
+
+********************************/
+
+
+
+.gruppi.administration .columns.center{
+
+    border-left:1px solid black;
+    padding-left: 2%;
+}
+
+
+
+.gruppi.administration p{
+    font-size: xx-large;
+    text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
+    color: #add8e6;
+    padding-top:0.5%;
+    text-align:left;
+}
+
+.gruppi.administration input{
+    margin-bottom: 3%;
+    border-width: 2px;
+    border-radius:5px;
+    border-color: #CCC;
+
+}
+
+.gruppi.administration input:focus{
+    outline:none;
+    border: 2px solid #add8e6;
+
+}
+
+.gruppi.administration input:placeholder-shown {
+    font-style: italic;
+}
+
+.gruppi.administration textarea{
+    margin-bottom: 3%;
+    border-width: 2px;
+    border-radius:5px;
+    border-color: #CCC;
+
+}
+
+.gruppi.administration textarea:focus{
+    outline:none;
+    border: 2px solid #add8e6;
+
+}
+
+
+.gruppi.administration input[type="number"]{
+    width: 10%;
+}
+
+.gruppi.administration table.responsabile td{
+    border:none;
+    text-align: left;
+}
+
+.gruppi.administration table.responsabile td.radio{
+    background-color: #add8e6;
+}
+
+.gruppi.administration select{
+    margin-bottom: 3%;
+    width:40%;
+    border: 2px solid #CCC;
+}
+
+.gruppi.administration select:focus{
+    outline:none;
+    border-color: #add8e6;
+}
+
+.gruppi.administration table.attrezzatura{
+    margin-bottom: 5%;
+}
+
+
+.gruppi.administration table.attrezzatura td.extend{
+    text-align: center;
+    width:40%;
+    padding:4px;
+}
+
+.gruppi.administration table.attrezzatura td.checkbox{
+    background-color: #add8e6;
+}
+
+.gruppi.administration button{
+    width:30%;
+    font-size: small;
+    background-color: #add8e6;
+    font-weight: bold;
+}
+
+.gruppi.administration button:disabled{
+    color: #696969;
+    pointer-events: none;
+}
+
+.gruppi.administration table.gruppo{
+    max-height: 200px;
+    overflow:auto;
+    margin-bottom: 3%;
+}
+
+.gruppi.administration table.gruppo td{
+    text-align: left;
+    
+}
+
+.gruppi.administration table.gruppo td.radio{
+    background-color: #add8e6;
+}
+
+.gruppi.administration table.gruppo td.extend{
+    padding: 4px;
+    
+}
+
+.gruppi.administration p.info{
+    font-style: italic;
+    font-size: small;
+    color: black;
+    text-shadow:none;
+}
+
+.gruppi.administration p.info_update_tipo{
+    font-style: italic;
+    font-size: x-small;
+    color: black;
+    text-shadow:none;
+}
+
+#tipo_gruppo{
+    margin-bottom: 5%;
+    margin-top: 1%;
+}
+
 
 

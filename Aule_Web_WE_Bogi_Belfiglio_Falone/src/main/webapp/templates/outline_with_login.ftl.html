@@ -10,19 +10,21 @@
     <body>
 
         <#include "base/header_with_login.ftl.html">
-        
+
         <#include "base/select_administration.html">
 
-        <#if mex?has_content && !operation?has_content>
-        
-       
-        <p>${mex}</p>
-
-        </#if>
-
+        <div id="contenuto">
+            <#if content_tpl?has_content>
+            <#include content_tpl>
+          </#if>
+        </div>
 
         <#include "base/footer.html">
 
-        <script src="script/script.js"></script>
+        <script src="script/script.js">
+            validateInputs();
+            validateEventsInputs();
+            validateGruppoInputs();
+        </script>
     </body>
 </html>
