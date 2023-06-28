@@ -1035,7 +1035,7 @@ input[type="date"]{
 
 .aule.administration table.aula td{
     text-align: left;
-    
+
 }
 
 .aule.administration table.aula td.radio{
@@ -1044,7 +1044,7 @@ input[type="date"]{
 
 .aule.administration table.aula td.extend{
     padding: 4px;
-    
+
 }
 
 .aule.administration p.info{
@@ -1054,42 +1054,73 @@ input[type="date"]{
     text-shadow:none;
 }
 
-
-
-
++
 /********************************
 
 * proprietà per eventi_administration.ftl.html
 
 ********************************/
 
+.eventi.administration .columns.center{
 
+    border-left:1px solid black;
+    padding-left: 2%;
+}
 
 .eventi.administration input{
     margin-bottom: 3%;
     border-width: 2px;
-    border-radius:5px;
+    border-radius: 5px;
     border-color: #CCC;
-
 }
 
+
+.eventi.administration #input1Ev{
+    margin-bottom: 3%;
+    border-width: 2px;
+    border-radius: 5px;
+    border-color: #CCC;
+}
+
+.eventi.administration #ricerca_evento{
+    margin-bottom: 3%;
+    border-width: 2px;
+    border-radius: 5px;
+    border-color: #CCC;
+}
+
+.eventi.administration #input1Ev:focus{
+    outline: none;
+    border: 2px solid #add8e6;
+}
+
+.eventi.administration #ricerca_evento:focus{
+    outline: none;
+    border: 2px solid #add8e6;
+}
+
+
 .eventi.administration input:focus{
-    outline:none;
+    outline: none;
     border: 2px solid #add8e6;
 
 }
 
-.eventi.administration table td{
+.eventi.administration table.tabella_insert td{
     border:none;
     text-align: left;
 }
 
-.eventi.administration table td.radio{
+.eventi.administration table.tabella_insert td.radio{
     background-color: #add8e6;
 }
 
 .eventi.administration input.orario{
     background-color: #add8e6;
+    margin-bottom: 3%;
+    border-width: 2px;
+    border-radius: 5px;
+
 }
 
 .eventi.administration textarea{
@@ -1131,6 +1162,28 @@ input[type="date"]{
 .eventi.administration .fine_ricorrenza{
     display: none;
 }
+
+.eventi.administration table.evento{
+    max-height: 200px;
+    overflow:auto;
+    margin-bottom: 3%;
+}
+
+.eventi.administration table.evento td.esteso{
+    border: 1px solid #000;
+    padding: 8px;
+}
+
+.eventi.administration table.evento td.interno{
+    background-color: #add8e6;
+    border: 1px solid #000;
+}
+.eventi.administration table.evento td.interno_header{
+    border: 1px solid #000;
+}
+
+
+
 
 
 /********************************

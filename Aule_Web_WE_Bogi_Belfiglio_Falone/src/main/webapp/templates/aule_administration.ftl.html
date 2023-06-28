@@ -39,7 +39,7 @@
                     <#list responsabili as responsabile>
                     <tr>
                         <td class="radio"><input type="radio" name="responsabile" id="input10" value="${responsabile.key}" onchange="validateInputs()"/></td>
-                        <td>${responsabile.email}</td>     
+                        <td>${responsabile.email}</td>
                     </tr>
                     </#list>
                 </table>
@@ -211,23 +211,23 @@
         
             </form>
 
-            
-
 
             <form method="post" action="administration" enctype='multipart/form-data'>
                 <input type="file" name="file_to_upload" required/><br>
                 <input type="hidden" name="import_aula" value="1" />
                 <button type="submit">importa</button>
             </form> 
+
         </div>
 
         <div class="four columns center">
             <p>Aggiornamento aule</p>
-            <form method="GET" action="administration">
+            <form method="post" action="administration">
                 <div class="ricercaForm">
                     <label for="ricerca">Aula specifica:</label>
-                    <input type="text"  id="ricerca_aula" placeholder="nome aula" oninput="searchAula()"" />
-                </div> 
+                    <input type="text"  id="ricerca_aula" placeholder="nome aula" oninput="searchAula()" />
+                </div>
+
                 <div id="table_aule"><table class="aula">
                         <tr>
                             <td></td>
@@ -236,11 +236,11 @@
                         <#list aule as aula>
                         <tr>
                             <td class="radio"><input type="radio" name="IDaula" value="${aula.key}"  id="IDaula" onchange="checkAula()"/></td>
-                            <td class="extend">${aula.nome}</td>     
+                            <td class="extend">${aula.nome}</td>
                         </tr>
                         </#list>
                     </table></div>
-            </form>          
+            </form>
             <div id="aula_update"></div>
         </div>
     </div>

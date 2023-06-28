@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class EventoDAO_MySQL extends DAO implements EventoDAO {
 
-    private PreparedStatement sEventoByID, sEventoInAWeekByAula, sEventoInADayByAula, sCurrentEventoByAula, sEventoInAWeekByCorso, sEventiByPeriodo;
+    private PreparedStatement sEventoByID, sEventoInAWeekByAula, sEventoInADayByAula, sCurrentEventoByAula, sEventoInAWeekByCorso, sEventiByPeriodo, sAllEventi, sEventiByPartialName;
     private PreparedStatement iEvento, uEvento, dEvento;
 
     public EventoDAO_MySQL(DataLayer d) {
@@ -44,12 +44,14 @@ public class EventoDAO_MySQL extends DAO implements EventoDAO {
 
         try {
             super.init();
+            sAllEventi = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento");
             sEventoByID = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE ID = ?");
             sEventoInAWeekByAula = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE ID_aula = ? AND (data_evento BETWEEN (? - INTERVAL 1 DAY) AND ?)");
             sEventoInADayByAula = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE ID_aula = ? AND data_evento = ?");
             sCurrentEventoByAula = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE data_evento = CURDATE() AND ((ora_inizio BETWEEN (CURTIME() - INTERVAL 15 MINUTE) AND (CURTIME() + INTERVAL 3 HOUR)) OR(CURTIME() BETWEEN ora_inizio AND ora_fine))AND ID_aula = ? ORDER BY data_evento, ora_inizio;");
             sEventoInAWeekByCorso = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento WHERE ID_corso = ? AND (data_evento BETWEEN ? AND ?)");
             sEventiByPeriodo = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento E WHERE (E.data_evento BETWEEN (? - INTERVAL 1 DAY) AND ?)");
+            sEventiByPartialName = this.dataLayer.getConnection().prepareStatement("SELECT * FROM Evento E WHERE substring(E.nome,1,?) = ?");
             iEvento = this.dataLayer.getConnection().prepareStatement("INSERT INTO Evento(nome, descrizione, tipologia, data_evento, ora_inizio, ora_fine, ricorrenza, data_fine_ricorrenza, ID_corso, ID_responsabile, ID_aula) VALUES (?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             uEvento = this.dataLayer.getConnection().prepareStatement("UPDATE Evento SET nome = ?, descrizione = ?, tipologia = ?,"
                     + "data_evento = ?, ora_inizio = ?, ora_fine = ?, ricorrenza = ?, data_fine_ricorrenza = ?, ID_corso = ?, ID_responsabile =?,"
@@ -435,7 +437,7 @@ public class EventoDAO_MySQL extends DAO implements EventoDAO {
         try {
             sEventiByPeriodo.setDate(1, Date.valueOf(inizio));
             sEventiByPeriodo.setDate(2, Date.valueOf(fine));
-            try (ResultSet rs = sEventiByPeriodo.executeQuery()) {
+            try ( ResultSet rs = sEventiByPeriodo.executeQuery()) {
                 while (rs.next()) {
                     eventi.add(this.createEvento(rs));
                 }
@@ -448,4 +450,33 @@ public class EventoDAO_MySQL extends DAO implements EventoDAO {
         return eventi;
     }
 
+    @Override
+    public List<Evento> getAllEventi() throws DataException {
+        List<Evento> eventi = new ArrayList<>();
+        try ( ResultSet rs = sAllEventi.executeQuery()) {
+            while (rs.next()) {
+                eventi.add(createEvento(rs));
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Impossibile caricare Aula dal nome e dalla posizione digitati", ex);
+        }
+        return eventi;
+    }
+
+    @Override
+    public List<Evento> getEventiByPartialName(String search) throws DataException {
+        List<Evento> eventi = new ArrayList<>();
+        try {
+            sEventiByPartialName.setInt(1, search.length());
+            sEventiByPartialName.setString(2, search);
+            try ( ResultSet rs = sEventiByPartialName.executeQuery()) {
+                while (rs.next()) {
+                    eventi.add(createEvento(rs));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("error DB", ex);
+        }
+        return eventi;
+    }
 }

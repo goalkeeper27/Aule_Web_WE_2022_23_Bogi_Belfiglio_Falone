@@ -27,6 +27,7 @@ import java.util.logging.Logger;
  */
 public class GruppoDAO_MySQL extends DAO implements GruppoDAO {
 
+
     private PreparedStatement sGruppoByID, sGruppoByTipoAndNome, sTipiGruppo, sAllGruppi, sGruppiByAula, sGruppiByPartialName;
     private PreparedStatement iGruppo;
     private PreparedStatement uGruppo;
@@ -274,5 +275,6 @@ public class GruppoDAO_MySQL extends DAO implements GruppoDAO {
         }
         return gruppi;
     }
+
 
 }

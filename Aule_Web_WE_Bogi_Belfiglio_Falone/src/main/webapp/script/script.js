@@ -45,49 +45,79 @@ input_settimana.addEventListener('input', function (event) {
 });
 
 
-function showFineRicorrenza() {
-    let radioButtons = document.getElementsByName('ricorrenza');
-    let data_fine_ricorrenza = document.getElementsByClassName('fine_ricorrenza');
 
-    let ultimoRadio = radioButtons[radioButtons.length - 1];
-
-    if (ultimoRadio.checked) {
-        for (let i = 0; i < data_fine_ricorrenza.length; i++) {
-            data_fine_ricorrenza[i].style.display = 'none';
+function showFineRicorrenza(choise) {
+    let radio_button;
+    let data_fine_ricorrenza;
+    if (choise === 1) {
+        //input_evento_8 rappresenta l'ID dell'input per la data fine di fine ricorrenza
+        data_fine_ricorrenza = document.getElementById('fine_ricorrenza');
+        //ultimoRadio = radioButtons[radioButtons.length - 1];
+        radio_button = document.querySelector('input[name="ricorrenza"][type="radio"][value="4"]');
+        if (radio_button.checked) {
+            data_fine_ricorrenza.style.display = 'none';
+        } else {
+            let ricorrenze = document.getElementById("input_evento_6");
+            ricorrenze.value = null;
+            data_fine_ricorrenza.style.display = 'block';
         }
-    } else {
-        for (let i = 0; i < data_fine_ricorrenza.length; i++) {
-            data_fine_ricorrenza[i].style.display = 'block';
+    }else if(choise === 2){
+        let div_update = document.getElementById("evento_update");
+        data_fine_ricorrenza = div_update.querySelector("#fine_ricorrenza");
+        radio_button = div_update.querySelector('input[name="ricorrenza"][type="radio"][value="NESSUNA"]');
+        
+        if (radio_button.checked) {
+            data_fine_ricorrenza.style.display = 'none';
+        } else {
+            let ricorrenze = div_update.querySelector("#input_evento_6");
+            ricorrenze.value = null;
+            data_fine_ricorrenza.style.display = 'block';
         }
     }
 }
 
+function showCorsi(choise) {
+    let radio_button1;
+    let radio_button2;
+    let radio_button3;
+    let div_corsi;
+    if (choise === 1) {
+        //input_evento_8 rappresenta l'ID dell'input per la data fine di fine ricorrenza
+        div_corsi = document.getElementById('corsi_evento');
+        //ultimoRadio = radioButtons[radioButtons.length - 1];
+        radio_button1 = document.querySelector('input[name="tipologia"][type="radio"][value="1"]');
+        radio_button2 = document.querySelector('input[name="tipologia"][type="radio"][value="2"]');
+        radio_button3 = document.querySelector('input[name="tipologia"][type="radio"][value="3"]');
+        if (radio_button1.checked || radio_button2.checked || radio_button3.checked) {
+            let corsi = div_corsi.querySelectorAll('input[type="radio"]');
+            corsi.forEach((elemento) => {
+                if (elemento.checked) {
+                    elemento.checked = false;
+                }
+            });
+            div_corsi.style.display = 'block';
+        } else {
+            div_corsi.style.display = 'none';
+        }
+    } else if (choise === 2) {
+        let div_update = document.getElementById('evento_update');
+        div_corsi = div_update.querySelector('#corsi_evento');
+        radio_button1 = div_update.querySelector('input[name="tipologia"][type="radio"][value="LEZIONE"]');
+        radio_button2 = div_update.querySelector('input[name="tipologia"][type="radio"][value="ESAME"]');
+        radio_button3 = div_update.querySelector('input[name="tipologia"][type="radio"][value="PARZIALE"]');
+        if (radio_button1.checked || radio_button2.checked || radio_button3.checked) {
+            let corsi = div_corsi.querySelectorAll('input[type="radio"]');
+            corsi.forEach((elemento) => {
+                if (elemento.checked) {
+                    elemento.checked = false;
+                }
+            });
+            div_corsi.style.display = 'block';
+        } else {
+            div_corsi.style.display = 'none';
+        }
 
-
-function modify_state_button(id_button, ...ids_date) {
-    let button = document.getElementById(id_button);
-    let input_date = [];
-    for (let i = 0; i < ids_date.length; i++) {
-        input_date[i] = document.getElementById(ids_date[i]);
     }
-    button.disabled = true;
-
-    for (let i = 0; i < ids_date.length; i++) {
-        input_settimana[i].addEventListener('input', function () {
-
-            for (let i = 0; i < ids_date.length; i++) {
-                if (input_settimana[i].value !== "")
-                    return;
-
-            }
-            button.disabled = false;
-
-        });
-
-    }
-
-
-
 }
 
 
@@ -160,7 +190,6 @@ function validateGruppoInputs(choise) {
     let input2;
     let input3;
     let button;
-
     if (choise === 1) {
         input1 = document.getElementById("input_gruppo_1").value;
         input3 = document.getElementById("input_gruppo_3").value;
@@ -185,15 +214,14 @@ function validateGruppoInputs(choise) {
                 }
                 button.disabled = true;
                 return;
-            }
-            else{
+            } else {
                 button.disabled = true;
                 return;
             }
         }
     } else if (choise === 2) {
         let div_update = document.getElementById("gruppo_update");
-        input1 = div_update.querySelector('input[id="input_gruppo_1"]').value;
+        input1 = div_update.querySelector('#input_gruppo_1').value;
         input3 = div_update.querySelector("#input_gruppo_3").value;
         button = div_update.querySelector("#gruppo_button");
         if (div_update.querySelector('input[id="add_tipo"]').checked) {
@@ -203,29 +231,44 @@ function validateGruppoInputs(choise) {
                 return;
             } else {
                 button.disabled = true;
+                return;
             }
         } else if (div_update.querySelector('input[id="select_tipo"]').checked) {
             let input2 = div_update.querySelectorAll('input[name="tipo"]');
             if (input1 && input3) {
                 input2.forEach((elemento) => {
-                    if(elemento.checked){
+                    if (elemento.checked) {
                         button.disabled = false;
                         return;
                     }
-                    else{
-                        button.disabled = true;
-                        return;
-                    }
                 });
-            }
-            else{
+                
+            } else {
                 button.disabled = true;
                 return;
             }
-
         }
     }
 }
+
+
+
+
+function showFineRicorrenzaUpdate() {
+    let radioButtons = document.getElementsByName('ricorrenzaUp');
+    let data_fine_ricorrenza = document.getElementsByClassName('fine_ricorrenza_update');
+    let ultimoRadio = radioButtons[radioButtons.length - 1];
+    if (ultimoRadio.checked) {
+        for (let i = 0; i < data_fine_ricorrenza.length; i++) {
+            data_fine_ricorrenza[i].style.display = 'none';
+        }
+    } else {
+        for (let i = 0; i < data_fine_ricorrenza.length; i++) {
+            data_fine_ricorrenza[i].style.display = 'block';
+        }
+    }
+}
+
 
 
 
@@ -234,10 +277,7 @@ function searchGruppo() {
     let xhr = new XMLHttpRequest();
     let input = document.getElementById("ricerca_gruppo");
     let str = input.value;
-
     let url = "administration?operation=3&search=" + str;
-
-
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
@@ -247,17 +287,12 @@ function searchGruppo() {
         }
     };
     xhr.send();
-
-
 }
 
 function checkGruppo() {
     let xhr = new XMLHttpRequest();
     let radio = document.querySelector('input[name="IDgruppo"]:checked');
-
     let id = radio.value;
-
-
     let url = "administration?operation=3&IDgruppo=" + id;
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -286,10 +321,9 @@ function selectTipoGruppo(choise) {
         rispostaDiv = document.getElementById("tipo_gruppo2");
         button = div_update.querySelector("#gruppo_button");
     }
-    //Ogni volta che modifico il tipo di selezione per il tipo del gruppo, disattivo il bottone di inserimento
+//Ogni volta che modifico il tipo di selezione per il tipo del gruppo, disattivo il bottone di inserimento
     button.disabled = true;
     let url = "administration?operation=3&select_tipo_gruppo=" + radio.value;
-
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
@@ -300,110 +334,178 @@ function selectTipoGruppo(choise) {
     xhr.send();
 }
 
-function searchAula() {
+
+
+function searchEvento() {
     let xhr = new XMLHttpRequest();
-    let input = document.getElementById("ricerca_aula");
+    let input = document.getElementById("ricerca_evento");
     let str = input.value;
-
-    let url = "administration?operation=2&search=" + str;
-
-
+    let url = "administration?operation=1&search=" + str;
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            var rispostaDiv = document.getElementById("table_aule");
+            let rispostaDiv = document.getElementById("table_eventi");
             rispostaDiv.innerHTML = xhr.responseText;
         }
     };
     xhr.send();
+}
 
+
+
+
+function checkEvento() {
+    let xhr = new XMLHttpRequest();
+    let radio = document.querySelector('input[name="IDevento"]:checked');
+    let id = radio.value;
+    let url = "administration?operation=1&IDevento=" + id;
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var rispostaDiv = document.getElementById("evento_update");
+            rispostaDiv.innerHTML = xhr.responseText;
+        }
+    };
+    xhr.send();
+}
+
+
+function validateEventsInputs(choise) {
+    let input1;
+    let input2;
+    let input3;
+    let input4;
+    let input5;
+    let input6;
+    let inputTipologia;
+    let inputCorso;
+    let inputRicorrenza;
+    let inputAula;
+    let inputResponsabile;
+    let button;
+
+    if (choise === 1) {
+        input1 = document.getElementById("input_evento_1").value;
+        input2 = document.getElementById("input_evento_2").value;
+        input3 = document.getElementById("input_evento_3").value;
+        input4 = document.getElementById("input_evento_4").value;
+        input5 = document.getElementById("input_evento_5").value;
+        inputAula = document.querySelector('input[name="aula"][type="radio"]:checked');
+        inputResponsabile = document.querySelector('input[name="responsabile"][type="radio"]:checked');
+        //input6 = document.getElementById("input_evento_6").value;
+        inputTipologia = document.querySelector('input[name="tipologia"][type="radio"]:checked');
+        inputRicorrenza = document.querySelector('input[name="ricorrenza"][type="radio"]:checked');
+        button = document.getElementById("button_events");
+        if (input1 && input2 && input3 && input4 && input5 && inputAula && inputResponsabile && inputTipologia && inputRicorrenza) {
+            if (inputTipologia.value === "1" || inputTipologia.value === "2" || inputTipologia.value === "3") {
+                inputCorso = document.querySelector('input[name="corso"][type="radio"]:checked');
+                if (!inputCorso) {
+                    button.disabled = true;
+                    return;
+                }
+            }
+            if (inputRicorrenza.value !== "4") {
+                input6 = document.getElementById("input_evento_6").value;
+                if (!input6) {
+                    button.disabled = true;
+                    return;
+                }
+            }
+
+            button.disabled = false;
+            return;
+        } else {
+            button.disabled = true;
+            return;
+        }
+
+    } else if (choise === 2) {
+        let div_update = document.getElementById("evento_update");
+        input1 = div_update.querySelector("#input_evento_1").value;
+        //alert(input1);
+        input2 = div_update.querySelector("#input_evento_2").value;
+        //alert(input2);
+        input3 = div_update.querySelector("#input_evento_3").value;
+        //alert(input3);
+        input4 = div_update.querySelector("#input_evento_4").value;
+        //alert(input4);
+        input5 = div_update.querySelector("#input_evento_5").value;
+        //alert(input5);
+        inputAula = div_update.querySelector('input[name="aula"][type="radio"]:checked');
+        //alert(inputAula.value);
+        inputResponsabile = div_update.querySelector('input[name="responsabile"][type="radio"]:checked');
+        //alert(inputResponsabile.value);
+        //input6 = document.getElementById("input_evento_6").value;
+        inputTipologia = div_update.querySelector('input[name="tipologia"][type="radio"]:checked');
+        //alert(inputTipologia.value);
+        inputRicorrenza = div_update.querySelector('input[name="ricorrenza"][type="radio"]:checked');
+        //alert(inputRicorrenza.value);
+        button = div_update.querySelector("#button_events");
+        if (input1 && input2 && input3 && input4 && input5 && inputAula && inputResponsabile && inputTipologia && inputRicorrenza) {
+            //alert("not empty");
+            if (inputTipologia.value === "LEZIONE" || inputTipologia.value === "ESAME" || inputTipologia.value === "PARZIALE") {
+                inputCorso = div_update.querySelector('input[name="corso"][type="radio"]:checked');
+                if (!inputCorso) {
+                    button.disabled = true;
+                    return;
+                }
+            }
+            if (inputRicorrenza.value !== "NESSUNA") {
+                input6 = div_update.querySelector("#input_evento_6").value;
+                if (!input6) {
+                    button.disabled = true;
+                    return;
+                }
+            }
+
+            button.disabled = false;
+            return;
+        } else {
+            button.disabled = true;
+            return;
+        }
+        
+
+    }
+}
+
+
+function searchAula() {
+    let xhr = new XMLHttpRequest();
+    let input = document.getElementById("ricerca_aula");
+    let str = input.value;
+    let url = "administration?operation=2&search=" + str;
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            let rispostaDiv = document.getElementById("table_aule");
+            rispostaDiv.innerHTML = xhr.responseText;
+        }
+    };
+    xhr.send();
 }
 
 
 function checkAula() {
     let xhr = new XMLHttpRequest();
     let radio = document.querySelector('input[name="IDaula"]:checked');
-
     let id = radio.value;
     //alert(id);
 
     let url = "administration?operation=2&IDaula=" + id;
-    alert(url);
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            alert("ciao");
-            var rispostaDiv = document.getElementById("aula_update");
+            let rispostaDiv = document.getElementById("aula_update");
             rispostaDiv.innerHTML = xhr.responseText;
         }
     };
     xhr.send();
 }
-
-function validateEventsInputs() {
-    var input1 = document.getElementById("input1Ev").value;
-    var input2 = document.getElementById("input2Ev").value;
-    var input4 = document.getElementById("input4Ev").value;
-    var input5 = document.getElementById("input5Ev").value;
-    var input6 = document.getElementById("input6Ev").value;
-    var inputTipologia = document.getElementsByTagName("input[name='tipologia']");
-    var inputRicorrenza = document.getElementsByTagName("input[name='ricorrenza']");
-    var inputCorsi = document.getElementsByTagName("input[name='corsi']");
-    var inputAule = document.getElementsByTagName("input[name='aule']");
-    var inputResponsabili = document.getElementsByTagName("input[name='responsabile']");
-    var button = document.getElementById("buttonEvents");
-
-    let selezionatiTipologia = false;
-    let selezionatiRicorrenza = false;
-    let selezionatiCorso = false;
-    let selezionatiAula = false;
-    let selezionatiResponsabile = false;
-
-    for (let i = 0; i < inputTipologia.length; i++) {
-        if (inputTipologia[i].checked) {
-            selezionatiTipologia = true;
-            break;
-        }
-    }
-
-    for (let i = 0; i < inputRicorrenza.length; i++) {
-        if (inputRicorrenza[i].checked) {
-            selezionatiRicorrenza = true;
-            break;
-        }
-    }
-
-    for (let i = 0; i < inputCorsi.length; i++) {
-        if (inputCorsi[i].checked) {
-            selezionatiCorso = true;
-            break;
-        }
-    }
-
-    for (let i = 0; i < inputAule.length; i++) {
-        if (inputAule[i].checked) {
-            selezionatiAula = true;
-            break;
-        }
-    }
-
-    for (let i = 0; i < inputResponsabili.length; i++) {
-        if (inputResponsabili[i].checked) {
-            selezionatiResponsabile = true;
-            break;
-        }
-    }
-
-    if (selezionatiTipologia && selezionatiRicorrenza && selezionatiCorso && selezionatiAula &&
-            selezionatiResponsabile && input1.checked && input2.checked && input4.checked && input5.checked && input6.checked) {
-        button.disabled = false;
-    } else {
-        button.disabled = true;
-    }
-}
-
 
 
 
@@ -411,10 +513,7 @@ function exportCSVAula() {
 
     let xhr = new XMLHttpRequest();
     let radio = document.querySelector('input[name="IDaula"]:checked');
-
     let id = radio.value;
-
-
     let url = "administration?operation=2&csv=1&IDaula=" + id;
     alert(url);
     xhr.open("GET", url, true);

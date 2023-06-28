@@ -13,18 +13,17 @@
 
         <#include "base/select_administration.html">
 
+
         <div id="contenuto">
             <#if content_tpl?has_content>
             <#include content_tpl>
           </#if>
         </div>
 
+
         <#include "base/footer.html">
 
         <script src="script/script.js">
-            validateInputs();
-            validateEventsInputs();
-            validateGruppoInputs();
         </script>
     </body>
 </html>

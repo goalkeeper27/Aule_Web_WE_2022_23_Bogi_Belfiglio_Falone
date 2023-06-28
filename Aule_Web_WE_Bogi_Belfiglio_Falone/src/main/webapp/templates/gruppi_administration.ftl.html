@@ -2,7 +2,7 @@
     <div class="container">
         <div class="five columns">
             <p>Inserimento gruppi</p> 
-            <form method="GET" action="administration">
+            <form method="post" action="administration">
                 <input type="hidden" name="insert_gruppo" value="1" />
                 <label for="input_gruppo_1">nome:</label>
                 <input type="text" name="nome" id="input_gruppo_1" oninput="validateGruppoInputs(1)"/>
@@ -23,12 +23,13 @@
         
         <div class="four columns center">
             <p>Aggiornamento gruppi</p> 
-            <form method="post" action="administration">
+            <form method="post" action="administration/operation">
                 <div class="ricercaForm">
                     <label for="ricerca">Gruppo specifico:</label>
                     <input type="text"  id="ricerca_gruppo" placeholder="nome gruppo" oninput="searchGruppo()" />
                 </div> 
                 <div id="table_gruppo">
+                    <#if gruppi?has_content>
                     <table class="gruppo">
                         <tr>
                             <td></td>
@@ -41,10 +42,12 @@
                         </tr>
                         </#list>
                     </table>
+                    <#else>
+                    <p class="info">nessun gruppo disponibile</p>
+                    </#if>
                 </div>
             </form>          
             <div id="gruppo_update"></div>
         </div>
-        
     </div>
 </div>
