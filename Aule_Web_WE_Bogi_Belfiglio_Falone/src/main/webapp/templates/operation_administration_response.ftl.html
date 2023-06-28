@@ -1,0 +1,35 @@
+<div class="output administration">
+    <div class="container">
+        <p class="response">${message}</p>
+        <#if gruppo?has_content>
+        <p>nome: ${gruppo.nome}</p>
+        <p>tipo: ${gruppo.tipoGruppo}</p>
+        <p>descrizione: ${gruppo.descrizione}</p>
+        
+        <#elseif aula?has_content>
+        <p>nome: ${aula.nome}</p>
+        <p>via: ${aula.luogo}</p>
+        <p>edificio: ${gruppo.edificio}, piano n. {aula.piano}</p>
+        <p>capienza: ${aula.capienza}</p>
+        <p>numero prese elettriche: ${aula.numeroPreseElettriche}</p>
+        <p>numero prese di rete: ${aula.numeroPreseDiRete}</p>
+        <p>note: ${aula.noteGeneriche}</p>
+        <p>responsabile: ${aula.responsabile.email}</p>
+        <p>gruppi di appartenenza:</p>
+        <ul>
+        <#list gruppi as gruppo>
+        <li>${gruppo.nome} -> ${gruppo.tipoGruppo}</li>
+        </#list>
+        </ul>
+        <p>attrezzature:
+        <#list attrezzature as attrezzatura>
+        ${attrezzatura.nome}
+        </#list>
+        </p>
+        
+        <#elseif evento?has_content>
+        
+        </#if>
+    </div>
+
+</div>

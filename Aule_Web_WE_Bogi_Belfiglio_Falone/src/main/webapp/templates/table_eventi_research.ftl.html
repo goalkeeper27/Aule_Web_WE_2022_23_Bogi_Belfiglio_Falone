@@ -1,4 +1,4 @@
-
+<#if eventi?has_content>
 <table class="evento">
     <tr>
         <td></td>
@@ -8,9 +8,13 @@
     <#list eventi as evento>
     <#assign ID = "IDevento"+i>
     <tr>
-        <td class="interno"><input type="radio" name="IDevento" value="${evento.key}"  onchange="checkEvento()"/></td>
-        <td class="esteso">${evento.nome}</td>     
+        <td class="radio"><input type="radio" name="IDevento" value="${evento.key}"  onchange="checkEvento()"/></td>
+        <td class="extend">${evento.nome}</td>     
     </tr>
     <#assign i=i+1>
     </#list>
-</table>   
+</table>
+
+<#else>
+<p class="info">nessun evento disponibile</p>
+</#if>

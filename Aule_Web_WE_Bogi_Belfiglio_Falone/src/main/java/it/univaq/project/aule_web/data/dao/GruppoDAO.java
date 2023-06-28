@@ -19,8 +19,6 @@ public interface GruppoDAO {
      
     public Gruppo getGruppo(int key) throws DataException;
     
-    public Gruppo getGruppo(int key) throws DataException;
-    
     public Gruppo getGruppoByTipoAndNome(String tipo, String nome) throws DataException;
     
     public List<Gruppo> getGruppiByPartialName(String search) throws DataException;

@@ -13,13 +13,14 @@ import it.univaq.project.aule_web.data.model.enumerable.Ricorrenza;
 import it.univaq.project.aule_web.data.model.enumerable.Tipologia;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 /**
  *
  * @author Francesco Falone
  */
-public class EventoImpl extends DataItemImpl<Integer> implements Evento{
-    
+public class EventoImpl extends DataItemImpl<Integer> implements Evento {
+
     private String nome;
     private String descrizione;
     private Tipologia tipologia;
@@ -31,8 +32,8 @@ public class EventoImpl extends DataItemImpl<Integer> implements Evento{
     private Corso corso;
     private Aula aula;
     private Responsabile responsabile;
-    
-    public EventoImpl(){
+
+    public EventoImpl() {
         super();
         nome = "";
         descrizione = "";
@@ -45,7 +46,7 @@ public class EventoImpl extends DataItemImpl<Integer> implements Evento{
         corso = null;
         aula = null;
         responsabile = null;
-        
+
     }
 
     @Override
@@ -95,17 +96,17 @@ public class EventoImpl extends DataItemImpl<Integer> implements Evento{
 
     @Override
     public Aula getAula() {
-       return this.aula;
+        return this.aula;
     }
 
     @Override
     public Responsabile getResponsabile() {
-       return this.responsabile;
+        return this.responsabile;
     }
 
     @Override
     public void setNome(String nome) {
-      this.nome = nome;
+        this.nome = nome;
     }
 
     @Override
@@ -150,12 +151,60 @@ public class EventoImpl extends DataItemImpl<Integer> implements Evento{
 
     @Override
     public void setResponsabile(Responsabile responsabile) {
-       this.responsabile = responsabile;
+        this.responsabile = responsabile;
     }
 
     @Override
     public void setAula(Aula aula) {
         this.aula = aula;
     }
-    
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        Evento evento = (Evento) obj;
+        if (this.getKey() != evento.getKey()) {
+            return false;
+        } else if (this.getVersion() != evento.getVersion()) {
+            return false;
+        } else if (!this.getNome().equals(evento.getNome())) {
+            return false;
+        } else if (!this.getDescrizione().equals(evento.getDescrizione())) {
+            return false;
+        } else if (!this.getDataEvento().equals(evento.getDataEvento())) {
+            return false;
+        } else if (!this.getOraFine().equals(evento.getOraFine())) {
+            return false;
+        } else if (!this.getOraInizio().equals(evento.getOraInizio())) {
+            return false;
+        } else if (!this.getRicorrenza().equals(evento.getRicorrenza())) {
+            return false;
+        } else if (!this.getTipologia().equals(evento.getTipologia())) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.nome);
+        hash = 59 * hash + Objects.hashCode(this.descrizione);
+        hash = 59 * hash + Objects.hashCode(this.tipologia);
+        hash = 59 * hash + Objects.hashCode(this.dataEvento);
+        hash = 59 * hash + Objects.hashCode(this.oraInizio);
+        hash = 59 * hash + Objects.hashCode(this.oraFine);
+        hash = 59 * hash + Objects.hashCode(this.ricorrenza);
+        hash = 59 * hash + Objects.hashCode(this.dataFineRicorrenza);
+        return hash;
+    }
+
 }

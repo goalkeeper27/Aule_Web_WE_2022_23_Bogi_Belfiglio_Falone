@@ -1,138 +1,147 @@
 <div class="eventi administration">
     <div class="container">
-        <div class="three columns">
+        <div class="five columns">
             <p>Inserimento eventi</p>
-            <form method="GET" action="administration">
+            <form method="post" action="administration">
                 <label for="input1Ev">nome:</label>
-                <input type="text" name="nome" id="input1Ev" oninput="validateEventsInputs()" />
+                <input type="text" name="nome" id="input_evento_1" oninput="validateEventsInputs(1)" />
                 <br>
                 <label for="input2Ev">descrizione:</label><br>
-                <textarea name="descrizione" id="input2Ev" oninput="validateEventsInputs()"></textarea>
+                <textarea name="descrizione" id="input_evento_2" oninput="validateEventsInputs(1)"></textarea>
                 <br>
-                <label>tipologia:</label>
+                <h3>tipologia</h3>
                 <table class="tabella_insert">
                     <tr>
-                        <td class="radio"><input type="radio" name="tipologia" class="tipologia" id="input3Ev" value="1" oninput="validateEventsInputs()"/></td>
+                        <td class="radio"><input type="radio" name="tipologia" class="tipologia" value="1" onchange="showCorsi(1); validateEventsInputs(1)"/></td>
                         <td>Lezione</td>
                     </tr>
                     <tr>
-                        <td class="radio"><input type="radio" name="tipologia" class="tipologia" id="input3Ev" value="2" oninput="validateEventsInputs()"/></td>
+                        <td class="radio"><input type="radio" name="tipologia" class="tipologia" value="2"  onchange="showCorsi(1); validateEventsInputs(1)"/></td>
                         <td>Esame</td>
                     </tr>
                     <tr> 
-                        <td class="radio"><input type="radio" name="tipologia" class="tipologia" id="input3Ev" value="3" oninput="validateEventsInputs()"/></td>
-                        <td>Seminario</td>    
+                        <td class="radio"><input type="radio" name="tipologia" class="tipologia" value="3"  onchange="showCorsi(1); validateEventsInputs(1)"/></td>
+                        <td>Parziale</td>    
                     </tr>
                     <tr>
-                        <td class="radio"><input type="radio" name="tipologia" class="tipologia" id="input3Ev" value="4" oninput="validateEventsInputs()"/></td>
-                        <td>Parziale</td>
+                        <td class="radio"><input type="radio" name="tipologia" class="tipologia" value="4"  onchange="showCorsi(1); validateEventsInputs(1)"/></td>
+                        <td>Seminario</td>
                     </tr>
                     <tr>
-                        <td class="radio"><input type="radio" name="tipologia" class="tipologia" id="input3Ev" value="5" oninput="validateEventsInputs()"/></td>
+                        <td class="radio"><input type="radio" name="tipologia" class="tipologia" value="5"  onchange="showCorsi(1); validateEventsInputs(1)"/></td>
                         <td>Riunione</td>
                     </tr>
                     <tr>
-                        <td class="radio"><input type="radio" name="tipologia" class="tipologia" id="input3Ev" value="6" oninput="validateEventsInputs()"/></td>
+                        <td class="radio"><input type="radio" name="tipologia" class="tipologia" value="6"  onchange="showCorsi(1); validateEventsInputs(1)"/></td>
                         <td>Laurea</td>
                     </tr>
                     <tr>
-                        <td class="radio"><input type="radio" name="tipologia" class="tipologia" id="input3Ev" value="7" oninput="validateEventsInputs()"/></td>
+                        <td class="radio"><input type="radio" name="tipologia" class="tipologia" value="7"  onchange="showCorsi(1); validateEventsInputs(1)"/></td>
                         <td>Altro</td>
                     </tr>
                 </table>
                 <br>
+                <div id="corsi_evento" style="display:none">
+                    <h3>Corsi di laurea</h3>
+                    <table class="evento">
+                        <#list corsi as corso>
+                        <tr>
+                            <td class="radio"><input type="radio" name="corso" class="corsi" value="${corso.key}" onchange="validateEventsInputs(1)"/></td>
+                            <td class="extend">${corso.nome}</td>
+                        </tr>
+                        </#list>
+                    </table>
+                </div>
+                <br>
                 <label for="input4Ev">data:</label>
-                <input type="date" name="data" id="input4Ev" oninput="validateEventsInputs()"/>
+                <input type="date" name="data" id="input_evento_3" oninput="validateEventsInputs(1)"/>
                 <br>
                 <label for="input5Ev">ora inizio:</label>
-                <input type="time" step="900" name="ora_inizio" class="orario" id="input5Ev" oninput="validateEventsInputs()"/>
+                <input type="time" step="900" name="ora_inizio" class="orario" id="input_evento_4" oninput="validateEventsInputs(1)"/>
                 <br>
                 <label for="input6Ev">ora fine:</label>
-                <input type="time" step="900" name="ora_fine" class="orario" id="input6Ev" oninput="validateEventsInputs()"/>
+                <input type="time" step="900" name="ora_fine" class="orario" id="input_evento_5" oninput="validateEventsInputs(1)"/>
                 <br>
-                <label>ricorrenza:</label>
+                <h3>Ricorrenza</h3>
                 <table class="tabella_insert">
                     <tr>
-                        <td class="radio"><input type="radio" name="ricorrenza" class="ricorrenza" id="input7Ev" value="8" onclick="showFineRicorrenza()" oninput="validateEventsInputs()"/></td>
+                        <td class="radio"><input type="radio" name="ricorrenza" class="ricorrenza" value="1" onchange="showFineRicorrenza(1); validateEventsInputs(1)"/></td>
                         <td>Giornaliera</td>
                     </tr>
                     <tr>
-                        <td class="radio"><input type="radio" name="ricorrenza" class="ricorrenza"  id="input7Ev" value="9" onclick="showFineRicorrenza()" oninput="validateEventsInputs()"/></td>
+                        <td class="radio"><input type="radio" name="ricorrenza" class="ricorrenza" value="2" onchange="showFineRicorrenza(1); validateEventsInputs(1)"/></td>
                         <td>Settimanale</td>
                     </tr>
                     <tr>
-                        <td class="radio"><input type="radio" name="ricorrenza" class="ricorrenza" id="input7Ev" value="10" onclick="showFineRicorrenza()" oninput="validateEventsInputs()"/></td>
+                        <td class="radio"><input type="radio" name="ricorrenza" class="ricorrenza" value="3" onchange="showFineRicorrenza(1); validateEventsInputs(1)"/></td>
                         <td>Mensile</td>
                     </tr>
                     <tr>
-                        <td class="radio"><input type="radio" name="ricorrenza" class="ricorrenza" id="input7Ev" value="11" onclick="showFineRicorrenza()" oninput="validateEventsInputs()"/></td>
+                        <td class="radio"><input type="radio" name="ricorrenza" class="ricorrenza" value="4" onchange="showFineRicorrenza(1); validateEventsInputs(1)"/></td>
                         <td>Nessuna</td>
                     </tr>
                 </table>
                 <br>
-                <label for="input8Ev" class="fine_ricorrenza">data fine ricorrenza:</label>
-                <input type="date" class="fine_ricorrenza" name="data_fine_ricorrenza" id="input8Ev" oninput="validateEventsInputs()" />
+                <div id="fine_ricorrenza" style="display:none">
+                    <label for="input_evento_8">data fine ricorrenza:</label>
+                    <input type="date" name="data_fine_ricorrenza" id="input_evento_6" oninput="validateEventsInputs(1)" />
+                </div>
                 <br>
-                <label>Corsi di laurea:</label>
-                <table class="tabella_insert">
-                    <#list corsi as corso>
-                    <tr>
-                        <td class="radio"><input type="radio" name="corsi" class="corsi" id="input9Ev" value="${corso.key}" oninput="validateEventsInputs()"/></td>
-                        <td>${corso.nome}</td>
-                    </tr>
-                    </#list>
-                </table>
-                <br>
-                <label>Aula:</label>
-                <table class="tabella_insert">
+                <h3>Aula</h3>
+                <table class="evento">
                     <#list aule as aula>
                     <tr>
-                        <td class="radio"><input type="radio" name="aule" class="aule" id="input10Ev" value="${aula.key}" oninput="validateEventsInputs()"/></td>
-                        <td>${aula.nome}</td>
+                        <td class="radio"><input type="radio" name="aula" class="aule" value="${aula.key}" onchange="validateEventsInputs(1)"/></td>
+                        <td class="extend">${aula.nome}</td>
                     </tr>
                     </#list>
                 </table>
                 <br>
-                <label>Responsabile</label>
-                <table class="tabella_insert">
+                <h3>Responsabile</h3>
+                <table class="evento">
                     <#list responsabili as responsabile>
                     <tr>
-                        <td class="radio"><input type="radio" name="responsabile" class="responsabili" id="input11Ev" value="${responsabile.key}" onchange="validateEventsInputs()"/></td>
-                        <td>${responsabile.email}</td>     
+                        <td class="radio"><input type="radio" name="responsabile" class="responsabili" value="${responsabile.key}" onchange="validateEventsInputs(1)"/></td>
+                        <td class="extend">${responsabile.email}</td>     
                     </tr>
                     </#list>
                 </table>
                 <br>
 
-                <button type="submit" name="insert_eventi" value="1" id="buttonEvents" disabled>inserisci</button>
+                <button type="submit" name="insert_eventi" value="1" id="button_events" disabled>inserisci</button>
 
             </form>
         </div>
 
         <div class="four columns center">
             <p>Aggiornamento Evento</p>
-            <form method="GET" action="administration">
+            <form method="post" action="administration">
                 <div class="ricercaForm">
                     <label for="ricerca_evento">Evento specifico:</label>
                     <input type="text"  id="ricerca_evento" placeholder="nome evento" oninput="searchEvento()" />
                 </div>
 
                 <div id="table_eventi">
+                    <#if eventi?has_content>
                     <table class="evento">
                         <tr>
-                            <td class="interno_header"> </td>
-                            <td class="esteso"><b>nome</b></td>
+                            <td> </td>
+                            <td class="extend"><b>nome</b></td>
                         </tr>
+
                         <#list eventi as evento>
                         <tr>
-                            <td class="interno"><input type="radio" name="IDevento" value="${evento.key}"  id="IDevento" onchange="checkEvento()"/></td>
-                            <td class="esteso">${evento.nome}</td>
+                            <td class="radio"><input type="radio" name="IDevento" value="${evento.key}"  id="IDevento" onchange="checkEvento()"/></td>
+                            <td class="extend">${evento.nome}</td>
                         </tr>
                         </#list>
                     </table>
+                    <#else>
+                    <p class="info">nessun evento disponibile</p>
+                    </#if>
                 </div>
             </form>
-          <div id="evento_update"></div> 
+            <div id="evento_update"></div> 
         </div> 
     </div>
 </div>

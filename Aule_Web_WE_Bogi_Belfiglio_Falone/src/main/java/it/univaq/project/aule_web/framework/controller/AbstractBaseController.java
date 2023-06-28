@@ -46,6 +46,7 @@ public abstract class AbstractBaseController extends HttpServlet {
         String completeRequestURL = request.getRequestURL() + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
         request.setAttribute("thispageurl", completeRequestURL);
         request.setAttribute("datalayer", dl);
+        
     }
 
     //override to enforce your policy and/or change the login url
@@ -128,15 +129,6 @@ public abstract class AbstractBaseController extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
 
         super.init(config);
-
-        //init protection pattern
-        String p = config.getServletContext().getInitParameter("security.protect.patterns");
-        if (p == null || p.isBlank()) {
-            protect = null;
-        } else {
-            String[] split = p.split("\\s*,\\s*");
-            protect = Pattern.compile(Arrays.stream(split).collect(Collectors.joining("$)|(?:", "(?:", "$)")));
-        }
 
         //init data source
         //IL DATA SOURCE POTREBBE ESSERE INSERITO NEL WEB.XML GRAZIE ALLA SERVLETCONTEXTLISTENER (VEDERE SLIDE)

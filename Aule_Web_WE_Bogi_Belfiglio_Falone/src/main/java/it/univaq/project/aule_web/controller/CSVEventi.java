@@ -51,7 +51,7 @@ public class CSVEventi extends AuleWebBaseController {
             //lista di tutte gli eventi relativi alle aule e corsi specificate
             List<Evento> eventi = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().getEventiByPeriodo(inizio, fine);
 
-            List<EventoRicorrente> eventiRicorrenti = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoRicorrenteDAO().EventiRicorrentiByPeriod(inizio, fine);
+            List<EventoRicorrente> eventiRicorrenti = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoRicorrenteDAO().getEventiRicorrentiByPeriod(inizio, fine);
             if (eventiRicorrenti != null) {
                 for (EventoRicorrente ev : eventiRicorrenti) {
                     Evento e = ev.getEvento();

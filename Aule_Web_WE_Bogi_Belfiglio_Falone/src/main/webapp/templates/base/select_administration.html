@@ -1,7 +1,8 @@
-
+<div class="select administration">
+<#if !(message?has_content)>
 
 <div>
-    <p>Seleziona contesto</p>
+    <p class="context">Seleziona contesto</p>
     <form method="post" id="select_form">
     <input type="radio" id="evento" name="operation" value="1" onchange="sendInfo()" />
     <label for="evento"> eventi</label><br>
@@ -12,4 +13,9 @@
     </form>
 </div>
 
-
+<#else>
+<div class="return">
+    <a href="administration">torna alla pagina di amministrazione</a>
+</div>
+</#if>
+</div>

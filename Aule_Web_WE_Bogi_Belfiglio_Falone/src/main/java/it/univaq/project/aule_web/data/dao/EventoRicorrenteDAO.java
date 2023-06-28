@@ -20,15 +20,17 @@ public interface EventoRicorrenteDAO {
     
     EventoRicorrente createEventoRicorrente();
     
-    List<EventoRicorrente> EventoRicorrenteByEvento(Evento evento)throws DataException;
+    List<EventoRicorrente> getEventoRicorrenteByEvento(Evento evento)throws DataException;
     
-    List<EventoRicorrente> EventiRicorrentiByPeriodAndAula(LocalDate data_inizio, LocalDate data_fine, Aula aula)throws DataException;
+    List<EventoRicorrente> getEventiRicorrentiByPeriodAndAula(LocalDate data_inizio, LocalDate data_fine, Aula aula)throws DataException;
     
-    List<EventoRicorrente> EventiRicorrentiByPeriod(LocalDate data_inizio, LocalDate data_fine)throws DataException;
+    List<EventoRicorrente> getEventiRicorrentiByPeriod(LocalDate data_inizio, LocalDate data_fine)throws DataException;
     
-    List<EventoRicorrente> EventiRicorrentiByDataAndAula(LocalDate data, Aula aula)throws DataException;
+    List<EventoRicorrente> getEventiRicorrentiByDataAndAula(LocalDate data, Aula aula)throws DataException;
     
-    List<EventoRicorrente> EventiRicorrentiByPeriodAndCorso(LocalDate dataInizio,LocalDate dataFine, Corso corso)throws DataException;
+    List<EventoRicorrente> getEventiRicorrentiByPeriodAndCorso(LocalDate dataInizio,LocalDate dataFine, Corso corso)throws DataException;
+    
+    List<Integer> getAllEventiIDByRicorrenze()throws DataException;
     
     
     

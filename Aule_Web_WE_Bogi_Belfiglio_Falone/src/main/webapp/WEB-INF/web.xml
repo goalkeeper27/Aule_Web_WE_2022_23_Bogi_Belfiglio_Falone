@@ -32,6 +32,10 @@
         <servlet-name>Logout</servlet-name>
         <servlet-class>it.univaq.project.aule_web.controller.Logout</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>OperationAdministration</servlet-name>
+        <servlet-class>it.univaq.project.aule_web.controller.OperationAdministration</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Homepage</servlet-name>
         <url-pattern>/homepage</url-pattern>
@@ -64,6 +68,10 @@
         <servlet-name>Logout</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OperationAdministration</servlet-name>
+        <url-pattern>/operation</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -85,6 +93,7 @@
         <param-name>view.template_directory</param-name>
         <param-value>templates</param-value>
     </context-param>
+
     <context-param>
         <param-name>view.outline_template</param-name>
         <param-value>outline.ftl.html</param-value>

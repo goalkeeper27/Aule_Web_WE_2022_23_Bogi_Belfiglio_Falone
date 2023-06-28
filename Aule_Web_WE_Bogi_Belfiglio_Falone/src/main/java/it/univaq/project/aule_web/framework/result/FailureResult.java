@@ -40,7 +40,9 @@ public class FailureResult {
     public void activate(Exception exception, HttpServletRequest request, HttpServletResponse response) {
         String message = "Unknown exception";
         if (exception != null && exception.getMessage() != null && !exception.getMessage().isEmpty()) {
-            message = exception.getMessage();
+            //message = exception.getStackTrace()[0].toString() + " " + exception.getStackTrace()[1].toString()+ " " + exception.getStackTrace()[2].toString()+ " " + exception.getStackTrace()[3].toString() ;
+            message=exception.getMessage();
+            //message=exception.getCause().getMessage();
         } else if (exception != null) {
             message = exception.getClass().getName();
         }

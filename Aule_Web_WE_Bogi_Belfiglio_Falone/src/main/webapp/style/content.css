@@ -10,7 +10,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 /********************************
 
-* proprietà per select.ftl.html
+* proprietà per select_client.ftl.html
 
 ********************************/
 
@@ -160,7 +160,32 @@ input[type="date"]{
 
 }
 
+/********************************
 
+* proprietà per select_client.ftl.html
+
+********************************/
+
+.select.administration .return{
+    margin-top:3%;
+    
+}
+
+.select.administration .return a{
+    font-size:large;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.select.administration p.context{
+    font-style: inherit;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+.select.administration label{
+    font-family: sans-serif;
+}
 
 
 
@@ -250,7 +275,14 @@ input[type="date"]{
     font-size: 19px;
 }
 
+.aule .messaggio.aule{
+    text-align: center;
+    font-size: large;
+    font-style: italic;
+    color: black;
+    padding-top:0.5%;
 
+}
 
 
 .aule fieldset .descrizione{
@@ -1054,7 +1086,7 @@ input[type="date"]{
     text-shadow:none;
 }
 
-+
+
 /********************************
 
 * proprietà per eventi_administration.ftl.html
@@ -1136,9 +1168,6 @@ input[type="date"]{
     border: 2px solid #add8e6;
 }
 
-.eventi.administration label{
-    font-weight: bold;
-}
 
 .eventi.administration p{
     font-size: xx-large;
@@ -1147,11 +1176,19 @@ input[type="date"]{
     padding-top:0.5%;
 }
 
+.eventi.administration p.info{
+    font-size: x-small;
+    font-style:italic;
+    text-shadow: none;
+    color: black;
+}
+
+
 .eventi.administration button{
     width:30%;
-    height:25px;
     background-color: #add8e6;
     font-weight: bold;
+    font-size: medium;
 }
 
 .eventi.administration button:disabled{
@@ -1159,28 +1196,23 @@ input[type="date"]{
     pointer-events: none;
 }
 
-.eventi.administration .fine_ricorrenza{
-    display: none;
-}
 
 .eventi.administration table.evento{
-    max-height: 200px;
+    max-height: 500px;
     overflow:auto;
-    margin-bottom: 3%;
+    margin-bottom:3%;
 }
 
-.eventi.administration table.evento td.esteso{
-    border: 1px solid #000;
-    padding: 8px;
-}
-
-.eventi.administration table.evento td.interno{
+.eventi.administration table.evento td.radio{
     background-color: #add8e6;
-    border: 1px solid #000;
 }
-.eventi.administration table.evento td.interno_header{
-    border: 1px solid #000;
+
+.eventi.administration table.evento td.extend{
+    padding: 4px;
+    
 }
+
+
 
 
 
@@ -1334,4 +1366,15 @@ input[type="date"]{
 }
 
 
+/********************************
+
+* proprietà per output_administration_response.ftl.html
+
+********************************/
+
+.output.administration p.response{
+    font-size:large;
+    color: #add8e6;
+    font-weight: bold;
+}
 

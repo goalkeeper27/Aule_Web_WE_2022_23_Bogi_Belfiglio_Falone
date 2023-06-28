@@ -98,7 +98,7 @@ public class Eventi extends AuleWebBaseController {
                 List<Evento> eventi = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().getEventoInAWeekByAula(aula, dataInizio, dataFine);
 
                 //aggiungo inoltre le eventuali ricorrenze dei vari eventi  che ci sono in quella settimana
-                List<EventoRicorrente> eventiRicorrenti = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoRicorrenteDAO().EventiRicorrentiByPeriodAndAula(dataInizio, dataFine, aula);
+                List<EventoRicorrente> eventiRicorrenti = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoRicorrenteDAO().getEventiRicorrentiByPeriodAndAula(dataInizio, dataFine, aula);
                 if (eventiRicorrenti != null) {
                     for (EventoRicorrente ev : eventiRicorrenti) {
                         Evento e = ev.getEvento();
@@ -162,7 +162,7 @@ public class Eventi extends AuleWebBaseController {
                 List<Evento> eventi = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().getEventoInAWeekByCorso(corso, dataInizio, dataFine);
 
                 //aggiungo inoltre le eventuali ricorrenze dei vari eventi  che ci sono in quella settimana
-                List<EventoRicorrente> eventiRicorrenti = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoRicorrenteDAO().EventiRicorrentiByPeriodAndCorso(dataInizio, dataFine, corso);
+                List<EventoRicorrente> eventiRicorrenti = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoRicorrenteDAO().getEventiRicorrentiByPeriodAndCorso(dataInizio, dataFine, corso);
                 if (eventiRicorrenti != null) {
                     for (EventoRicorrente ev : eventiRicorrenti) {
                         Evento e = ev.getEvento();
@@ -222,7 +222,7 @@ public class Eventi extends AuleWebBaseController {
             List<Evento> eventi = new ArrayList();
             for (Aula aula : aule) {
                 eventi.addAll(((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().getEventoInADayByAula(aula, giorno));
-                List<EventoRicorrente> eventiRicorrenti = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoRicorrenteDAO().EventiRicorrentiByDataAndAula(giorno, aula);
+                List<EventoRicorrente> eventiRicorrenti = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoRicorrenteDAO().getEventiRicorrentiByDataAndAula(giorno, aula);
                 for (EventoRicorrente ev : eventiRicorrenti) {
                     Evento e = ev.getEvento();
                     if (e != null) {
