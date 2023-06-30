@@ -168,7 +168,7 @@ input[type="date"]{
 
 .select.administration .return{
     margin-top:3%;
-    
+
 }
 
 .select.administration .return a{
@@ -1011,12 +1011,24 @@ input[type="date"]{
     width: 10%;
 }
 
-.aule.administration table.responsabile td{
-    border:none;
-    text-align: left;
+.aule.administration table.aula{
+    max-height: 500px;
+    overflow:auto;
+    margin-bottom:3%;
 }
 
-.aule.administration table.responsabile td.radio{
+.aule.administration table.aula td.radio{
+    background-color: #add8e6;
+}
+
+.aule.administration table.aula td.extend{
+    padding: 4px;
+
+
+}
+
+.aule.administration table.aula td.extend.header{
+    font-weight: bold;
     background-color: #add8e6;
 }
 
@@ -1065,17 +1077,12 @@ input[type="date"]{
     margin-bottom: 3%;
 }
 
-.aule.administration table.aula td{
-    text-align: left;
-
-}
-
-.aule.administration table.aula td.radio{
+.aule.administration button.crea.responsabile{
+    border-radius: 4px;
+    width: 10%;
     background-color: #add8e6;
-}
-
-.aule.administration table.aula td.extend{
-    padding: 4px;
+    cursor: pointer;
+    margin-bottom: 2%;
 
 }
 
@@ -1196,6 +1203,39 @@ input[type="date"]{
     pointer-events: none;
 }
 
+.eventi.administration button.crea.corso{
+    border-radius: 4px;
+    width: 10%;
+    background-color: #add8e6;
+    cursor: pointer;
+    margin-bottom: 2%;
+
+}
+
+.eventi.administration button.crea.corso:hover{
+    color: #add8e6;
+    background-color: white;
+    border-color: #add8e6;
+
+
+}
+
+.eventi.administration button.crea.responsabile{
+    border-radius: 4px;
+    width: 10%;
+    background-color: #add8e6;
+    cursor: pointer;
+    margin-bottom: 2%;
+
+}
+
+.eventi.administration button.crea.responsabile:hover{
+    color: #add8e6;
+    background-color: white;
+    border-color: #add8e6;
+
+
+}
 
 .eventi.administration table.evento{
     max-height: 500px;
@@ -1209,7 +1249,18 @@ input[type="date"]{
 
 .eventi.administration table.evento td.extend{
     padding: 4px;
-    
+
+
+}
+
+.eventi.administration table.evento td.extend.header{
+    font-weight: bold;
+    background-color: #add8e6;
+}
+
+.eventi.administration .input.corso{
+    border-left: 2px solid black;
+    padding-left: 1%;
 }
 
 
@@ -1334,7 +1385,7 @@ input[type="date"]{
 
 .gruppi.administration table.gruppo td{
     text-align: left;
-    
+
 }
 
 .gruppi.administration table.gruppo td.radio{
@@ -1343,7 +1394,12 @@ input[type="date"]{
 
 .gruppi.administration table.gruppo td.extend{
     padding: 4px;
-    
+
+}
+
+.gruppi.administration table.gruppo td.extend.header{
+    font-weight: bold;
+    background-color: #add8e6;
 }
 
 .gruppi.administration p.info{
@@ -1378,3 +1434,212 @@ input[type="date"]{
     font-weight: bold;
 }
 
+.output.administration .information{
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f7f7f7;
+}
+
+.output.administration ul{
+    background-color: transparent;
+    font-size: medium;
+    list-style-type: circle;
+
+}
+
+/********************************
+
+* proprietà per corsi_administration.ftl.html
+
+********************************/
+
+
+.corsi.administration p{
+    font-size: xx-large;
+    text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
+    color: #add8e6;
+    padding-top:0.5%;
+    text-align:left;
+}
+
+.corsi.administration input{
+    margin-bottom: 2%;
+    border-width: 2px;
+    border-radius:5px;
+    border-color: #CCC;
+
+}
+
+.corsi.administration input:focus{
+    outline:none;
+    border: 2px solid #add8e6;
+
+}
+
+.corsi.administration input:placeholder-shown {
+    font-style: italic;
+}
+
+
+.corsi.administration input[type="number"]{
+    width: 5%;
+}
+
+
+.corsi.administration select{
+    margin-bottom: 2%;
+    width:10%;
+    border: 2px solid #CCC;
+}
+
+.corsi.administration select:focus{
+    outline:none;
+    border-color: #add8e6;
+}
+
+
+.corsi.administration button{
+    width:10%;
+    background-color: #add8e6;
+    color: black;
+    font-size: small;
+    cursor: pointer;
+    margin-bottom:2%;
+}
+
+.corsi.administration button:disabled{
+    color: #696969;
+    pointer-events: none;
+}
+
+
+.corsi.administration table.corso{
+    max-height: 200px;
+    overflow:auto;
+    margin-bottom: 3%;
+}
+
+.corsi.administration table.corso td{
+    text-align: center;
+
+}
+
+.corsi.administration table.corso td.radio{
+    background-color: #add8e6;
+}
+
+.corsi.administration table.corso td.extend{
+    padding: 4px;
+
+}
+
+.corsi.administration table.corso td.extend.header{
+    font-weight: bold;
+    background-color: #add8e6;
+}
+
+.corsi.administration p.info{
+    font-style: italic;
+    font-size: small;
+    color: black;
+    text-shadow:none;
+}
+
+/********************************
+
+* proprietà per responsabili_administration.ftl.html
+
+********************************/
+
+
+.responsabili.administration p{
+    font-size: xx-large;
+    text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
+    color: #add8e6;
+    padding-top:0.5%;
+    text-align:left;
+}
+
+.responsabili.administration input{
+    margin-bottom: 2%;
+    border-width: 2px;
+    border-radius:5px;
+    border-color: #CCC;
+
+}
+
+.responsabili.administration input:focus{
+    outline:none;
+    border: 2px solid #add8e6;
+
+}
+
+.responsabili.administration input:placeholder-shown {
+    font-style: italic;
+}
+
+
+.responsabili.administration input[type="number"]{
+    width: 5%;
+}
+
+
+.responsabili.administration select{
+    margin-bottom: 2%;
+    width:10%;
+    border: 2px solid #CCC;
+}
+
+.responsabili.administration select:focus{
+    outline:none;
+    border-color: #add8e6;
+}
+
+
+.responsabili.administration button{
+    width:10%;
+    background-color: #add8e6;
+    color: black;
+    font-size: small;
+    cursor: pointer;
+    margin-bottom:2%;
+}
+
+.responsabili.administration button:disabled{
+    color: #696969;
+    pointer-events: none;
+}
+
+
+.responsabili.administration table.corso{
+    max-height: 200px;
+    overflow:auto;
+    margin-bottom: 3%;
+}
+
+.responsabili.administration table.corso td{
+    text-align: center;
+
+}
+
+.responsabili.administration table.corso td.radio{
+    background-color: #add8e6;
+}
+
+.responsabili.administration table.corso td.extend{
+    padding: 4px;
+
+}
+
+.responsabili.administration table.corso td.extend.header{
+    font-weight: bold;
+    background-color: #add8e6;
+}
+
+.responsabili.administration p.info{
+    font-style: italic;
+    font-size: small;
+    color: black;
+    text-shadow:none;
+}

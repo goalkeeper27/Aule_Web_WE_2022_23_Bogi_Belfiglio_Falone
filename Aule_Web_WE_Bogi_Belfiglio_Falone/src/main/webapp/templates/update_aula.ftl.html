@@ -1,44 +1,49 @@
 <form method="post" action="administration">
     <input type="hidden" name="IDaula" value="${aula.key}" />
     <label>nome:</label>
-    <input type="text" name="nome" value="${aula.nome}"/>
+    <input type="text" name="nome" value="${aula.nome}" id="input_aula_1" oninput="validateAulaInputs(2)"/>
     <br>
     <label>via:</label>
     <#assign luogo = (aula.luogo)?split(",")>
-    <input type="text" name="via" placeholder="inserire nome via" value="${luogo[0]}"/>
+    <input type="text" name="via" id="input_aula_2" placeholder="inserire nome via" value="${luogo[0]}" oninput="validateAulaInputs(2)"/>
     <br>
     <label>n.civico:</label>
-    <input type="number" name="civico" value="${luogo[1]?number}"/>
+    <input type="number" name="civico" id="input_aula_3" min="1" value="${luogo[1]?number}" oninput="validateAulaInputs(2)"/>
     <br>
     <label>edificio</label>
-    <input type="text" name="edificio" value="${aula.edificio}"/>
+    <input type="text" name="edificio" id="input_aula_4" value="${aula.edificio}" oninput="validateAulaInputs(2)"/>
     <br>
     <label>piano</label>
-    <input type="number" name="piano" min="1" value="${aula.piano?number}" />
+    <input type="number" name="piano" id="input_aula_5" min="1" value="${aula.piano?number}" oninput="validateAulaInputs(2)"/>
     <br>
     <label>capienza</label>
-    <input type="number" name="capienza" min="1" value="${aula.capienza?number}" />
+    <input type="number" name="capienza" id="input_aula_6" min="1" value="${aula.capienza?number}" oninput="validateAulaInputs(2)"/>
     <br>
     <label>prese elettriche</label>
-    <input type="number" name="prese_elettriche" min="1" value="${aula.numeroPreseElettriche?number}" />
+    <input type="number" name="prese_elettriche" id="input_aula_7" min="1" value="${aula.numeroPreseElettriche?number}" oninput="validateAulaInputs(2)"/>
     <br>
     <label>prese di rete</label>
-    <input type="number" name="prese_di_rete" min="1" value="${aula.numeroPreseDiRete?number}"/>
+    <input type="number" name="prese_di_rete" id="input_aula_8" min="1" value="${aula.numeroPreseDiRete?number}" oninput="validateAulaInputs(2)"/>
     <br>
     <label>note</label><br>
-    <textarea name="note">${aula.noteGeneriche}</textarea>
+    <textarea name="note" id="input_aula_9" oninput="validateAulaInputs(2)">${aula.noteGeneriche}</textarea>
     <h3>Responsabile</h3>
-    <table class="responsabile">
-        <#list responsabili as responsabile>
-        <#if responsabile.key == aula.responsabile.key>
+    <label>aggiungi un nuovo responsabile</label>
+    <button type="button" class="crea responsabile" onclick="inputResponsabile()" >vai</button>
+    <table class="aula">
         <tr>
-            <td class="radio"><input type="radio" name="responsabile" id="input10" value="${responsabile.key}" checked/></td>
-            <td>${responsabile.email}</td>     
+            <td class="extend header"></td>
+            <td class="extend header">email</td>
         </tr>
-        <#else>
         <tr>
-            <td class="radio"><input type="radio" name="responsabile" id="input10" value="${responsabile.key}"/></td>
-            <td>${responsabile.email}</td>     
+            <td class="radio"><input type="radio" name="responsabile" value="${aula.responsabile.key}" onchange="validateAulaInputs(1)" checked/></td>
+            <td class="extend">${aula.responsabile.email}</td>     
+        </tr>
+        <#list responsabili as responsabile>
+        <#if !(responsabile.key == aula.responsabile.key)>
+        <tr>
+            <td class="radio"><input type="radio" name="responsabile" value="${responsabile.key}" onchange="validateAulaInputs(1)"/></td>
+            <td class="extend">${responsabile.email}</td>     
         </tr>
         </#if>
         </#list>
@@ -50,7 +55,7 @@
     <#list tipi_gruppo as tipo>
     <#assign name="gruppo"+i>
     <label>${tipo}:</label>
-    <select name="${name}">
+    <select name="${name}" onchange="validateAulaInputs(2)">
         <option value="0">nessuno</option>
         <#list gruppi as gruppo>
         <#if gruppo.tipoGruppo == tipo>
@@ -72,13 +77,13 @@
         <#assign name="attrezzatura"+i>
         <#if attrezzatura.aulaKey == aula.key>
         <tr>
-            <td class="checkbox"><input type="checkbox" name="${name}" value="${attrezzatura.key}" checked/></td>
+            <td class="checkbox"><input type="checkbox" name="${name}" class="attrezzatura" value="${attrezzatura.key}" onchange="validateAulaInputs(2)" checked/></td>
             <td class="extend">${attrezzatura.nome?lower_case}</td>
             <td class="extend">${attrezzatura.numeroDiSerie?lower_case}</td>
         </tr>
         <#else>
         <tr>
-            <td class="checkbox"><input type="checkbox" name="${name}" value="${attrezzatura.key}"/></td>
+            <td class="checkbox"><input type="checkbox" name="${name}" class="attrezzatura" value="${attrezzatura.key}" onchange="validateAulaInputs(2)"/></td>
             <td class="extend">${attrezzatura.nome?lower_case}</td>
             <td class="extend">${attrezzatura.numeroDiSerie?lower_case}</td>
         </tr>
@@ -88,7 +93,7 @@
 
     </table>
 
-    <button type="submit" name="modify_aula" value="1">inserisci</button>
+    <button type="submit" name="modify_aula" id="aula_button" value="1">aggiorna</button>
     <button type="submit" id="export_button" name="export_aula" value="1">esporta</button>
-    
+
 </form>

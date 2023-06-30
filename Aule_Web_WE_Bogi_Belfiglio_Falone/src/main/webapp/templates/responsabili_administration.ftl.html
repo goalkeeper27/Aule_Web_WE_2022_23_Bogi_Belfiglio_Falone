@@ -1,0 +1,43 @@
+<div class="responsabili administration">
+    <div class="container">
+        <div class="ten columns">
+            <h3>Inserisci responsabile</h3>
+            <form method="post" action="">
+                <label for="input_responsabile_1">nome:</label>
+                <input type="text" id="input_responsabile_1" oninput="validateResponsabileInput()"/> 
+                <br>
+                <label for="input_responsabile_2">cognome:</label>
+                <input type="text" id="input_responsabile_2" oninput="validateResponsabileInput()"/> 
+                <br>
+                <label for="input_responsabile_3">codice fiscale:</label>
+                <input type="text" id="input_responsabile_3" oninput="validateResponsabileInput()"/> 
+                <br>
+                <label for="input_responsabile_4">email:</label>
+                <input type="text" id="input_responsabile_4" placeholder="dominio @univaq.it" oninput="validateResponsabileInput()"/>
+                <br>
+                <button type="button" id="responsabili_button" onclick="createResponsabile()" disabled>inserisci</button>
+            </form>
+        </div>
+        <div class="ten columns">
+            <#if responsabili?has_content>
+
+            <table class="corso">
+                <tr>
+                    <td class="extend header">nome</td>
+                    <td class="extend header">cognome</td>
+                    <td class="extend header">email</td>
+                </tr>
+                <#list responsabili as responsabile>
+                <tr>
+                    <td class="extend">${responsabile.nome?lower_case}</td>
+                    <td class="extend">${responsabile.cognome?lower_case}</td>
+                    <td class="extend">${responsabile.email?lower_case}</td>
+                </tr>
+                </#list>
+            </table>
+            <#else>
+            <p class="info">non ci sono responsabili disponibili</p>
+            </#if>
+        </div>
+    </div>
+</div>

@@ -70,3 +70,7 @@ body{
     cursor: pointer;
 }
 
+p.error{
+    color: red;
+}
+

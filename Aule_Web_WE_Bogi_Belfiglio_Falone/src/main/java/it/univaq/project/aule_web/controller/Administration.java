@@ -34,6 +34,7 @@ import it.univaq.project.aule_web.data.model.Gruppo;
 import it.univaq.project.aule_web.data.model.Responsabile;
 
 import it.univaq.project.aule_web.data.model.enumerable.Ricorrenza;
+import it.univaq.project.aule_web.data.model.enumerable.TipoLaurea;
 import it.univaq.project.aule_web.data.model.enumerable.Tipologia;
 
 import it.univaq.project.aule_web.framework.data.DataException;
@@ -145,15 +146,7 @@ public class Administration extends AuleWebBaseController {
             ((AuleWebDataLayer) request.getAttribute("datalayer")).getAttrezzaturaDAO().storeAttrezzatura(attrezzatura);
         }
 
-        Map data = new HashMap<>();
-        data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));
-        data.put("outline_tpl", "outline_with_login.ftl.html");
-        data.put("attrezzature", attrezzature);
-        data.put("aula", aula);
-        data.put("gruppi", ((AuleWebDataLayer) request.getAttribute("datalayer")).getGruppoDAO().getGruppiByAula(aula));
-        data.put("message", "inserimento aula avvenuto con successo");
-        TemplateResult res = new TemplateResult(getServletContext());
-        res.activate("operation_administration_response.ftl.html", data, response);
+        response.sendRedirect("operation?IDaula=" + aula_key + "&message=" + URLEncoder.encode("inserimento aula avvenuto con successo", "utf-8"));
 
     }
 
@@ -315,15 +308,7 @@ public class Administration extends AuleWebBaseController {
             }
         }
 
-        Map data = new HashMap<>();
-        data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));
-        data.put("outline_tpl", "outline_with_login.ftl.html");
-        data.put("attrezzature", attrezzatureNuove);
-        data.put("aula", aula);
-        data.put("gruppi", ((AuleWebDataLayer) request.getAttribute("datalayer")).getGruppoDAO().getGruppiByAula(aula));
-        data.put("message", "aggiornamento aula avvenuto con successo");
-        TemplateResult res = new TemplateResult(getServletContext());
-        res.activate("", data, response);
+        response.sendRedirect("operation?IDaula=" + aula_key + "&message=" + URLEncoder.encode("aggiornamento aula avvenuto con successo", "utf-8"));
 
     }
 
@@ -404,12 +389,8 @@ public class Administration extends AuleWebBaseController {
 
         ((AuleWebDataLayer) request.getAttribute("datalayer")).getGruppoDAO().storeGruppo(gruppo);
 
-        data.put("gruppo", gruppo);
-        data.put("message", "inserimento gruppo avvenuto con successo");
+        response.sendRedirect("operation?IDgruppo=" + gruppo.getKey() + "&message=" + URLEncoder.encode("inserimento gruppo avvenuto con successo", "utf-8"));
 
-        response.sendRedirect("operation?IDgruppo="+gruppo.getKey()+"&message="+URLEncoder.encode("inserimento gruppo avvenuto con successo", "utf-8"));
-        //TemplateResult res = new TemplateResult(getServletContext());
-        //res.activate("operation_administration_response.ftl.html", data, response);
     }
 
     private void action_modify_gruppo(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
@@ -427,14 +408,7 @@ public class Administration extends AuleWebBaseController {
 
         ((AuleWebDataLayer) request.getAttribute("datalayer")).getGruppoDAO().storeGruppo(gruppo);
 
-        Map data = new HashMap<>();
-        data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));
-        data.put("outline_tpl", "outline_with_login.ftl.html");
-        data.put("gruppo", gruppo);
-        data.put("message", "aggiornamento gruppo avvenuto con successo");
-        response.sendRedirect("operation?IDgruppo="+gruppo.getKey()+"&message="+URLEncoder.encode("aggiornamento gruppo avvenuto con successo", "utf-8"));
-        //TemplateResult res = new TemplateResult(getServletContext());
-        //res.activate("operation_administration_response.ftl.html", data, response);
+        response.sendRedirect("operation?IDgruppo=" + gruppo.getKey() + "&message=" + URLEncoder.encode("aggiornamento gruppo avvenuto con successo", "utf-8"));
 
     }
 
@@ -525,7 +499,7 @@ public class Administration extends AuleWebBaseController {
                 ((EventoProxy) evento).setCorsoKey(0);
                 break;
             case 6:
-                evento.setTipologia(Tipologia.LAUREE);
+                evento.setTipologia(Tipologia.LAUREA);
                 ((EventoProxy) evento).setCorsoKey(0);
                 break;
             case 7:
@@ -561,13 +535,7 @@ public class Administration extends AuleWebBaseController {
 
         ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().storeEvento(evento);
 
-        Map data = new HashMap<>();
-        data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));
-        data.put("outline_tpl", "outline_with_login.ftl.html");
-        data.put("evento", evento);
-        data.put("mex", "inserimento aula avvenuto con successo");
-        TemplateResult res = new TemplateResult(getServletContext());
-        res.activate("", data, response);
+        response.sendRedirect("operation?IDevento=" + evento.getKey() + "&message=" + URLEncoder.encode("inserimento evento avvenuto con successo", "utf-8"));
 
     }
 
@@ -584,54 +552,56 @@ public class Administration extends AuleWebBaseController {
             evento.setDescrizione(request.getParameter("descrizione"));
         }
 
-        if (!evento.getTipologia().toString().equals(request.getParameter("tipologia"))) {
-            String scelta_tipologia = request.getParameter("tipologia");
+        String scelta_tipologia = request.getParameter("tipologia");
 
-            switch (scelta_tipologia) {
-                case "LEZIONE":
-                    evento.setTipologia(Tipologia.LEZIONE);
-                    ((EventoProxy) evento).setCorsoKey(SecurityHelpers.checkNumeric(request.getParameter("corso")));
-                    break;
-                case "ESAME":
-                    evento.setTipologia(Tipologia.ESAME);
-                    ((EventoProxy) evento).setCorsoKey(SecurityHelpers.checkNumeric(request.getParameter("corso")));
-                    break;
-                case "SEMINARIO":
-                    evento.setTipologia(Tipologia.SEMINARIO);
-                    ((EventoProxy) evento).setCorsoKey(0);
-                    break;
-                case "PARZIALE":
-                    evento.setTipologia(Tipologia.PARZIALE);
-                    ((EventoProxy) evento).setCorsoKey(SecurityHelpers.checkNumeric(request.getParameter("corso")));
-                    break;
-                case "RIUNIONE":
-                    evento.setTipologia(Tipologia.RIUNIONE);
-                    ((EventoProxy) evento).setCorsoKey(0);
-                    break;
-                case "LAUREE":
-                    evento.setTipologia(Tipologia.LAUREE);
-                    ((EventoProxy) evento).setCorsoKey(0);
-                    break;
-                case "ALTRO":
-                    evento.setTipologia(Tipologia.ALTRO);
-                    ((EventoProxy) evento).setCorsoKey(0);
-                    break;
-            }
+        switch (scelta_tipologia) {
+            case "LEZIONE":
+                evento.setTipologia(Tipologia.LEZIONE);
+                ((EventoProxy) evento).setCorsoKey(SecurityHelpers.checkNumeric(request.getParameter("corso")));
+                break;
+            case "ESAME":
+                evento.setTipologia(Tipologia.ESAME);
+                ((EventoProxy) evento).setCorsoKey(SecurityHelpers.checkNumeric(request.getParameter("corso")));
+                break;
+            case "SEMINARIO":
+                evento.setTipologia(Tipologia.SEMINARIO);
+                ((EventoProxy) evento).setCorsoKey(0);
+                break;
+            case "PARZIALE":
+                evento.setTipologia(Tipologia.PARZIALE);
+                ((EventoProxy) evento).setCorsoKey(SecurityHelpers.checkNumeric(request.getParameter("corso")));
+                break;
+            case "RIUNIONE":
+                evento.setTipologia(Tipologia.RIUNIONE);
+                ((EventoProxy) evento).setCorsoKey(0);
+                break;
+            case "LAUREA":
+                evento.setTipologia(Tipologia.LAUREA);
+                ((EventoProxy) evento).setCorsoKey(0);
+                break;
+            case "ALTRO":
+                evento.setTipologia(Tipologia.ALTRO);
+                ((EventoProxy) evento).setCorsoKey(0);
+                break;
         }
 
-        if (!evento.getDataEvento().toString().equals(request.getParameter("data"))) {
+        if (!evento.getDataEvento()
+                .toString().equals(request.getParameter("data"))) {
             evento.setDataEvento(LocalDate.parse(request.getParameter("data"), formatterDate));
         }
 
-        if (!evento.getOraInizio().toString().equals(request.getParameter("ora_inizio"))) {
+        if (!evento.getOraInizio()
+                .toString().equals(request.getParameter("ora_inizio"))) {
             evento.setOraInizio(LocalTime.parse(request.getParameter("ora_inizio"), formatterTime));
         }
 
-        if (!evento.getOraFine().toString().equals(request.getParameter("ora_fine"))) {
+        if (!evento.getOraFine()
+                .toString().equals(request.getParameter("ora_fine"))) {
             evento.setOraFine(LocalTime.parse(request.getParameter("ora_fine"), formatterTime));
         }
 
-        if (!evento.getRicorrenza().toString().equals(request.getParameter("ricorrenza"))) {
+        if (!evento.getRicorrenza()
+                .toString().equals(request.getParameter("ricorrenza"))) {
             String scelta_ricorrenza = request.getParameter("ricorrenza");
 
             switch (scelta_ricorrenza) {
@@ -658,25 +628,21 @@ public class Administration extends AuleWebBaseController {
             Corso corso = ((AuleWebDataLayer) request.getAttribute("datalayer")).getCorsoDAO().getCorso(SecurityHelpers.checkNumeric(request.getParameter("corsi")));
             evento.setCorso(corso);
         }*/
-        if (evento.getAula().getKey() != SecurityHelpers.checkNumeric(request.getParameter("aula"))) {
-            Aula aula = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().getAula(SecurityHelpers.checkNumeric(request.getParameter("aule")));
+        if (evento.getAula()
+                .getKey() != SecurityHelpers.checkNumeric(request.getParameter("aula"))) {
+            Aula aula = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().getAula(SecurityHelpers.checkNumeric(request.getParameter("aula")));
             evento.setAula(aula);
         }
 
-        if (evento.getResponsabile().getKey() != SecurityHelpers.checkNumeric(request.getParameter("responsabile"))) {
+        if (evento.getResponsabile()
+                .getKey() != SecurityHelpers.checkNumeric(request.getParameter("responsabile"))) {
             Responsabile responsabile = ((AuleWebDataLayer) request.getAttribute("datalayer")).getResponsabileDAO().getResponsabile(SecurityHelpers.checkNumeric(request.getParameter("responsabile")));
             evento.setResponsabile(responsabile);
         }
 
         ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().storeEvento(evento);
 
-        Map data = new HashMap<>();
-        data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));
-        data.put("outline_tpl", "outline_with_login.ftl.html");
-        data.put("evento", evento);
-        data.put("mex", "aggiornamento evento avvenuto con successo");
-        TemplateResult res = new TemplateResult(getServletContext());
-        res.activate("", data, response);
+        response.sendRedirect("operation?IDevento=" + evento.getKey() + "&message=" + URLEncoder.encode("aggiornamento evento avvenuto con successo", "utf-8"));
     }
 
     private void action_view_evento(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
@@ -714,6 +680,58 @@ public class Administration extends AuleWebBaseController {
         TemplateResult res = new TemplateResult(getServletContext());
         res.activate("table_eventi_research.ftl.html", data, response);
     }
+
+    private void action_input_corso(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
+        Map data = new HashMap<>();
+        data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));
+        data.put("outline_tpl", "");
+        data.put("corsi", ((AuleWebDataLayer) request.getAttribute("datalayer")).getCorsoDAO().getAllCorsi());
+        TemplateResult res = new TemplateResult(getServletContext());
+        res.activate("corsi_administration.ftl.html", data, response);
+    }
+
+    private void action_insert_corso(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
+        Corso corso = ((AuleWebDataLayer) request.getAttribute("datalayer")).getCorsoDAO().createCorso();
+        corso.setKey(null);
+        corso.setNome(request.getParameter("nome"));
+        corso.setCorsoDiLaurea(request.getParameter("corso_laurea"));
+        switch (SecurityHelpers.checkNumeric(request.getParameter("tipo_laurea"))) {
+            case 1:
+                corso.setTipoLaurea(TipoLaurea.TRIENNALE);
+                break;
+            case 2:
+                corso.setTipoLaurea(TipoLaurea.MAGISTRALE);
+                break;
+            case 3:
+                corso.setTipoLaurea(TipoLaurea.CICLO_UNICO);
+        }
+        corso.setAnnoDiFrequentazione(SecurityHelpers.checkNumeric(request.getParameter("anno_frequentazione")));
+        ((AuleWebDataLayer) request.getAttribute("datalayer")).getCorsoDAO().storeCorso(corso);
+
+        response.sendRedirect("administration?input_corso=1");
+    }
+
+    private void action_input_responsabile(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
+        Map data = new HashMap<>();
+        data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));
+        data.put("outline_tpl", "");
+        data.put("responsabili", ((AuleWebDataLayer) request.getAttribute("datalayer")).getResponsabileDAO().getAllResponsabili());
+        TemplateResult res = new TemplateResult(getServletContext());
+        res.activate("responsabili_administration.ftl.html", data, response);
+    }
+
+    private void action_insert_responsabile(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
+        Responsabile responsabile = ((AuleWebDataLayer) request.getAttribute("datalayer")).getResponsabileDAO().createResponsabile();
+        responsabile.setKey(null);
+        responsabile.setNome(request.getParameter("nome"));
+        responsabile.setCognome(request.getParameter("cognome"));
+        responsabile.setCodiceFiscale(request.getParameter("codice_fiscale"));
+        responsabile.setEmail(request.getParameter("email"));
+        ((AuleWebDataLayer) request.getAttribute("datalayer")).getResponsabileDAO().storeResponsabile(responsabile);
+
+        response.sendRedirect("administration?input_responsabile=1");
+    }
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -780,7 +798,15 @@ public class Administration extends AuleWebBaseController {
                     action_insert_evento(request, response);
                 } else if (request.getParameter("modify_evento") != null) {
                     action_modify_evento(request, response);
-                } else {
+                } else if (request.getParameter("input_corso") != null) {
+                    action_input_corso(request, response);
+                } else if (request.getParameter("insert_corso") != null) {
+                    action_insert_corso(request, response);
+                } else if (request.getParameter("input_responsabile") != null) {
+                    action_input_responsabile(request, response);
+                } else if (request.getParameter("insert_responsabile") != null) {
+                    action_insert_responsabile(request, response);
+                }else {
                     action_default(request, response);
                 }
             } else {

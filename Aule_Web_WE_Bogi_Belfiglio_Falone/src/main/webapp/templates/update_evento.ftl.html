@@ -1,4 +1,4 @@
-<form method="post" action="administration">
+<form method="get" action="administration">
     <input type="hidden" name="IDevento" value="${evento.key}" />
     <label>nome:</label>
     <input type="text" name="nome" id="input_evento_1" value="${evento.nome}"  oninput="validateEventsInputs(2)"/>
@@ -63,14 +63,14 @@
             <td>Riunione</td>
         </tr>
         </#if>
-        <#if evento.tipologia?string == "LAUREE">
+        <#if evento.tipologia?string == "LAUREA">
         <tr>
-            <td class="radio"><input type="radio" name="tipologia"  value="LAUREE" onchange="showCorsi(2); validateEventsInputs(2)" checked/></td>
+            <td class="radio"><input type="radio" name="tipologia"  value="LAUREA" onchange="showCorsi(2); validateEventsInputs(2)" checked/></td>
             <td>Laurea</td>
         </tr>
         <#else>
         <tr>
-            <td class="radio"><input type="radio" name="tipologia"  value="LAUREE" onchange="showCorsi(2); validateEventsInputs(2)" /></td>
+            <td class="radio"><input type="radio" name="tipologia"  value="LAUREA" onchange="showCorsi(2); validateEventsInputs(2)" /></td>
             <td>Laurea</td>
         </tr>
         </#if>
@@ -89,32 +89,71 @@
     <br>
     <#if (evento.tipologia?string == "LEZIONE") || (evento.tipologia?string == "ESAME") || (evento.tipologia?string == "PARZIALE")>
     <div id="corsi_evento">
-        <h3>Corsi di laurea</h3>
-        <table class="tabella_insert">
+        <h3>Corso</h3>
+        <label>aggiungi un nuovo corso</label>
+        <button type="button" class="crea corso" onclick="inputCorso()" >vai</button>
+        <table class="evento">
+            <tr>
+                <td class="extend header"></td>
+                <td class="extend header">nome</td>
+                <td class="extend header">laurea</td>
+                <td class="extend header">tipo</td>
+                <td class="extend header">anno frequenza</td>
+            </tr>
             <#list corsi as corso>
             <#if evento.corsoKey == corso.key>
             <tr>
-                <td class="radio"><input type="radio" name="corso" class="corsi" value="${corso.key}" onchange="validateEventsInputs(2)" checked/></td>
-                <td>${corso.nome}</td>
+                <td class="radio"><input type="radio" name="corso"  value="${corso.key}" onchange="validateEventsInputs(2);" checked/></td>
+                <td class="extend">${corso.nome?lower_case}</td>
+                <td class="extend">${(corso.corsoDiLaurea?string)?lower_case}</td>
+                <td class="extend">${((corso.tipoLaurea?string)?replace("_"," "))?lower_case}</td>
+                <td>${corso.annoDiFrequentazione}</td>
             </tr>
             <#else>
             <tr>
-                <td class="radio"><input type="radio" name="corso" class="corsi" value="${corso.key}" onchange="validateEventsInputs(2)"/></td>
-                <td>${corso.nome}</td>
+                <td class="radio"><input type="radio" name="corso"  value="${corso.key}" onchange="validateEventsInputs(2);"/></td>
+                <td class="extend">${corso.nome?lower_case}</td>
+                <td class="extend">${(corso.corsoDiLaurea?string)?lower_case}</td>
+                <td class="extend">${((corso.tipoLaurea?string)?replace("_"," "))?lower_case}</td>
+                <td>${corso.annoDiFrequentazione}</td>
             </tr>
             </#if>
+
             </#list>
         </table>
     </div>
+
     <#else>
     <div id="corsi_evento" style="display:none">
-        <h3>Corsi di laurea</h3>
-        <table class="tabella_insert">
-            <#list corsi as corso>
+        <label>aggiungi un nuovo corso</label>
+        <button type="button" class="crea corso" onclick="inputCorso()" >vai</button>
+        <table class="evento">
             <tr>
-                <td class="radio"><input type="radio" name="corso" class="corsi" value="${corso.key}" oninput="validateEventsInputs(2)"/></td>
-                <td>${corso.nome}</td>
+                <td class="extend header"></td>
+                <td class="extend header">nome</td>
+                <td class="extend header">laurea</td>
+                <td class="extend header">tipo</td>
+                <td class="extend header">anno frequenza</td>
             </tr>
+            <#list corsi as corso>
+            <#if evento.corsoKey == corso.key>
+            <tr>
+                <td class="radio"><input type="radio" name="corso"  value="${corso.key}" onchange="validateEventsInputs(2);" checked/></td>
+                <td class="extend">${corso.nome?lower_case}</td>
+                <td class="extend">${(corso.corsoDiLaurea?string)?lower_case}</td>
+                <td class="extend">${((corso.tipoLaurea?string)?replace("_"," "))?lower_case}</td>
+                <td>${corso.annoDiFrequentazione}</td>
+            </tr>
+            <#else>
+            <tr>
+                <td class="radio"><input type="radio" name="corso"  value="${corso.key}" onchange="validateEventsInputs(2);"/></td>
+                <td class="extend">${corso.nome?lower_case}</td>
+                <td class="extend">${(corso.corsoDiLaurea?string)?lower_case}</td>
+                <td class="extend">${((corso.tipoLaurea?string)?replace("_"," "))?lower_case}</td>
+                <td>${corso.annoDiFrequentazione}</td>
+            </tr>
+            </#if>
+
             </#list>
         </table>
     </div>
@@ -207,7 +246,13 @@
     </table>
     <br>
     <h3>Responsabile</h3>
+    <label>aggiungi un nuovo responsabile</label>
+    <button type="button" class="crea responsabile" onclick="inputResponsabile()" >vai</button>
     <table class="evento">
+        <tr>
+            <td class="extend header"></td>
+            <td class="extend header">email</td>
+        </tr>
         <#list responsabili as responsabile>
         <#if responsabile.key == evento.responsabile.key>
         <tr>

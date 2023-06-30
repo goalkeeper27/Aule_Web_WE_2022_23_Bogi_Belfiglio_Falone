@@ -107,8 +107,8 @@ public class EventoDAO_MySQL extends DAO implements EventoDAO {
                     evento.setTipologia(Tipologia.SEMINARIO);
                     evento.setCorsoKey(0);
                     break;
-                case "LAUREE":
-                    evento.setTipologia(Tipologia.LAUREE);
+                case "LAUREA":
+                    evento.setTipologia(Tipologia.LAUREA);
                     evento.setCorsoKey(0);
                     break;
                 case "RIUNIONE":
@@ -245,8 +245,8 @@ public class EventoDAO_MySQL extends DAO implements EventoDAO {
                         uEvento.setString(3, "SEMINARIO");
                         uEvento.setNull(9, java.sql.Types.INTEGER);
                         break;
-                    case "LAUREE":
-                        uEvento.setString(3, "LAUREE");
+                    case "LAUREA":
+                        uEvento.setString(3, "LAUREA");
                         uEvento.setNull(9, java.sql.Types.INTEGER);
                         break;
                     case "RIUNIONE":
@@ -317,8 +317,8 @@ public class EventoDAO_MySQL extends DAO implements EventoDAO {
                         iEvento.setString(3, "SEMINARIO");
                         iEvento.setNull(9, java.sql.Types.INTEGER);
                         break;
-                    case "LAUREE":
-                        iEvento.setString(3, "LAUREE");
+                    case "LAUREA":
+                        iEvento.setString(3, "LAUREA");
                         iEvento.setNull(9, java.sql.Types.INTEGER);
                         break;
                     case "RIUNIONE":

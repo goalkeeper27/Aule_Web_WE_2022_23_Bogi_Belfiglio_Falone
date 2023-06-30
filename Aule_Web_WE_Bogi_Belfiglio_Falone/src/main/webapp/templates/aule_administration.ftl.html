@@ -2,53 +2,60 @@
     <div class="container">
         <div class="five columns">
             <p>Inserimento aule</p> 
-            
+
             <form method="post" action="administration" id="form_insert" >
-                
+
                 <#if !(import?has_content)>
                 <label for="input1">nome:</label>
-                <input type="text" name="nome" id="input1" oninput="validateInputs()"/>
+                <input type="text" name="nome" id="input_aula_1" oninput="validateAulaInputs(1)"/>
                 <br>
                 <label for="input2">via:</label>
-                <input type="text" name="via" id="input2" placeholder="inserire nome via" oninput="validateInputs()"/>
+                <input type="text" name="via" id="input_aula_2" placeholder="inserire nome via" oninput="validateAulaInputs(1)"/>
                 <br>
                 <label for="input3">n.civico:</label>
-                <input type="number" name="civico" id="input3" min="1" oninput="validateInputs()"/>
+                <input type="number" name="civico" id="input_aula_3" min="1" oninput="validateAulaInputs(1)"/>
                 <br>
                 <label for="input4">edificio</label>
-                <input type="text" name="edificio" id="input4" oninput="validateInputs()"/>
+                <input type="text" name="edificio" id="input_aula_4" oninput="validateAulaInputs(1)"/>
                 <br>
                 <label for="input5">piano</label>
-                <input type="number" name="piano" id="input5" min="1" oninput="validateInputs()"/>
+                <input type="number" name="piano" id="input_aula_5" min="1" oninput="validateAulaInputs(1)"/>
                 <br>
                 <label for="input6">capienza</label>
-                <input type="number" id="input6" name="capienza" min="1" oninput="validateInputs()"/>
+                <input type="number" id="input_aula_6" name="capienza" min="1" oninput="validateAulaInputs(1)"/>
                 <br>
                 <label for="input7">prese elettriche</label>
-                <input type="number" name="prese_elettriche" id="input7" min="1" oninput="validateInputs()"/>
+                <input type="number" name="prese_elettriche" id="input_aula_7" min="1" oninput="validateAulaInputs(1)"/>
                 <br>
                 <label for="input8">prese di rete</label>
-                <input type="number" name="prese_di_rete" id="input8" min="1" oninput="validateInputs()"/>
+                <input type="number" name="prese_di_rete" id="input_aula_8" min="1" oninput="validateAulaInputs(1)"/>
                 <br>
                 <label for="input9">note</label><br>
-                <textarea name="note" id="input9" oninput="validateInputs()"></textarea>
+                <textarea name="note" id="input_aula_9" oninput="validateAulaInputs(1)"></textarea>
                 <h3>Responsabile</h3>
-                <table class="responsabile">
+                <label>aggiungi un nuovo responsabile</label>
+                <button type="button" class="crea responsabile" onclick="inputResponsabile()" >vai</button>
 
-
+                <table class="aula">
+                    <tr>
+                        <td class="extend header"></td>
+                        <td class="extend header">email</td>
+                    </tr>
                     <#list responsabili as responsabile>
                     <tr>
-                        <td class="radio"><input type="radio" name="responsabile" id="input10" value="${responsabile.key}" onchange="validateInputs()"/></td>
-                        <td>${responsabile.email}</td>
+                        <td class="radio"><input type="radio" name="responsabile" value="${responsabile.key}" onchange="validateAulaInputs(1)"/></td>
+                        <td class="extend">${responsabile.email}</td>     
                     </tr>
                     </#list>
                 </table>
+
+
                 <h3>Gruppi</h3>
                 <#assign i=1>
                 <#list tipi_gruppo as tipo>
                 <#assign name="gruppo"+i>
                 <label>${tipo}:</label>
-                <select class="input11" name="${name}" onchange="validateInputs()">
+                <select name="${name}" onchange="validateAulaInputs(1)">
                     <option value="0">nessuno</option>
                     <#list gruppi as gruppo>
                     <#if gruppo.tipoGruppo == tipo>
@@ -69,7 +76,7 @@
                     <#list attrezzature as attrezzatura>
                     <#assign name="attrezzatura"+i>
                     <tr>
-                        <td class="checkbox"><input type="checkbox" name="${name}" class="input12" value="${attrezzatura.key}" onchange="validateInputs()"/></td>
+                        <td class="checkbox"><input type="checkbox" name="${name}" class="attrezzatura"  value="${attrezzatura.key}" onchange="validateAulaInputs(1)"/></td>
                         <td class="extend">${attrezzatura.nome?lower_case}</td>
                         <td class="extend">${attrezzatura.numeroDiSerie?lower_case}</td>
                     </tr>
@@ -77,60 +84,65 @@
                     </#list>
 
                 </table>
-                
+                <button type="submit" name="insert_aula" value="1" id="aula_button" disabled>inserisci</button><br> 
                 <#else>
-                
+
                 <label for="input1">nome:</label>
-                <input type="text" name="nome" id="input1" value="${aula.nome}" oninput="validateInputs()"/>
+                <input type="text" name="nome" id="input_aula_1" value="${aula.nome}" oninput="validateAulaInputs(1)"/>
                 <br>
                 <label for="input2">via:</label>
                 <#assign luogo = (aula.luogo)?split(",")>
-                <input type="text" name="via" id="input2" value="${luogo[0]}" placeholder="inserire nome via" oninput="validateInputs()"/>
+                <input type="text" name="via" id="input_aula_2" value="${luogo[0]}" placeholder="inserire nome via" oninput="validateAulaInputs(1)"/>
                 <br>
                 <label for="input3">n.civico:</label>
-                <input type="number" name="civico" id="input3" value="${luogo[1]}" min="1" oninput="validateInputs()"/>
+                <input type="number" name="civico" id="input_aula_3" value="${luogo[1]}" min="1" oninput="validateAulaInputs(1)"/>
                 <br>
                 <label for="input4">edificio</label>
-                <input type="text" name="edificio" id="input4" value="${aula.edificio}" oninput="validateInputs()"/>
+                <input type="text" name="edificio" id="input_aula_4" value="${aula.edificio}" oninput="validateAulaInputs(1)"/>
                 <br>
                 <label for="input5">piano</label>
-                <input type="number" name="piano" id="input5" value="${aula.piano?number}" min="1" oninput="validateInputs()"/>
+                <input type="number" name="piano" id="input_aula_5" value="${aula.piano?number}" min="1" oninput="validateAulaInputs(1)"/>
                 <br>
                 <label for="input6">capienza</label>
-                <input type="number" id="input6" name="capienza" value="${aula.capienza?number}" min="1" oninput="validateInputs()"/>
+                <input type="number" id="inputa_aula_6" name="capienza" value="${aula.capienza?number}" min="1" oninput="validateAulaInputs(1)"/>
                 <br>
                 <label for="input7">prese elettriche</label>
-                <input type="number" name="prese_elettriche" id="input7" value="${aula.numeroPreseElettriche?number}" min="1" oninput="validateInputs()"/>
+                <input type="number" name="prese_elettriche" id="input_aula_7" value="${aula.numeroPreseElettriche?number}" min="1" oninput="validateAulaInputs(1)"/>
                 <br>
                 <label for="input8">prese di rete</label>
-                <input type="number" name="prese_di_rete" id="input8" value="${aula.numeroPreseDiRete?number}" min="1" oninput="validateInputs()"/>
+                <input type="number" name="prese_di_rete" id="input_aula_8" value="${aula.numeroPreseDiRete?number}" min="1" oninput="validateAulaInputs(1)"/>
                 <br>
                 <label for="input9">note</label><br>
-                <textarea name="note" id="input9" oninput="validateInputs()">${aula.noteGeneriche}</textarea>
+                <textarea name="note" id="input_aula_9" oninput="validateAulaInputs(1)">${aula.noteGeneriche}</textarea>
                 <h3>Responsabile</h3>
-                <table class="responsabile">
-
+                <label>aggiungi un nuovo responsabile</label>
+                <button type="button" class="crea responsabile" onclick="inputResponsabile()" >vai</button>
+                <table class="aula">
                     <tr>
-                        <td class="radio"><input type="radio" name="responsabile" id="input10" value="${aula.responsabile.key}" onchange="validateInputs()" checked/></td>
-                        <td>${aula.responsabile.email}</td>     
+                        <td class="extend header"></td>
+                        <td class="extend header">email</td>
+                    </tr>
+                    <tr>
+                        <td class="radio"><input type="radio" name="responsabile" value="${aula.responsabile.key}" onchange="validateAulaInputs(1)" checked/></td>
+                        <td class="extend">${aula.responsabile.email}</td>     
                     </tr>
                     <#list responsabili as responsabile>
                     <#if !(responsabile.key == aula.responsabile.key)>
                     <tr>
-                        <td class="radio"><input type="radio" name="responsabile" id="input10" value="${responsabile.key}" onchange="validateInputs()"/></td>
-                        <td>${responsabile.email}</td>     
+                        <td class="radio"><input type="radio" name="responsabile" value="${responsabile.key}" onchange="validateAulaInputs(1)"/></td>
+                        <td class="extend">${responsabile.email}</td>     
                     </tr>
                     </#if>
                     </#list>
                 </table>
-                
+
                 <h3>Gruppi</h3>
                 <#if !(gruppi_import?has_content)>
                 <#assign i=1>
                 <#list tipi_gruppo as tipo>
                 <#assign name="gruppo"+i>
                 <label>${tipo}:</label>
-                <select class="input11" name="${name}" onchange="validateInputs()">
+                <select name="${name}" onchange="validateAulaInputs(1)">
                     <option value="0">nessuno</option>
                     <#list gruppi_totali as gruppo>
                     <#if gruppo.tipoGruppo == tipo>
@@ -143,39 +155,39 @@
                 <br>
                 <#assign i=i+1>
                 </#list>
-                
-                
-                
+
+
+
                 <#else>
-                
+
                 <#assign i=1>
                 <#list tipi_gruppo as tipo>
                 <#assign name="gruppo"+i>
                 <label>${tipo}:</label>
-                <select class="input11" name="${name}" onchange="validateInputs()">
+                <select name="${name}" onchange="validateAulaInputs(1)">
                     <option value="0">nessuno</option>
-                    
+
                     <#list gruppi_import as g>
                     <#if g.tipoGruppo == tipo>
                     <option value="${g.key}" selected>${g.nome}</option>
                     </#if>
                     </#list>
-                    
+
                     <#list gruppi_totali as g>
                     <#if g.tipoGruppo == tipo>
                     <option value="${g.key}">${g.nome}</option>
                     </#if>
                     </#list>
-                    
+
                 </select>
                 <br>
                 <#assign i=i+1>
                 </#list>
-                
+
                 </#if>
-                
-                
-                
+
+
+
 
                 <h3>Attrezzature</h3>
                 <table class="attrezzatura">
@@ -184,17 +196,17 @@
                     <#list attrezzature_import as attrezzatura>
                     <#assign name="attrezzatura"+i>
                     <tr>
-                        <td class="checkbox"><input type="checkbox" name="${name}" class="input12" value="${attrezzatura.key}" onchange="validateInputs()" checked/></td>
+                        <td class="checkbox"><input type="checkbox" name="${name}" class="attrezzatura" value="${attrezzatura.key}" onchange="validateAulaInputs(1)" checked/></td>
                         <td class="extend">${attrezzatura.nome?lower_case}</td>
                         <td class="extend">${attrezzatura.numeroDiSerie?lower_case}</td>
                     </tr>
                     <#assign i=i+1>
                     </#list>
-                    
+
                     <#list attrezzature_disponibili as attrezzatura>
                     <#assign name="attrezzatura"+i>
                     <tr>
-                        <td class="checkbox"><input type="checkbox" name="${name}" class="input12" value="${attrezzatura.key}" onchange="validateInputs()"/></td>
+                        <td class="checkbox"><input type="checkbox" name="${name}" class="attrezzatura"  value="${attrezzatura.key}" onchange="validateAulaInputs(1)"/></td>
                         <td class="extend">${attrezzatura.nome?lower_case}</td>
                         <td class="extend">${attrezzatura.numeroDiSerie?lower_case}</td>
                     </tr>
@@ -202,13 +214,13 @@
                     </#list>
 
                 </table>
-                
-                
-                
+
+
+                <button type="submit" name="insert_aula" value="1" id="aula_button">inserisci</button><br> 
                 </#if>
-                
-            <button type="submit" name="insert_aula" value="1" id="button" disabled>inserisci</button><br>   
-        
+
+
+
             </form>
 
 
@@ -230,8 +242,8 @@
 
                 <div id="table_aule"><table class="aula">
                         <tr>
-                            <td></td>
-                            <td class="extend">nome</td>
+                            <td class="extend header"></td>
+                            <td class="extend header">nome</td>
                         </tr>
                         <#list aule as aula>
                         <tr>

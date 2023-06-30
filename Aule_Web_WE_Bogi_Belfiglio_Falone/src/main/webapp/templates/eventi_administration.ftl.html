@@ -42,13 +42,27 @@
                 </table>
                 <br>
                 <div id="corsi_evento" style="display:none">
-                    <h3>Corsi di laurea</h3>
+                    <h3>Corso</h3>
+                    <label>aggiungi un nuovo corso</label>
+                    <button type="button" class="crea corso" onclick="inputCorso()" >vai</button>
                     <table class="evento">
+                        <tr>
+                            <td class="extend header"></td>
+                            <td class="extend header">nome</td>
+                            <td class="extend header">laurea</td>
+                            <td class="extend header">tipo</td>
+                            <td class="extend header">anno frequenza</td>
+                        </tr>
                         <#list corsi as corso>
                         <tr>
-                            <td class="radio"><input type="radio" name="corso" class="corsi" value="${corso.key}" onchange="validateEventsInputs(1)"/></td>
-                            <td class="extend">${corso.nome}</td>
+                            <td class="radio"><input type="radio" name="corso"  value="${corso.key}" onchange="validateEventsInputs(2);" checked/></td>
+                            <td class="extend">${corso.nome?lower_case}</td>
+                            <td class="extend">${(corso.corsoDiLaurea?string)?lower_case}</td>
+                            <td class="extend">${((corso.tipoLaurea?string)?replace("_"," "))?lower_case}</td>
+                            <td>${corso.annoDiFrequentazione}</td>
                         </tr>
+
+
                         </#list>
                     </table>
                 </div>
@@ -98,7 +112,13 @@
                 </table>
                 <br>
                 <h3>Responsabile</h3>
+                <label>aggiungi un nuovo responsabile</label>
+                <button type="button" class="crea corso" onclick="inputResponsabile()" >vai</button>
                 <table class="evento">
+                    <tr>
+                        <td class="extend header"></td>
+                        <td class="extend header">email</td>
+                    </tr>
                     <#list responsabili as responsabile>
                     <tr>
                         <td class="radio"><input type="radio" name="responsabile" class="responsabili" value="${responsabile.key}" onchange="validateEventsInputs(1)"/></td>
@@ -125,8 +145,8 @@
                     <#if eventi?has_content>
                     <table class="evento">
                         <tr>
-                            <td> </td>
-                            <td class="extend"><b>nome</b></td>
+                            <td class="extend header"> </td>
+                            <td class="extend header"><b>nome</b></td>
                         </tr>
 
                         <#list eventi as evento>

@@ -1,35 +1,52 @@
 <div class="output administration">
     <div class="container">
-        <p class="response">${message}</p>
-        <#if gruppo?has_content>
-        <p>nome: ${gruppo.nome}</p>
-        <p>tipo: ${gruppo.tipoGruppo}</p>
-        <p>descrizione: ${gruppo.descrizione}</p>
-        
-        <#elseif aula?has_content>
-        <p>nome: ${aula.nome}</p>
-        <p>via: ${aula.luogo}</p>
-        <p>edificio: ${gruppo.edificio}, piano n. {aula.piano}</p>
-        <p>capienza: ${aula.capienza}</p>
-        <p>numero prese elettriche: ${aula.numeroPreseElettriche}</p>
-        <p>numero prese di rete: ${aula.numeroPreseDiRete}</p>
-        <p>note: ${aula.noteGeneriche}</p>
-        <p>responsabile: ${aula.responsabile.email}</p>
-        <p>gruppi di appartenenza:</p>
-        <ul>
-        <#list gruppi as gruppo>
-        <li>${gruppo.nome} -> ${gruppo.tipoGruppo}</li>
-        </#list>
-        </ul>
-        <p>attrezzature:
-        <#list attrezzature as attrezzatura>
-        ${attrezzatura.nome}
-        </#list>
-        </p>
-        
-        <#elseif evento?has_content>
-        
-        </#if>
+        <div class="ten columns">
+            <div class="information">
+                <p class="response">${message}</p>
+                <#if gruppo?has_content>
+                <p>nome: ${gruppo.nome}</p>
+                <p>tipo: ${gruppo.tipoGruppo}</p>
+                <p>descrizione: ${gruppo.descrizione}</p>
+
+                <#elseif aula?has_content>
+                <p>nome: ${aula.nome}</p>
+                <p>via: ${aula.luogo}</p>
+                <p>edificio: ${aula.edificio}, piano n.${aula.piano}</p>
+                <p>capienza: ${aula.capienza}</p>
+                <p>numero prese elettriche: ${aula.numeroPreseElettriche}</p>
+                <p>numero prese di rete: ${aula.numeroPreseDiRete}</p>
+                <p>note: ${aula.noteGeneriche}</p>
+                <p>responsabile: ${aula.responsabile.email}</p>
+                <p>gruppi di appartenenza:</p>
+                <ul>
+                    <#list gruppi as gruppo>
+                    <li>${gruppo.nome} -> ${gruppo.tipoGruppo}</li>
+                    </#list>
+                </ul>
+                <p>attrezzature:
+                    <#list attrezzature as attrezzatura>
+                    ${attrezzatura.nome}
+                    </#list>
+                </p>
+
+                <#elseif evento?has_content>
+                <p>nome: ${evento.nome?lower_case}</p>
+                <p>tipologia: ${(evento.tipologia?string)?lower_case}</p>
+                <#if evento.corso?has_content>
+                <p>corso: ${evento.corso.nome?lower_case}</p>
+                </#if>   
+                <p>descrizione: ${evento.descrizione?lower_case}</p>
+                <p>data: ${evento.dataEvento}</p>
+                <p>orario: ${evento.oraInizio?string} - ${evento.oraFine?string}</p>
+                <p>ricorrenza: ${(evento.ricorrenza?string)?lower_case}</p>
+                <#if !(evento.ricorrenza == "NESSUNA")>
+                <p>data fine ricorrenza: ${evento.dataFineRicorrenza}</p>
+                </#if>
+                <p>aula: ${evento.aula.nome?lower_case}</p>
+                <p>responsabile: ${evento.responsabile.email}</p>
+                </#if>
+            </div>
+        </div>
     </div>
 
 </div>

@@ -14,7 +14,7 @@ public enum Tipologia {
     SEMINARIO, 
     PARZIALE, 
     RIUNIONE, 
-    LAUREE, 
+    LAUREA, 
     ALTRO
     
 }

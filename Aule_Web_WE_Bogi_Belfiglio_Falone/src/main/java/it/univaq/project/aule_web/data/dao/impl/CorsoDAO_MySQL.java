@@ -203,21 +203,6 @@ public class CorsoDAO_MySQL extends DAO implements CorsoDAO {
                 }
 
                 uCorso.setInt(4, corso.getAnnoDiFrequentazione());
-
-                //può accadere che due persone accedano al DB e prendano lo stesso articolo, quindi due thread concorrenti che 
-                //prendono l'articolo, ma i due thread non si riferiscono allo stesso oggetto
-                //se io ho due accessi concorrenti non condividono la stessa cache e quindi non risolvo il problema della
-                //peristenza, perchè se entrambi decidessero di modificare l'oggetto, ci sono disallineamenti diversi che
-                //potrebbero accadere.
-                //quindi il caching è utile nel nel caso dell'esecuzione di un singolo thread
-                //Le due strategie di base sono: locking(bloccare le risorse in lettura e scrittura, come il semaforo)
-                //Il locking pessimistico sta nel fatto che se due persone leggono la stessa entità, allora si considera
-                //il caso peggiore, cioè entrambi vogliono modificare l'informazione. Questo però non si usa quasi mai.
-                //Si usa il locking ottimistico: se tutti e due prendono una stessa risorsa, allora si tiene conto del fatto che
-                //uno la modificherà, mentre l'altro andrà in lettura. Cioè se uno vuole modificare e scriver sul DB, allora controllo
-                //se la risorsa è già stata modificata da qualcuno dopo aver letto la risorsa che si è modificata
-                //per questo utilizziamo un attributo version, un numero che indica la versione dell'oggetto che abbiamo letto e ogni
-                //volta che lo si modifica si incrementa il numero di versione
                 long versioneCorrente = corso.getVersion();
                 long versioneSuccessiva = versioneCorrente + 1;
 
@@ -235,19 +220,7 @@ public class CorsoDAO_MySQL extends DAO implements CorsoDAO {
             } else { //insert
                 iCorso.setString(1, corso.getNome());
                 iCorso.setString(2, corso.getCorsoDiLaurea());
-                switch (corso.getTipoLaurea().toString()) {
-                    case "MAGISTRALE":
-                        iCorso.setString(3, "MAGISTRALE");
-                        break;
-
-                    case "TRIENNALE":
-                        iCorso.setString(3, "TRIENNALE");
-                        break;
-
-                    case "CICLO_UNICO":
-                        iCorso.setString(3, "CICLO_UNICO");
-                        break;
-                }
+                iCorso.setString(3, corso.getTipoLaurea().toString());
                 iCorso.setInt(4, corso.getAnnoDiFrequentazione());
 
                 if (iCorso.executeUpdate() == 1) {
@@ -277,25 +250,11 @@ public class CorsoDAO_MySQL extends DAO implements CorsoDAO {
                     }
                 }
             }
-
-//            //se possibile, restituiamo l'oggetto appena inserito RICARICATO
-//            //dal database tramite le API del modello. In tal
-//            //modo terremo conto di ogni modifica apportata
-//            //durante la fase di inserimento
-//            //if possible, we return the just-inserted object RELOADED from the
-//            //database through our API. In this way, the resulting
-//            //object will ambed any data correction performed by
-//            //the DBMS
-//            if (key > 0) {
-//                article.copyFrom(getArticle(key));
-//            }
-            //se abbiamo un proxy, resettiamo il suo attributo dirty
-            //if we have a proxy, reset its dirty attribute
             if (corso instanceof DataItemProxy) {
                 ((DataItemProxy) corso).setModified(false);
             }
         } catch (SQLException | OptimisticLockException ex) {
-            throw new DataException("Unable to store article", ex);
+            throw new DataException(ex.getMessage(), ex);
         }
     }
 

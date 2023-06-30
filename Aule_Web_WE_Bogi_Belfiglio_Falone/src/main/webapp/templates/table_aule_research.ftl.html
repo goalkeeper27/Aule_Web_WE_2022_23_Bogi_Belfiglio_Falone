@@ -1,8 +1,8 @@
-
+<#if aule?has_content>
 <table class="aula">
     <tr>
-        <td></td>
-        <td class="extend">nome</td>
+        <td class="extend header"></td>
+        <td class="extend header">nome</td>
     </tr>
     <#assign i=1>
     <#list aule as aula>
@@ -14,3 +14,6 @@
     <#assign i=i+1>
     </#list>
 </table>   
+<#else>
+<p class="info">non ci sono aule esistenti</p>
+</#if>

@@ -28,13 +28,7 @@
                         <#assign tipoLaurea = corso.tipoLaurea>
                         <#assign tipoDiLaurea = tipoLaurea?replace("_"," ")>
                         <td>${tipoDiLaurea}</td>
-                        <#assign annoFreqPrec = corso.annoDiFrequentazione-1>
-                        <#assign stringAnnoFreqPrecConPunto = annoFreqPrec?string>
-                        <#assign stringAnnoFreqPrec = stringAnnoFreqPrecConPunto?replace(".","")>
-                        <#assign annoFreq = corso.annoDiFrequentazione>
-                        <#assign stringAnnoFreqConPunto = annoFreq?string>
-                        <#assign stringAnnoFreq = stringAnnoFreqConPunto?replace(".","")>
-                        <td>${stringAnnoFreqPrec} / ${stringAnnoFreq}</td>
+                        <td>${corso.annoDiFrequentazione}</td>
                         <td>
                             <form method="GET" action="eventi">
                                 <input type="hidden" name="IDgruppo" value="${IDgruppo}">

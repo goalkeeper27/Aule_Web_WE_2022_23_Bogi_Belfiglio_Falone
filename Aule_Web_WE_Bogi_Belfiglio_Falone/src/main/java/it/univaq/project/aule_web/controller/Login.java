@@ -33,6 +33,14 @@ public class Login extends AuleWebBaseController {
         result.activate("login_admin.ftl.html", request, response);
 
     }
+    
+    private void action_login_error(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
+        TemplateResult result = new TemplateResult(getServletContext());
+        request.setAttribute("outline_tpl", "");
+        request.setAttribute("error", "username e/o password errati");
+        result.activate("login_admin.ftl.html", request, response);
+
+    }
 
     private void action_login(HttpServletRequest request, HttpServletResponse response) throws IOException, TemplateManagerException, ServletException {
         String username = request.getParameter("username");
@@ -41,16 +49,11 @@ public class Login extends AuleWebBaseController {
             try {
                 Amministratore a = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAmministratoreDAO().getAmministratoreByUsername(username);
                 if (a != null && SecurityHelpers.checkPasswordHashPBKDF2(password, a.getPassword())) {
-                    //se la validazione ha successo
-                    //if the identity validation succeeds
-                    //          SecurityHelpers.createSession(request, username, u.getKey());
-                    //se è stato trasmesso un URL di origine, torniamo a quell'indirizzo
-                    //if an origin URL has been transmitted, return to it
                     SecurityHelpers.createSession(request, username, a.getKey());
                     response.sendRedirect("administration");
 
                 } else {
-                    action_default(request, response);
+                    action_login_error(request, response);
                 }
             } catch (NoSuchAlgorithmException | InvalidKeySpecException | DataException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);

@@ -20,6 +20,8 @@ public interface ResponsabileDAO {
     
     List<Responsabile> getAllResponsabili()throws DataException;
     
+    List<Responsabile> getGruppiByPartialEmail(String search) throws DataException;
+    
     Responsabile createResponsabile();
     
     void storeResponsabile(Responsabile responsabile)throws DataException;

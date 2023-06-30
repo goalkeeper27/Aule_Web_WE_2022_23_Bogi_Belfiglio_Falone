@@ -13,6 +13,7 @@ import it.univaq.project.aule_web.data.dao.ResponsabileDAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ import java.util.List;
  */
 public class ResponsabileDAO_MySQL extends DAO implements ResponsabileDAO {
 
-    private PreparedStatement sResponsabileByID, sResponsabileByEmail, sAllResponsabili;
+    private PreparedStatement sResponsabileByID, sResponsabileByEmail, sAllResponsabili, sResponsabiliByPartialEmail;
     private PreparedStatement iResponsabile, dResponsabileByEmail;
 
     public ResponsabileDAO_MySQL(DataLayer d) {
@@ -35,7 +36,8 @@ public class ResponsabileDAO_MySQL extends DAO implements ResponsabileDAO {
             sResponsabileByID = this.connection.prepareStatement("SELECT * FROM responsabile WHERE ID=?");
             sResponsabileByEmail = this.connection.prepareStatement("SELECT * FROM responsabile WHERE email=?");
             sAllResponsabili = this.connection.prepareStatement("SELECT * FROM Responsabile");
-            iResponsabile = this.connection.prepareStatement("INSERT INTO responsabile (nome,cognome,codice_fiscale,email) VALUES(?,?,?,?)");
+            sResponsabiliByPartialEmail = connection.prepareStatement("SELECT * FROM Responsabile R WHERE substring(R.email,1,?) = ?");
+            iResponsabile = this.connection.prepareStatement("INSERT INTO responsabile (nome,cognome,codice_fiscale,email) VALUES(?,?,?,?)",Statement.RETURN_GENERATED_KEYS );
             dResponsabileByEmail = this.connection.prepareStatement("DELETE FROM responsabile WHERE email=?");
         } catch (SQLException ex) {
             throw new DataException("Errore nell'inizializzazione del data layer", ex);
@@ -48,6 +50,7 @@ public class ResponsabileDAO_MySQL extends DAO implements ResponsabileDAO {
         try {
             sResponsabileByID.close();
             sResponsabileByEmail.close();
+            sResponsabiliByPartialEmail.close();
             sAllResponsabili.close();
             iResponsabile.close();
             dResponsabileByEmail.close();
@@ -159,6 +162,23 @@ public class ResponsabileDAO_MySQL extends DAO implements ResponsabileDAO {
             }
         } catch (SQLException ex) {
             throw new DataException("Impossibile caricare il responsabile dalla email citata", ex);
+        }
+        return responsabili;
+    }
+    
+    @Override
+    public List<Responsabile> getGruppiByPartialEmail(String search) throws DataException {
+        List<Responsabile> responsabili = new ArrayList<>();
+        try {
+            sResponsabiliByPartialEmail.setInt(1, search.length());
+            sResponsabiliByPartialEmail.setString(2, search);
+            try ( ResultSet rs = sResponsabiliByPartialEmail.executeQuery()) {
+                while (rs.next()) {
+                    responsabili.add(createResponsabile(rs));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("error DB", ex);
         }
         return responsabili;
     }

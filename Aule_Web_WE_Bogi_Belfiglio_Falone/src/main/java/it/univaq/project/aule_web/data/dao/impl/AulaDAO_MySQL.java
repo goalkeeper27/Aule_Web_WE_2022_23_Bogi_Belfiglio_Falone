@@ -56,7 +56,7 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
             iAssociationAulaGruppo = connection.prepareStatement("INSERT INTO associazione_aula_gruppo(ID_aula, ID_gruppo) values (?,?)");
             uAula = connection.prepareStatement("UPDATE aula SET nome=?,luogo=?,edificio=?,piano=?,capienza=?,numero_prese_elettriche=?,numero_prese_di_rete=?,note_generiche = ?,ID_responsabile =?, versione=? WHERE ID=? and versione=?");
             dAula = connection.prepareStatement("DELETE FROM aula WHERE ID=?");
-            dAssociationAulaGruppo = connection.prepareStatement("DELETE FROM associazione_aula_gruppo WHERE ID_aula = ?");
+            dAssociationAulaGruppo = connection.prepareStatement("DELETE FROM associazione_aula_gruppo WHERE ID_aula = ? and ID_gruppo = ?");
         } catch (SQLException ex) {
             throw new DataException("Errore durante l'inizializzazione del data layer", ex);
         }
@@ -172,8 +172,11 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
 
     private void deleteAssociationAulaGruppo(int aula_key, List<Integer> gruppi_keys) throws DataException {
         try {
+            for (Integer gk : gruppi_keys){
             dAssociationAulaGruppo.setInt(1, aula_key);
+            dAssociationAulaGruppo.setInt(2, gk);
             dAssociationAulaGruppo.executeUpdate();
+            }
 
         } catch (SQLException ex) {
             throw new DataException("Error DB", ex);

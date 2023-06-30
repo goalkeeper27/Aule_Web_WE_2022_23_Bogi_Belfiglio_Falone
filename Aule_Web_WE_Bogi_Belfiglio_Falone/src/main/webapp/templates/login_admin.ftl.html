@@ -30,7 +30,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 
                 <a href="homepage">torna alla homepage</a>
             </form>
-
+            
+            <#if error?has_content>
+            <p class="error">${error}</p>
+            </#if>
         </div>
     </body>
 </html>

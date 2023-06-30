@@ -1,0 +1,50 @@
+<div class="corsi administration">
+    <div class="container">
+        <div class="ten columns">
+            <h3>Inserisci corso</h3>
+            <form method="post" action="">
+                <label for="input_corso_1">nome:</label>
+                <input type="text" name="nome_corso" id="input_corso_1" oninput="validateCorsoInput()"/> 
+                <br>
+                <label for="input_corso_2">corso di laurea:</label>
+                <input type="text" name="corso_laurea" id="input_corso_2" oninput="validateCorsoInput()"/> 
+                <br>
+                <label for="input_corso_3">tipo di laurea:</label>
+                <select name="tipo_laurea" id="input_corso_3" onchange="validateCorsoInput(); modifyAnnoFrequentazione();">
+                    <option value="1">triennale</option>
+                    <option value="2">magistrale</option>
+                    <option value="3">ciclo unico</option>
+                    
+                </select>
+                <br>
+                <label for="input_corso_4">anno di frequentazione:</label>
+                <input type="number" min="1" max="3" name="anno_frequentazione" id="input_corso_4" oninput="validateCorsoInput()"/>
+                <br>
+                <button type="button" id="corso_button" onclick="createCorso()" disabled>inserisci</button>
+            </form>
+        </div>
+        <div class="ten columns">
+            <#if corsi?has_content>
+
+            <table class="corso">
+                <tr>
+                    <td class="extend header">nome</td>
+                    <td class="extend header">laurea</td>
+                    <td class="extend header">tipo</td>
+                    <td class="extend header">anno frequenza</td>
+                </tr>
+                <#list corsi as corso>
+                <tr>
+                    <td class="extend">${corso.nome?lower_case}</td>
+                    <td class="extend">${(corso.corsoDiLaurea?string)?lower_case}</td>
+                    <td class="extend">${((corso.tipoLaurea?string)?replace("_"," "))?lower_case}</td>
+                    <td>${corso.annoDiFrequentazione}</td>
+                </tr>
+                </#list>
+            </table>
+            <#else>
+            <p class="info">non ci sono corsi disponibili</p>
+            </#if>
+        </div>
+    </div>
+</div>
