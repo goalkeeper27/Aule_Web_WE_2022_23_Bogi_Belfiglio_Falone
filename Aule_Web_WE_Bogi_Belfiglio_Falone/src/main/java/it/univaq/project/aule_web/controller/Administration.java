@@ -118,12 +118,12 @@ public class Administration extends AuleWebBaseController {
         aula.setNome(request.getParameter("nome"));
         aula.setLuogo(request.getParameter("via") + "," + request.getParameter("civico"));
         aula.setEdificio(request.getParameter("edificio"));
-        aula.setPiano(Integer.parseInt(request.getParameter("piano")));
-        aula.setCapienza(Integer.parseInt(request.getParameter("capienza")));
-        aula.setNumeroPreseElettriche(Integer.parseInt(request.getParameter("prese_elettriche")));
-        aula.setNumeroPreseDiRete(Integer.parseInt(request.getParameter("prese_di_rete")));
+        aula.setPiano(SecurityHelpers.checkNumeric(request.getParameter("piano")));
+        aula.setCapienza(SecurityHelpers.checkNumeric(request.getParameter("capienza")));
+        aula.setNumeroPreseElettriche(SecurityHelpers.checkNumeric(request.getParameter("prese_elettriche")));
+        aula.setNumeroPreseDiRete(SecurityHelpers.checkNumeric(request.getParameter("prese_di_rete")));
         aula.setNoteGeneriche(request.getParameter("note"));
-        ((AulaProxy) aula).setResponsabileKey(Integer.parseInt(request.getParameter(("responsabile"))));
+        ((AulaProxy) aula).setResponsabileKey(SecurityHelpers.checkNumeric(request.getParameter(("responsabile"))));
 
         List<Integer> gruppi_keys = new ArrayList<>();
         List<Attrezzatura> attrezzature = new ArrayList<>();
@@ -131,10 +131,10 @@ public class Administration extends AuleWebBaseController {
         while (params.hasMoreElements()) {
             String par = params.nextElement();
             if (par.startsWith("gruppo")) {
-                int gk = Integer.parseInt(request.getParameter(par));
+                int gk = SecurityHelpers.checkNumeric(request.getParameter(par));
                 gruppi_keys.add(gk);
             } else if (par.startsWith("attrezzatura")) {
-                Attrezzatura attrezzatura = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAttrezzaturaDAO().getAttrezzatura(Integer.parseInt(request.getParameter(par)));
+                Attrezzatura attrezzatura = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAttrezzaturaDAO().getAttrezzatura(SecurityHelpers.checkNumeric(request.getParameter(par)));
                 attrezzature.add(attrezzatura);
             }
         }
@@ -284,7 +284,7 @@ public class Administration extends AuleWebBaseController {
                     gruppi_keys.add(gk);
                 }
             } else if (par.startsWith("attrezzatura")) {
-                Attrezzatura attrezzatura = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAttrezzaturaDAO().getAttrezzatura(Integer.parseInt(request.getParameter(par)));
+                Attrezzatura attrezzatura = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAttrezzaturaDAO().getAttrezzatura(SecurityHelpers.checkNumeric(request.getParameter(par)));
                 attrezzatureNuove.add(attrezzatura);
                 attr_keys.add(attrezzatura.getKey());
             }
