@@ -6,10 +6,6 @@ package it.univaq.project.aule_web.data.model;
 
 import it.univaq.project.aule_web.framework.data.DataItem;
 
-/**
- *
- * @author Francesco Falone
- */
 public interface Responsabile extends DataItem<Integer> {
     
     String getNome();

@@ -23,10 +23,6 @@ import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
-/**
- *
- * @author Alberto Bogi
- */
 public class CSVResult {
 
     private static final String[] HEADERS_EVENTO = {"aula", "evento", "tipo", "data", "ora di inizio", "ora di fine"};

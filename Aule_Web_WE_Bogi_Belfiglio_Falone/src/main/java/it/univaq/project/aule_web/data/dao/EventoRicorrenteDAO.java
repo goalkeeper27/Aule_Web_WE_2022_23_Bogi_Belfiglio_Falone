@@ -12,10 +12,6 @@ import it.univaq.project.aule_web.framework.data.DataException;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- *
- * @author Alberto Bogi
- */
 public interface EventoRicorrenteDAO {
     
     EventoRicorrente createEventoRicorrente();

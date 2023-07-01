@@ -8,10 +8,6 @@ import it.univaq.project.aule_web.data.impl.AmministratoreImpl;
 import it.univaq.project.aule_web.framework.data.DataItemProxy;
 import it.univaq.project.aule_web.framework.data.DataLayer;
 
-/**
- *
- * @author Alberto Bogi
- */
 public class AmministratoreProxy extends AmministratoreImpl implements DataItemProxy{
     
     private boolean modified;

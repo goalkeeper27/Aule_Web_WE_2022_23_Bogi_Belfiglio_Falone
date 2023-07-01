@@ -16,10 +16,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- *
- * @author Stefano Belfiglio
- */
 public class AmministratoreDAO_MySQL extends DAO implements AmministratoreDAO {
 
     private PreparedStatement sAmministratoreByUsername, sAmministratoreByID;

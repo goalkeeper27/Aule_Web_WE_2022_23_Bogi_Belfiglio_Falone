@@ -9,10 +9,6 @@ import it.univaq.project.aule_web.data.model.Gruppo;
 import it.univaq.project.aule_web.framework.data.DataException;
 import java.util.List;
 
-/**
- *
- * @author Alberto Bogi
- */
 public interface AulaDAO {
     
     public Aula createAula();

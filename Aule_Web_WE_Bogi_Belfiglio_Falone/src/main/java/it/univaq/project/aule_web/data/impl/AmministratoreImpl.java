@@ -7,10 +7,6 @@ package it.univaq.project.aule_web.data.impl;
 import it.univaq.project.aule_web.data.model.Amministratore;
 import it.univaq.project.aule_web.framework.data.DataItemImpl;
 
-/**
- *
- * @author acer
- */
 public class AmministratoreImpl extends DataItemImpl<Integer> implements Amministratore{
     
     private String username;

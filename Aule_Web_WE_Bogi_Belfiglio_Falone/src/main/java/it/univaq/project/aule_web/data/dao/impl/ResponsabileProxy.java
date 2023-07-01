@@ -8,10 +8,6 @@ import it.univaq.project.aule_web.data.impl.ResponsabileImpl;
 import it.univaq.project.aule_web.framework.data.DataItemProxy;
 import it.univaq.project.aule_web.framework.data.DataLayer;
 
-/**
- *
- * @author Alberto Bogi
- */
 public class ResponsabileProxy extends ResponsabileImpl implements DataItemProxy{
     
     private boolean modified;

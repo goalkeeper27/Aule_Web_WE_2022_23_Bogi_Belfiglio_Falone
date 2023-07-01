@@ -8,10 +8,6 @@ import it.univaq.project.aule_web.framework.data.DataItemImpl;
 import it.univaq.project.aule_web.data.model.Aula;
 import it.univaq.project.aule_web.data.model.Responsabile;
 
-/**
- *
- * @author Stefano Belfiglio
- */
 public class AulaImpl extends DataItemImpl<Integer> implements Aula {
     
     private Responsabile responsabile;

@@ -4,10 +4,6 @@
  */
 package it.univaq.project.aule_web.framework.data;
 
-/**
- *
- * @author Alberto Bogi
- */
 public interface DataItemProxy {
 
     boolean isModified();

@@ -7,10 +7,6 @@ package it.univaq.project.aule_web.data.dao;
 import it.univaq.project.aule_web.data.model.Amministratore;
 import it.univaq.project.aule_web.framework.data.DataException;
 
-/**
- *
- * @author Alberto Bogi
- */
 public interface AmministratoreDAO {
     
     Amministratore createAmministratore();

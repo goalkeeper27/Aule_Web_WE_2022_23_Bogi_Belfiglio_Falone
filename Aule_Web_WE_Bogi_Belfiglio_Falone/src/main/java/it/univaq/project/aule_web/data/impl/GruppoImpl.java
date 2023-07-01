@@ -7,10 +7,6 @@ package it.univaq.project.aule_web.data.impl;
 import it.univaq.project.aule_web.framework.data.DataItemImpl;
 import it.univaq.project.aule_web.data.model.Gruppo;
 
-/**
- *
- * @author Stefano Belfiglio
- */
 public class GruppoImpl extends DataItemImpl<Integer> implements Gruppo{
     
     private String tipoGruppo;

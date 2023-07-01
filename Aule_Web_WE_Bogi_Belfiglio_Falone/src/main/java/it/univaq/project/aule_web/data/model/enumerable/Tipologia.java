@@ -4,10 +4,6 @@
  */
 package it.univaq.project.aule_web.data.model.enumerable;
 
-/**
- *
- * @author franc
- */
 public enum Tipologia {
     LEZIONE, 
     ESAME, 

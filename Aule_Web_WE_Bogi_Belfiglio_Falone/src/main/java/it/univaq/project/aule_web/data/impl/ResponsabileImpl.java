@@ -7,10 +7,6 @@ package it.univaq.project.aule_web.data.impl;
 import it.univaq.project.aule_web.framework.data.DataItemImpl;
 import it.univaq.project.aule_web.data.model.Responsabile;
 
-/**
- *
- * @author franc
- */
 public class ResponsabileImpl extends DataItemImpl<Integer> implements Responsabile{
     
     private String nome;

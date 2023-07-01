@@ -13,10 +13,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-/**
- *
- * @author Alberto Bogi
- */
 public interface EventoDAO {
     
     public Evento getEvento(int key) throws DataException;

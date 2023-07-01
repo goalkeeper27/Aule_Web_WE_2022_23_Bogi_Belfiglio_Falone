@@ -4,10 +4,6 @@
  */
 package it.univaq.project.aule_web.framework.data;
 
-/**
- *
- * @author stefa
- */
 public interface DataItem<KT> {
 
     KT getKey();

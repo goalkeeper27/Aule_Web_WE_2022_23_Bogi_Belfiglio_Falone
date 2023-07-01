@@ -11,10 +11,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-/**
- *
- * @author Francesco Falone
- */
 public interface Evento extends DataItem<Integer> {
      String getNome();
      

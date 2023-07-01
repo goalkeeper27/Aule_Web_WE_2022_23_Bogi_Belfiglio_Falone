@@ -9,10 +9,6 @@ import it.univaq.project.aule_web.data.model.Evento;
 import it.univaq.project.aule_web.data.model.EventoRicorrente;
 import java.time.LocalDate;
 
-/**
- *
- * @author Francesco Falone
- */
 public class EventoRicorrenteImpl extends DataItemImpl<Integer> implements EventoRicorrente{
     
     private LocalDate dataEvento;

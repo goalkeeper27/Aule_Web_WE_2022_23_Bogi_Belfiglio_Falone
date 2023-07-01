@@ -7,10 +7,6 @@ package it.univaq.project.aule_web.data.model;
 import it.univaq.project.aule_web.framework.data.DataItem;
 import java.time.LocalDate;
 
-/**
- *
- * @author Francesco Falone
- */
 public interface EventoRicorrente extends DataItem<Integer>{
     
     LocalDate getDataEvento();

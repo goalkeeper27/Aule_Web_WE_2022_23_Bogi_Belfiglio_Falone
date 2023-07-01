@@ -20,10 +20,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Alberto Bogi
- */
 public class EventoRicorrenteDAO_MySQL extends DAO implements EventoRicorrenteDAO {
 
     private PreparedStatement sEventoRicorrenteByEvento, sEventiRicorrentiByPeriodAndAula, sEventiRicorrentiByPeriod, sEventiRicorrentiByDataAndAula, sEventiRicorrentiByPeriodAndCorso, sAllEventiIDByRicorrenze;

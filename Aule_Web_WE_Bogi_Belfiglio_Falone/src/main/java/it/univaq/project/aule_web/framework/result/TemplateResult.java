@@ -43,10 +43,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Giuseppe Della Penna
- */
 public class TemplateResult {
 
     protected ServletContext context;

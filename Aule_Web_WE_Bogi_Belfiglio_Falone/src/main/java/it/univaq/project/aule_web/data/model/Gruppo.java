@@ -6,10 +6,6 @@ package it.univaq.project.aule_web.data.model;
 
 import it.univaq.project.aule_web.framework.data.DataItem;
 
-/**
- *
- * @author Stefano Belfiglio
- */
 public interface Gruppo extends DataItem<Integer> {
     
     String getTipoGruppo();

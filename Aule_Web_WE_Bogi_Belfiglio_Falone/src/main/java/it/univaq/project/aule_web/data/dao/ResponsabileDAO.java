@@ -8,10 +8,6 @@ import it.univaq.project.aule_web.data.model.Responsabile;
 import it.univaq.project.aule_web.framework.data.DataException;
 import java.util.List;
 
-/**
- *
- * @author Alberto Bogi
- */
 public interface ResponsabileDAO {
     
     Responsabile getResponsabile(int key) throws DataException;

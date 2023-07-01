@@ -22,10 +22,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Francesco Falone
- */
 public class AulaDAO_MySQL extends DAO implements AulaDAO {
 
     private PreparedStatement sAulaByID, sAuleByIDs, sAulaByNomeAndPosizione, sAuleByGruppoID, sAllAule, sAuleByPartialName;

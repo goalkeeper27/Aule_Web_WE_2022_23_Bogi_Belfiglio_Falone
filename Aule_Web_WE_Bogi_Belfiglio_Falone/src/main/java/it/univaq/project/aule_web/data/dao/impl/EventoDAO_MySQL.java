@@ -26,10 +26,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Alberto Bogi
- */
 public class EventoDAO_MySQL extends DAO implements EventoDAO {
 
     private PreparedStatement sEventoByID, sEventoInAWeekByAula, sEventoInADayByAula, sCurrentEventoByAula, sEventoInAWeekByCorso, sEventiByPeriodo, sAllEventi, sEventiByPartialName;

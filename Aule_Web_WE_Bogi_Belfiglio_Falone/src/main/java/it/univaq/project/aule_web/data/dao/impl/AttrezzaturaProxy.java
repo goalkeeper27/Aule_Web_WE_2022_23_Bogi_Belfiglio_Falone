@@ -13,10 +13,6 @@ import it.univaq.project.aule_web.data.dao.AulaDAO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author acer
- */
 public class AttrezzaturaProxy extends AttrezzaturaImpl implements DataItemProxy {
 
     private boolean modified;

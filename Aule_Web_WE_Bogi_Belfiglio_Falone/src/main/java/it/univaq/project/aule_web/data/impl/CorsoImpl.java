@@ -8,10 +8,6 @@ import it.univaq.project.aule_web.framework.data.DataItemImpl;
 import it.univaq.project.aule_web.data.model.Corso;
 import it.univaq.project.aule_web.data.model.enumerable.TipoLaurea;
 
-/**
- *
- * @author Francesco Falone
- */
 public class CorsoImpl extends DataItemImpl<Integer> implements Corso{
     private String nome;
     private TipoLaurea tipoLaurea;

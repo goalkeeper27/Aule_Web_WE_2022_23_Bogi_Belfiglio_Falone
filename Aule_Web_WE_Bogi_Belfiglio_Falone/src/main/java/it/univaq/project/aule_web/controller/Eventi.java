@@ -30,10 +30,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Alberto Bogi
- */
 public class Eventi extends AuleWebBaseController {
 
     private void action_default(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
@@ -63,7 +59,7 @@ public class Eventi extends AuleWebBaseController {
             data.put("select_button", 1);
             data.put("IDgruppo", gruppo_key);
             TemplateResult res = new TemplateResult(getServletContext());
-            res.activate("aule.ftl.html", data, response);
+            res.activate("eventi_attuali.html", data, response);
         } catch (DataException ex) {
             handleError("Data access exception: " + ex.getMessage(), request, response);
         }

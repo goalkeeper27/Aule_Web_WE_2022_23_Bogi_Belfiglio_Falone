@@ -15,10 +15,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
-/**
- *
- * @author Francesco Falone
- */
 public class EventoImpl extends DataItemImpl<Integer> implements Evento {
 
     private String nome;
