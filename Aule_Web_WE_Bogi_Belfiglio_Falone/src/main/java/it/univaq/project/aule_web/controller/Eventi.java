@@ -37,7 +37,7 @@ public class Eventi extends AuleWebBaseController {
         try {
             Map data = new HashMap<>();
 
-            int gruppo_key = Integer.valueOf(request.getParameter("IDgruppo"));
+            int gruppo_key = SecurityHelpers.checkNumeric(request.getParameter("IDgruppo"));
             // lista di tutte le aule del gruppo specificato
 
             List<Aula> aule = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().getAuleByGruppoID(gruppo_key);
@@ -70,8 +70,8 @@ public class Eventi extends AuleWebBaseController {
         try {
             Map data = new HashMap<>();
 
-            int aula_key = Integer.valueOf(request.getParameter("IDaula"));
-            int gruppo_key = Integer.valueOf(request.getParameter("IDgruppo"));
+            int aula_key = SecurityHelpers.checkNumeric(request.getParameter("IDaula"));
+            int gruppo_key = SecurityHelpers.checkNumeric(request.getParameter("IDgruppo"));
             Aula aula = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().getAula(aula_key);
 
             data.put("select_button", 1);
@@ -86,8 +86,8 @@ public class Eventi extends AuleWebBaseController {
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.clear();
-                calendar.set(Calendar.YEAR, Integer.valueOf(settimana[0]));
-                calendar.set(Calendar.WEEK_OF_YEAR, Integer.valueOf(settimana[1]));
+                calendar.set(Calendar.YEAR, SecurityHelpers.checkNumeric(settimana[0]));
+                calendar.set(Calendar.WEEK_OF_YEAR, SecurityHelpers.checkNumeric(settimana[1]));
 
                 LocalDate dataInizio = calendar.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 LocalDate dataFine = dataInizio.plusDays(6);
@@ -136,8 +136,8 @@ public class Eventi extends AuleWebBaseController {
         try {
             Map data = new HashMap<>();
 
-            int corso_key = Integer.valueOf(request.getParameter("IDcorso"));
-            int gruppo_key = Integer.valueOf(request.getParameter("IDgruppo"));
+            int corso_key = SecurityHelpers.checkNumeric(request.getParameter("IDcorso"));
+            int gruppo_key = SecurityHelpers.checkNumeric(request.getParameter("IDgruppo"));
             Corso corso = ((AuleWebDataLayer) request.getAttribute("datalayer")).getCorsoDAO().getCorso(corso_key);
 
             data.put("select_button", 3);
@@ -151,8 +151,8 @@ public class Eventi extends AuleWebBaseController {
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.clear();
-                calendar.set(Calendar.YEAR, Integer.valueOf(settimana[0]));
-                calendar.set(Calendar.WEEK_OF_YEAR, Integer.valueOf(settimana[1]));
+                calendar.set(Calendar.YEAR, SecurityHelpers.checkNumeric(settimana[0]));
+                calendar.set(Calendar.WEEK_OF_YEAR, SecurityHelpers.checkNumeric(settimana[1]));
                 LocalDate dataInizio = calendar.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 LocalDate dataFine = dataInizio.plusDays(6);
 
