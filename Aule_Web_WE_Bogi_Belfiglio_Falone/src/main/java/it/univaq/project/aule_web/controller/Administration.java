@@ -4,39 +4,20 @@
  */
 package it.univaq.project.aule_web.controller;
 
-import it.univaq.f4i.iw.framework.result.FailureResult;
 import it.univaq.f4i.iw.framework.result.TemplateManagerException;
 import it.univaq.project.aule_web.data.dao.impl.AttrezzaturaProxy;
 import it.univaq.project.aule_web.data.dao.impl.AulaProxy;
 import it.univaq.project.aule_web.data.dao.impl.AuleWebDataLayer;
 import it.univaq.project.aule_web.data.dao.impl.EventoProxy;
-import it.univaq.project.aule_web.data.dao.impl.EventoRicorrenteProxy;
 import it.univaq.project.aule_web.data.model.Attrezzatura;
 import it.univaq.project.aule_web.data.model.Aula;
-
-import it.univaq.project.aule_web.data.model.enumerable.Ricorrenza;
-import it.univaq.project.aule_web.data.model.enumerable.Tipologia;
-
 import it.univaq.project.aule_web.data.model.Corso;
-import it.univaq.project.aule_web.framework.data.DataException;
-import it.univaq.project.aule_web.framework.result.TemplateResult;
-import it.univaq.project.aule_web.framework.security.SecurityHelpers;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import it.univaq.project.aule_web.data.model.Evento;
-import it.univaq.project.aule_web.data.model.EventoRicorrente;
 import it.univaq.project.aule_web.data.model.Gruppo;
 import it.univaq.project.aule_web.data.model.Responsabile;
-
 import it.univaq.project.aule_web.data.model.enumerable.Ricorrenza;
 import it.univaq.project.aule_web.data.model.enumerable.TipoLaurea;
 import it.univaq.project.aule_web.data.model.enumerable.Tipologia;
-
 import it.univaq.project.aule_web.framework.data.DataException;
 import it.univaq.project.aule_web.framework.result.CSVResult;
 import it.univaq.project.aule_web.framework.result.StreamResult;
@@ -47,19 +28,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import java.io.PrintWriter;
 import java.net.URLEncoder;
-
-import java.security.MessageDigest;
-
-import java.security.MessageDigest;
-
-import java.time.LocalDate;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -71,8 +40,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
@@ -677,6 +644,7 @@ public class Administration extends AuleWebBaseController {
         res.activate("table_eventi_research.ftl.html", data, response);
     }
 
+    
     private void action_input_corso(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
         Map data = new HashMap<>();
         data.put("username", SecurityHelpers.checkSession(request).getAttribute("username"));

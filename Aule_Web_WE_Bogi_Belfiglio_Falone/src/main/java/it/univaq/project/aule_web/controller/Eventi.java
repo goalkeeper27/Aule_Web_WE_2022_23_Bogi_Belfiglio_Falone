@@ -13,6 +13,7 @@ import it.univaq.project.aule_web.data.model.Corso;
 import it.univaq.project.aule_web.data.model.Evento;
 import it.univaq.project.aule_web.data.model.EventoRicorrente;
 import it.univaq.project.aule_web.framework.data.DataException;
+import it.univaq.project.aule_web.framework.security.SecurityHelpers;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.time.LocalDate;
@@ -202,7 +203,7 @@ public class Eventi extends AuleWebBaseController {
         try {
             Map data = new HashMap<>();
 
-            int gruppo_key = Integer.valueOf(request.getParameter("IDgruppo"));
+            int gruppo_key = SecurityHelpers.checkNumeric(request.getParameter("IDgruppo"));
             List<Aula> aule = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().getAuleByGruppoID(gruppo_key);
 
             data.put("select_button", 1);

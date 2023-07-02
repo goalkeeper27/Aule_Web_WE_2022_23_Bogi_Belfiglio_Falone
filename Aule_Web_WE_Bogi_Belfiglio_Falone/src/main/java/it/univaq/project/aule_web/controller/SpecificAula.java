@@ -12,6 +12,7 @@ import it.univaq.project.aule_web.data.model.Attrezzatura;
 import it.univaq.project.aule_web.data.model.Aula;
 import it.univaq.project.aule_web.framework.data.DataException;
 import it.univaq.project.aule_web.framework.result.TemplateResult;
+import it.univaq.project.aule_web.framework.security.SecurityHelpers;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class SpecificAula extends AuleWebBaseController {
     private void action_default(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
         try {
             Map data = new HashMap<>();
-            int gruppo_key = Integer.valueOf(request.getParameter("IDgruppo"));
+            int gruppo_key = SecurityHelpers.checkNumeric(request.getParameter("IDgruppo"));
             // lista di tutte le aule del gruppo specificato
             List<Aula> aule = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().getAuleByGruppoID(gruppo_key);
             
