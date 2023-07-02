@@ -6,10 +6,6 @@ package it.univaq.project.aule_web.framework.data;
 
 import java.sql.Connection;
 
-/**
- *
- * @author Alberto Bogi
- */
 public class DAO {
     
     protected final DataLayer dataLayer;

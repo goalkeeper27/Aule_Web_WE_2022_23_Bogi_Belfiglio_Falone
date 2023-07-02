@@ -21,10 +21,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Francesco Falone
- */
 public class GruppoDAO_MySQL extends DAO implements GruppoDAO {
 
 

@@ -17,10 +17,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Stefano Belfiglio
- */
 public class ResponsabileDAO_MySQL extends DAO implements ResponsabileDAO {
 
     private PreparedStatement sResponsabileByID, sResponsabileByEmail, sAllResponsabili, sResponsabiliByPartialEmail;

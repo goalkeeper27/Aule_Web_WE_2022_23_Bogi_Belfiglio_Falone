@@ -7,10 +7,6 @@ package it.univaq.project.aule_web.data.comparator;
 import it.univaq.project.aule_web.data.model.Evento;
 import java.util.Comparator;
 
-/**
- *
- * @author Alberto Bogi
- */
 public class EventoComparator implements Comparator<Evento>{
 
     @Override

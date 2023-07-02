@@ -10,10 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.sql.DataSource;
 
-/**
- *
- * @author Alberto Bogi
- */
 public class DataLayer implements AutoCloseable{
     
     

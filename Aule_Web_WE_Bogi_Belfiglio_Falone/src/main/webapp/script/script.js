@@ -321,7 +321,6 @@ function checkGruppo() {
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            alert("ciao");
             var rispostaDiv = document.getElementById("gruppo_update");
             rispostaDiv.innerHTML = xhr.responseText;
         }
@@ -447,27 +446,16 @@ function validateEventsInputs(choise) {
     } else if (choise === 2) {
         let div_update = document.getElementById("evento_update");
         input1 = div_update.querySelector("#input_evento_1").value;
-        //alert(input1);
         input2 = div_update.querySelector("#input_evento_2").value;
-        //alert(input2);
         input3 = div_update.querySelector("#input_evento_3").value;
-        //alert(input3);
         input4 = div_update.querySelector("#input_evento_4").value;
-        //alert(input4);
         input5 = div_update.querySelector("#input_evento_5").value;
-        //alert(input5);
         inputAula = div_update.querySelector('input[name="aula"][type="radio"]:checked');
-        //alert(inputAula.value);
         inputResponsabile = div_update.querySelector('input[name="responsabile"][type="radio"]:checked');
-        //alert(inputResponsabile.value);
-        //input6 = document.getElementById("input_evento_6").value;
         inputTipologia = div_update.querySelector('input[name="tipologia"][type="radio"]:checked');
-        //alert(inputTipologia.value);
         inputRicorrenza = div_update.querySelector('input[name="ricorrenza"][type="radio"]:checked');
-        //alert(inputRicorrenza.value);
         button = div_update.querySelector("#button_events");
         if (input1 && input2 && input3 && input4 && input5 && inputAula && inputResponsabile && inputTipologia && inputRicorrenza) {
-            //alert("not empty");
             if (inputTipologia.value === "LEZIONE" || inputTipologia.value === "ESAME" || inputTipologia.value === "PARZIALE") {
                 inputCorso = div_update.querySelector('input[name="corso"][type="radio"]:checked');
                 if (!inputCorso) {
@@ -583,7 +571,6 @@ function createCorso() {
 
     let url = "administration?insert_corso=1&nome=" + nome + "&corso_laurea=" + corso_laurea +
             "&tipo_laurea=" + tipo_laurea + "&anno_frequentazione=" + anno_frequentazione;
-    alert(url);
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
@@ -605,7 +592,6 @@ function createResponsabile() {
 
     let url = "administration?insert_responsabile=1&nome=" + nome + "&cognome=" + cognome +
             "&codice_fiscale=" + codice_fiscale + "&email=" + email;
-    alert(url);
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
@@ -640,7 +626,6 @@ function checkAula() {
     let xhr = new XMLHttpRequest();
     let radio = document.querySelector('input[name="IDaula"]:checked');
     let id = radio.value;
-    //alert(id);
 
     let url = "administration?operation=2&IDaula=" + id;
     xhr.open("GET", url, true);
@@ -662,7 +647,7 @@ function exportCSVAula() {
     let radio = document.querySelector('input[name="IDaula"]:checked');
     let id = radio.value;
     let url = "administration?operation=2&csv=1&IDaula=" + id;
-    alert(url);
+
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {

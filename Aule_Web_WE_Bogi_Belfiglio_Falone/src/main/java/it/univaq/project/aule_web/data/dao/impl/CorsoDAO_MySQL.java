@@ -21,10 +21,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/**
- *
- * @author Alberto Bogi
- */
 public class CorsoDAO_MySQL extends DAO implements CorsoDAO {
 
     private PreparedStatement sCorsoByID, sCorsoByName, sCorsoByPartialName, sAllCorsi;

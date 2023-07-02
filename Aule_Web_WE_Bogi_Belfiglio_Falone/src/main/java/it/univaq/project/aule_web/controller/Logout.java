@@ -21,10 +21,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author acer
- */
 public class Logout extends AuleWebBaseController {
 
     private void action_logout(HttpServletRequest request, HttpServletResponse response) throws IOException {

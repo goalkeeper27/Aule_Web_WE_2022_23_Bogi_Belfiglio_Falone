@@ -21,10 +21,6 @@ import java.time.LocalTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Alberto Bogi
- */
 public class EventoProxy extends EventoImpl implements DataItemProxy {
 
     protected boolean modified;

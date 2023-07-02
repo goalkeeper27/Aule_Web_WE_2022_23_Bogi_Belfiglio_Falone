@@ -14,10 +14,6 @@ import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Alberto Bogi
- */
 public class EventoRicorrenteProxy extends EventoRicorrenteImpl implements DataItemProxy{
     
     private boolean modified;

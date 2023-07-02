@@ -7,10 +7,6 @@ package it.univaq.project.aule_web.data.model;
 import it.univaq.project.aule_web.data.model.enumerable.TipoLaurea;
 import it.univaq.project.aule_web.framework.data.DataItem;
 
-/**
- *
- * @author Francesco Falone
- */
 public interface Corso extends DataItem<Integer>{
     
     String getNome();

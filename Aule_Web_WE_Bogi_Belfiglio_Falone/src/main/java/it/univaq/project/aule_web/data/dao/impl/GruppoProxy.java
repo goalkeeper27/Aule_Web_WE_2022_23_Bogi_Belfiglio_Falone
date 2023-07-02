@@ -11,10 +11,6 @@ import it.univaq.project.aule_web.framework.data.DataLayer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Alberto Bogi
- */
 public class GruppoProxy extends GruppoImpl implements DataItemProxy {
 
     private boolean modified;

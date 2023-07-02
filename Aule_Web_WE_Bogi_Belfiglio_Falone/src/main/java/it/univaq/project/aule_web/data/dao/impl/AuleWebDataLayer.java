@@ -27,10 +27,6 @@ import it.univaq.project.aule_web.data.dao.ResponsabileDAO;
 import java.sql.SQLException;
 import javax.sql.DataSource;
 
-/**
- *
- * @author Alberto Bogi
- */
 public class AuleWebDataLayer extends DataLayer{
     
     

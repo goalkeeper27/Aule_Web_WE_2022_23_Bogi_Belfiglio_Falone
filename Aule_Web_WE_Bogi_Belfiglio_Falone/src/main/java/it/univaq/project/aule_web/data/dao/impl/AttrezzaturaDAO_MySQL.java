@@ -20,10 +20,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Stefano Belfiglio
- */
 public class AttrezzaturaDAO_MySQL extends DAO implements AttrezzaturaDAO {
 
     private PreparedStatement sAttrezzaturaByAula, sAttrezzaturaDisponibile, sAttrezzaturaByID, sAttrezzaturaDisponibileByNome;

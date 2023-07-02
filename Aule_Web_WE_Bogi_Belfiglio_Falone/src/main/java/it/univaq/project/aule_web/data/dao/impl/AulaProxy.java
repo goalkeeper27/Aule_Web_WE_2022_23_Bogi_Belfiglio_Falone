@@ -13,10 +13,6 @@ import it.univaq.project.aule_web.data.dao.ResponsabileDAO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Alberto Bogi
- */
 public class AulaProxy extends AulaImpl implements DataItemProxy {
 
     private boolean modified;

@@ -9,6 +9,7 @@ import it.univaq.project.aule_web.data.dao.impl.AuleWebDataLayer;
 import it.univaq.project.aule_web.data.model.Corso;
 import it.univaq.project.aule_web.framework.data.DataException;
 import it.univaq.project.aule_web.framework.result.TemplateResult;
+import it.univaq.project.aule_web.framework.security.SecurityHelpers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,16 +19,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Stefano Belfiglio
- */
 public class SpecificCorso extends AuleWebBaseController {
     
     private void action_default(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
         try {
             Map data = new HashMap<>();
-            int gruppo_key = Integer.valueOf(request.getParameter("IDgruppo"));
+            int gruppo_key = SecurityHelpers.checkNumeric(request.getParameter("IDgruppo"));
             List<Corso> corsi = new ArrayList<>();
             if(request.getParameter("ricerca") != null){
                 corsi = ((AuleWebDataLayer) request.getAttribute("datalayer")).getCorsoDAO().getCorsiByPartialName(request.getParameter("ricerca").length(),request.getParameter("ricerca"));

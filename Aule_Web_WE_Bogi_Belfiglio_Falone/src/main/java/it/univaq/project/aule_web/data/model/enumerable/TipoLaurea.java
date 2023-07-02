@@ -4,10 +4,6 @@
  */
 package it.univaq.project.aule_web.data.model.enumerable;
 
-/**
- *
- * @author Francesco Falone
- */
 public enum TipoLaurea {
     TRIENNALE,
     MAGISTRALE,

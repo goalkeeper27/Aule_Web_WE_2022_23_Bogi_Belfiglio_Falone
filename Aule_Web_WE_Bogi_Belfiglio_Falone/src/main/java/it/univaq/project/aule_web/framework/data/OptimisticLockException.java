@@ -1,9 +1,5 @@
 package it.univaq.project.aule_web.framework.data;
 
-/**
- *
- * @author Alberto Bogi
- */
 public class OptimisticLockException extends DataException {
 
     private DataItem item;

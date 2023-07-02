@@ -8,10 +8,6 @@ import it.univaq.project.aule_web.framework.data.DataItemImpl;
 import it.univaq.project.aule_web.data.model.Attrezzatura;
 import it.univaq.project.aule_web.data.model.Aula;
 
-/**
- *
- * @author Stefano Belfiglio
- */
 public class AttrezzaturaImpl extends DataItemImpl<Integer> implements Attrezzatura {
     
     private Aula aula;

@@ -11,10 +11,6 @@ import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.sql.DataSource;
 
-/**
- *
- * @author Alberto Bogi
- */
 
 public abstract class AuleWebBaseController extends AbstractBaseController {
     

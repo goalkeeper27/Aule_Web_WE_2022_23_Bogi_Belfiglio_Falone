@@ -6,10 +6,6 @@ package it.univaq.project.aule_web.data.model;
 
 import it.univaq.project.aule_web.framework.data.DataItem;
 
-/**
- *
- * @author Alberto Bogi
- */
 public interface Amministratore extends DataItem<Integer>{
     
     public String getUsername();
