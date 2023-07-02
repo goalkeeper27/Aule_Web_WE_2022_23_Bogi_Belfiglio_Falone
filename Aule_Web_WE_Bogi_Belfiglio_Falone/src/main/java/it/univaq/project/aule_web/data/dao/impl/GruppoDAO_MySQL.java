@@ -189,7 +189,7 @@ public class GruppoDAO_MySQL extends DAO implements GruppoDAO {
                 ((DataItemProxy) gruppo).setModified(false);
             }
         } catch (SQLException | OptimisticLockException ex) {
-            throw new DataException("Impossibile caricare Gruppo", ex);
+            throw new DataException("Data error", ex);
         }
     }
 

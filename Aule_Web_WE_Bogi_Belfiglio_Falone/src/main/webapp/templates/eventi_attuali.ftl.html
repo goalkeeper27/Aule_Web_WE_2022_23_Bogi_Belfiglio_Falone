@@ -1,6 +1,6 @@
 
 
-<div class="aule">
+<div class="eventi attuali">
     <div class="container">
         <div class="ten columns">
             <p class="title">Eventi attuali</p>
@@ -20,7 +20,7 @@
             <!-- se ci sono eventi associati a questa aula, allora genero il fieldset associato, altrimenti no -->
             <#if fieldset_vuoto == "false">
             <fieldset>
-                <legend class="nome_aula">Aula ${aula.nome}</legend>
+                <legend>Aula ${aula.nome}</legend>
                 <#list eventi as evento>
                 <#if evento.aulaKey == aula.key>
                 <#assign fieldset_vuoto = "false">

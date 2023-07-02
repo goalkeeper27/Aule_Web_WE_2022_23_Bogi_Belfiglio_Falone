@@ -6,40 +6,33 @@
 
 
 
-let input_orario_attuale = document.getElementById('date');
-let button_orario_attuale = document.getElementById('calendar');
 
-if (button_orario_attuale.disabled !== null)
-    button_orario_attuale.disabled = true;   //il bottone viene disattivato inizialmente
+function checkDailyEventDateInput() {
+    let form = document.getElementById("daily_event");
+    let input = form.querySelector('input[type="date"]').value;
+    let button = form.querySelector('button');
 
-input_orario_attuale.addEventListener('input', function (event) {
-
-    let val = event.target.value;  //prendiamo il valore dell'input corrente, nel nostro caso input[type = date]
-
-    if (val === '') {
-        button_orario_attuale.disabled = true;  //bottone disabilitato
+    if (input) {
+        button.disabled = false;
+        return;
     } else {
-        button_orario_attuale.disabled = false;  //bottone abilitato
+        button.disabled = true;
+        return;
     }
+}
 
-});
+function checkInputWeek() {
+    let input = document.getElementById("input_week").value;
+    let button = document.getElementById("button_week");
 
-let input_settimana = document.getElementById('week');
-let button_settimana = document.getElementById('button_week');
-
-button_settimana.disabled = true;   //il bottone viene disattivato inizialmente
-
-input_settimana.addEventListener('input', function (event) {
-
-    let val = event.target.value;  //prendiamo il valore dell'input corrente, nel nostro caso input[type = date]
-
-    if (val === '') {
-        button_settimana.disabled = true;  //bottone disabilitato
+    if (input) {
+        button.disabled = false;
+        return;
     } else {
-        button_settimana.disabled = false;  //bottone abilitato
+        button.disabled = true;
+        return;
     }
-
-});
+}
 
 
 
@@ -681,7 +674,117 @@ function exportCSVAula() {
     xhr.send();
 }
 
+function checkCSVButton() {
+    let date1 = document.getElementById("input_csv_date_1").value;
+    let date2 = document.getElementById("input_csv_date_2").value;
+    let button = document.getElementById("button_csv_eventi");
 
+    if (date1 && date2) {
+        button.disabled = false;
+        return;
+    } else {
+        button.disabled = true;
+        return;
+    }
+}
+
+function verifyCorrectnessTimeEvento(choise) {
+    let input_data;
+    let input_time_1;
+    let input_time_2;
+    let div_message;
+    if (choise === 1) {
+        input_data = document.getElementById("input_evento_3");
+        input_time_1 = document.getElementById("input_evento_4");
+        input_time_2 = document.getElementById("input_evento_5");
+        div_message = document.getElementById("request_time_input");
+    }else if(choise === 2){
+        let div_update = document.getElementById("evento_update");
+        input_data = div_update.querySelector("#input_evento_3");
+        input_time_1 = div_update.querySelector("#input_evento_4");
+        input_time_2 = div_update.querySelector("#input_evento_5"); 
+        div_message = div_update.querySelector("#request_time_input");
+    }
+    if (input_data.value) {
+        let verify_data = new Date(input_data.value);
+        let current_data = new Date();
+        verify_data.setHours(0, 0, 0, 0);
+        current_data.setHours(0, 0, 0, 0);
+        if (verify_data < current_data) {
+            div_message.style.display = 'block';
+            input_data.value = "";
+            return;
+        } else if (verify_data.getTime() === current_data.getTime()) {
+            if (input_time_1.value) {
+                let timeComponents = input_time_1.value.split(":");
+                let hours = parseInt(timeComponents[0], 10);
+                let minutes = parseInt(timeComponents[1], 10);
+
+                let time_start = new Date();
+                time_start.setHours(hours);
+                time_start.setMinutes(minutes);
+                let current_time = new Date();
+
+                if (time_start < current_time) {
+                    div_message.style.display = 'block';
+                    input_time_1.value = "";
+                    return;
+
+                }
+            }
+        } else {
+            if (input_time_1.value && input_time_2.value) {
+                let timeComponents = input_time_1.value.split(":");
+                let hours = parseInt(timeComponents[0], 10);
+                let minutes = parseInt(timeComponents[1], 10);
+
+                let time_start = new Date();
+                time_start.setHours(hours);
+                time_start.setMinutes(minutes);
+
+                timeComponents = input_time_2.value.split(":");
+                hours = parseInt(timeComponents[0], 10);
+                minutes = parseInt(timeComponents[1], 10);
+                let time_end = new Date();
+                time_end.setHours(hours);
+                time_end.setMinutes(minutes);
+                if (time_end <= time_start) {
+                    div_message.style.display = 'block';
+                    input_time_2.value = "";
+                    return;
+
+                }
+            }
+
+        }
+
+    }
+
+    if (input_time_1.value) {
+        let timeComponents = input_time_1.value.split(":");
+        let minutes = parseInt(timeComponents[1], 10);
+        if (minutes % 15 !== 0) {
+            div_message.style.display = 'block';
+            input_time_1.value = "";
+            return;
+        }
+    }
+
+    if (input_time_2.value) {
+        let timeComponents = input_time_2.value.split(":");
+        let minutes = parseInt(timeComponents[1], 10);
+        if (minutes % 15 !== 0) {
+            div_message.style.display = 'block';
+            input_time_2.value = "";
+            return;
+        }
+    }
+
+
+    div_message.style.display = 'none';
+    return;
+
+}
 
 
 

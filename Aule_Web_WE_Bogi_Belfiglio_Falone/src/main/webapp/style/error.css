@@ -7,17 +7,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : acer
 */
 
-.title{
-    font-size: x-large;
+
+h1{
+    color: #add8e6;
     text-shadow: -1.5px 0 #000000, 0 1.5px #000000, 1.5px 0 #000000, 0 -1.5px #000000;
-    color: white;
-    padding-top:0.5%;
+    font-family: sans-serif;
 }
 
 p{
-    font-size: x-large;
+    font-size: large;
     font-style: italic;
     font-weight: bold;
-    
+    font-family: sans-serif;
+
 }
+
+
 

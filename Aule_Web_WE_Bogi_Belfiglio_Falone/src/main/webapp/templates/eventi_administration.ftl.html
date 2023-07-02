@@ -68,14 +68,23 @@
                 </div>
                 <br>
                 <label for="input4Ev">data:</label>
-                <input type="date" name="data" id="input_evento_3" oninput="validateEventsInputs(1)"/>
+                <input type="date" name="data" id="input_evento_3" oninput="validateEventsInputs(1), verifyCorrectnessTimeEvento(1)"/>
                 <br>
                 <label for="input5Ev">ora inizio:</label>
-                <input type="time" step="900" name="ora_inizio" class="orario" id="input_evento_4" oninput="validateEventsInputs(1)"/>
+                <input type="time" step="900" name="ora_inizio" class="orario" id="input_evento_4" oninput="validateEventsInputs(1), verifyCorrectnessTimeEvento(1)"/>
                 <br>
                 <label for="input6Ev">ora fine:</label>
-                <input type="time" step="900" name="ora_fine" class="orario" id="input_evento_5" oninput="validateEventsInputs(1)"/>
+                <input type="time" step="900" name="ora_fine" class="orario" id="input_evento_5" oninput="validateEventsInputs(1), verifyCorrectnessTimeEvento(1)"/>
                 <br>
+                <div id="request_time_input" style="display:none">
+                    <p>Attenzione. verificare che:</p>
+                    <ul>
+                        <li>La data inserita sia almeno la data odierna</li>
+                        <li>In caso di data odierna, l'orario di inizio non sia inferiore a quello attuale</li>
+                        <li>In caso di date successive, l'orario di inizio sia inferiore a quello di fine</li>
+                        <li>L'orario sia inserito con scarti di 15 minuti</li>
+                    </ul>
+                </div>
                 <h3>Ricorrenza</h3>
                 <table class="tabella_insert">
                     <tr>

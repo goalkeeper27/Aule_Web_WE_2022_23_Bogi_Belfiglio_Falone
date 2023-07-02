@@ -284,7 +284,7 @@ public class AulaDAO_MySQL extends DAO implements AulaDAO {
                 ((DataItemProxy) aula).setModified(false);
             }
         } catch (SQLException | OptimisticLockException ex) {
-            throw new DataException("Unable to store aula", ex);
+            throw new DataException("Data error", ex);
         }
         return null;
     }

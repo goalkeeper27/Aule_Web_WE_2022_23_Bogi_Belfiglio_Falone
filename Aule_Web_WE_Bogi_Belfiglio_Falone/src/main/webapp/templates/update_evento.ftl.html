@@ -160,14 +160,23 @@
     </#if>
     <br>
     <label>modifica la data:</label>
-    <input type="date" name="data" id="input_evento_3" value="${evento.dataEvento}" oninput="validateEventsInputs(2)"/>
+    <input type="date" name="data" id="input_evento_3" value="${evento.dataEvento}" oninput="validateEventsInputs(2); verifyCorrectnessTimeEvento(2)"/>
     <br>
     <label>modifica l'ora inizio:</label>
-    <input type="time" step="900" name="ora_inizio" class="orario" value="${evento.oraInizio}" id="input_evento_4" oninput="validateEventsInputs(2)"/>
+    <input type="time" step="900" name="ora_inizio" class="orario" value="${evento.oraInizio}" id="input_evento_4" oninput="validateEventsInputs(2); verifyCorrectnessTimeEvento(2)"/>
     <br>
     <label>modifica l'ora fine:</label>
-    <input type="time" step="900" name="ora_fine" class="orario" value="${evento.oraFine}" id="input_evento_5" oninput="validateEventsInputs(2)"/>
+    <input type="time" step="900" name="ora_fine" class="orario" value="${evento.oraFine}" id="input_evento_5" oninput="validateEventsInputs(2); verifyCorrectnessTimeEvento(2)"/>
     <br>
+    <div id="request_time_input" style="display:none">
+        <p>Attenzione. verificare che:</p>
+        <ul>
+            <li>La data inserita sia almeno la data odierna</li>
+            <li>In caso di data odierna, l'orario di inizio non sia inferiore a quello attuale</li>
+            <li>In caso di date successive, l'orario di inizio sia inferiore a quello di fine</li>
+            <li>L'orario sia inserito con scarti di 15 minuti</li>
+        </ul>
+    </div>
     <h3>Ricorrenza:</h3>
     <table class="tabella_insert">
         <#if evento.ricorrenza?string == "GIORNALIERA">

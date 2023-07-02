@@ -817,7 +817,6 @@ public class Administration extends AuleWebBaseController {
             handleError(ex, request, response);
 
         } catch (DataException ex) {
-            //request.setAttribute("admin", 1);
             handleError(ex, request, response);
         }
     }

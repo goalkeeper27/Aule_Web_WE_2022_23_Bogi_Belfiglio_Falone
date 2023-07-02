@@ -375,7 +375,7 @@ public class EventoDAO_MySQL extends DAO implements EventoDAO {
                 ((DataItemProxy) eventoProxy).setModified(false);
             }
         } catch (SQLException | OptimisticLockException ex) {
-            throw new DataException("Unable to store article", ex);
+            throw new DataException("Data error", ex);
         }
     }
 

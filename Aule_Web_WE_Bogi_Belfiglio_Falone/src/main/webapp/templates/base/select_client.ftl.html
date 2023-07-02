@@ -49,10 +49,10 @@
 
 
                 <p>vedi gli eventi in un giorno specifico:</p>
-                <form method="get" action="eventi">
-                    <input name="data" type="date" id="date"/><br>
+                <form method="get" action="eventi" id="daily_event">
+                    <input name="data" type="date" oninput="checkDailyEventDateInput()"/><br>
                     <input type="hidden" name="IDgruppo" value="${IDgruppo}"/>
-                    <button id="calendar" type="submit">cerca</button>
+                    <button type="submit" disabled>cerca</button>
                     <!--<script src="script/script.js"></script>-->
                 </form> 
 

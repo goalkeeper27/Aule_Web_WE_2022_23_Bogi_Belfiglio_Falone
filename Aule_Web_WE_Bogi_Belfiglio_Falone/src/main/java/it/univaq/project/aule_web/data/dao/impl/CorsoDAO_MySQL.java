@@ -254,7 +254,7 @@ public class CorsoDAO_MySQL extends DAO implements CorsoDAO {
                 ((DataItemProxy) corso).setModified(false);
             }
         } catch (SQLException | OptimisticLockException ex) {
-            throw new DataException(ex.getMessage(), ex);
+            throw new DataException("Data error", ex);
         }
     }
 

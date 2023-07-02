@@ -63,7 +63,7 @@ public class Eventi extends AuleWebBaseController {
             data.put("select_button", 1);
             data.put("IDgruppo", gruppo_key);
             TemplateResult res = new TemplateResult(getServletContext());
-            res.activate("aule.ftl.html", data, response);
+            res.activate("eventi_attuali.ftl.html", data, response);
         } catch (DataException ex) {
             handleError("Data access exception: " + ex.getMessage(), request, response);
         }
@@ -115,7 +115,7 @@ public class Eventi extends AuleWebBaseController {
                 //Inserisco il range di date utili per la visualizzazione degli eventi
                 List<LocalDate> datas = new ArrayList();
                 LocalDate d = dataInizio;
-                for (int i = 0; i < 6; i++) {
+                for (int i = 0; i < 7; i++) {
                     datas.add(d);
                     d = d.plusDays(1);
                 }

@@ -11,10 +11,10 @@
 
                 <p>seleziona la settimana di tuo interesse</p>
                 <form method="GET" action="eventi">
-                    <input type="week" name="week" id="week"/><br>
+                    <input type="week" name="week" id="input_week" oninput="checkInputWeek()"/><br>
                     <input type="hidden" name="IDaula" value="${aula.key}" />
                     <input type="hidden" name="IDgruppo" value="${IDgruppo}" />
-                    <button type="submit" id="button_week">vedi</button>
+                    <button type="submit" id="button_week" disabled>vedi</button>
                 </form>
                 
             </div>
@@ -54,7 +54,7 @@
 
         <#elseif data_inizio?has_content && data_fine?has_content>
         <div class="ten columns">
-            <div class="messaggio aule">
+            <div class="messaggio eventi">
                 <p>Non ci sono eventi in questa aula nella settimana che va dal giorno ${data_inizio} al giorno ${data_fine}</p>
             </div>
         </div>

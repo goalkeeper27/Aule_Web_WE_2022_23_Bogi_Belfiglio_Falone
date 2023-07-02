@@ -119,7 +119,7 @@ public class ResponsabileDAO_MySQL extends DAO implements ResponsabileDAO {
                 ((DataItemProxy) responsabile).setModified(false);
             }
         } catch (SQLException ex) {
-            throw new DataException("Non è stato possibile memorizzare il responsabile", ex);
+            throw new DataException("Data error", ex);
         }
     }
 

@@ -10,10 +10,10 @@
 
                 <p>seleziona la settimana di tuo interesse</p>
                 <form method="GET" action="eventi">
-                    <input type="week" name="week" id="week"/><br>
+                    <input type="week" name="week" id="input_week" oninput="checkInputWeek()"/><br>
                     <input type="hidden" name="IDcorso" value="${corso.key}" />
                     <input type="hidden" name="IDgruppo" value="${IDgruppo}" />
-                    <button type="submit" id="button_week">vedi</button>
+                    <button type="submit" id="button_week" disabled>vedi</button>
                 </form>
             </div>
         </div>
