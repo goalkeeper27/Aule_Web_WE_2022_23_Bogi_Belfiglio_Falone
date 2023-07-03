@@ -774,7 +774,7 @@ public class Administration extends AuleWebBaseController {
                     action_default(request, response);
                 }
             } else {
-                response.sendRedirect("homepage");
+                response.sendRedirect("login");
             }
 
         } catch (IOException | TemplateManagerException ex) {
