@@ -14,7 +14,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 ********************************/
 
-.select button{
+.select.client button{
     width: 20%;
     background-color: #add8e6;
     color:black;
@@ -23,24 +23,24 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     border-radius: 4px;
 }
 
-.select .four.columns{
+.select.client .four.columns{
     text-align:center;
 }
 
-.select button:hover{
+.select.client button:hover{
     background-color: white;
     color: #add8e6;
     border-color: #add8e6;
     text-align: center;
 }
 
-.select p{
+.select.client p{
     font-weight: bold;
     font-style: italic;
 
 }
 
-.select{
+.select.client{
     margin-bottom:2%;
     margin-top:1%;
 }
@@ -57,7 +57,7 @@ input[type="date"]{
     margin-bottom:1%;
 }
 
-.select #daily_event button{
+.select.client #daily_event button{
     width: 10%;
     background-color: #add8e6;
     color:black;
@@ -66,14 +66,14 @@ input[type="date"]{
     border-radius: 4px;
 }
 
-.select #daily_event button:hover{
+.select.client #daily_event button:hover{
     background-color: white;
     color: #add8e6;
     border-color: #add8e6;
     text-align: center;
 }
 
-.select #daily_event button:disabled{
+.select.client #daily_event button:disabled{
     color: #696969;
     pointer-events: none;
 }
@@ -106,9 +106,16 @@ input[type="date"]{
     background-color: #add8e6;
     color:black;
     border-radius:5%;
-
     cursor:pointer;
     border-radius: 4px;
+
+}
+
+#restrict_select button:hover{
+    background-color: white;
+    color: #add8e6;
+    border-color: #add8e6;
+    text-align: center;
 
 }
 
@@ -159,7 +166,7 @@ input[type="date"]{
 
 /********************************
 
-* proprietà per select_client.ftl.html
+* proprietà per select_administration.ftl.html
 
 ********************************/
 
@@ -183,6 +190,7 @@ input[type="date"]{
 .select.administration label{
     font-family: sans-serif;
 }
+
 
 
 

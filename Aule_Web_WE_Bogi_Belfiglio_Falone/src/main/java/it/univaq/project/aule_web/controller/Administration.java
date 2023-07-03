@@ -78,9 +78,9 @@ public class Administration extends AuleWebBaseController {
     private void action_insert_aula(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
         Aula aula = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().createAula();
         aula.setKey(null);
-        aula.setNome(request.getParameter("nome"));
-        aula.setLuogo(request.getParameter("via") + "," + request.getParameter("civico"));
-        aula.setEdificio(request.getParameter("edificio"));
+        aula.setNome(request.getParameter("nome").toUpperCase());
+        aula.setLuogo((request.getParameter("via") + "," + request.getParameter("civico")).toUpperCase());
+        aula.setEdificio(request.getParameter("edificio").toUpperCase());
         aula.setPiano(SecurityHelpers.checkNumeric(request.getParameter("piano")));
         aula.setCapienza(SecurityHelpers.checkNumeric(request.getParameter("capienza")));
         aula.setNumeroPreseElettriche(SecurityHelpers.checkNumeric(request.getParameter("prese_elettriche")));
@@ -132,9 +132,9 @@ public class Administration extends AuleWebBaseController {
         uploaded_file.deleteOnExit();
 
         Aula aula = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().createAula();
-        aula.setNome(input.get("nome"));
-        aula.setLuogo(input.get("luogo"));
-        aula.setEdificio(input.get("edificio"));
+        aula.setNome(input.get("nome").toUpperCase());
+        aula.setLuogo(input.get("luogo").toUpperCase());
+        aula.setEdificio(input.get("edificio").toUpperCase());
         aula.setPiano(SecurityHelpers.checkNumeric(input.get("piano")));
         aula.setCapienza(SecurityHelpers.checkNumeric(input.get("capienza")));
         aula.setNumeroPreseElettriche(SecurityHelpers.checkNumeric(input.get("prese_elettriche")));
@@ -204,13 +204,13 @@ public class Administration extends AuleWebBaseController {
         Aula aula = ((AuleWebDataLayer) request.getAttribute("datalayer")).getAulaDAO().getAula(SecurityHelpers.checkNumeric(request.getParameter("IDaula")));
 
         if (!aula.getNome().equals(request.getParameter("nome"))) {
-            aula.setNome(request.getParameter("nome"));
+            aula.setNome(request.getParameter("nome").toUpperCase());
         }
         if (!aula.getLuogo().equals(request.getParameter("via") + "," + request.getParameter("civico"))) {
-            aula.setLuogo(request.getParameter("via") + "," + request.getParameter("civico"));
+            aula.setLuogo((request.getParameter("via") + "," + request.getParameter("civico")).toUpperCase());
         }
         if (!aula.getEdificio().equals(request.getParameter("edificio"))) {
-            aula.setEdificio(request.getParameter("edificio"));
+            aula.setEdificio(request.getParameter("edificio").toUpperCase());
         }
         if (aula.getPiano() != SecurityHelpers.checkNumeric(request.getParameter("piano"))) {
             aula.setPiano(SecurityHelpers.checkNumeric(request.getParameter("piano")));
@@ -366,7 +366,7 @@ public class Administration extends AuleWebBaseController {
             gruppo.setTipoGruppo(request.getParameter("tipo").toUpperCase());
         }
         if (!gruppo.getDescrizione().equals(request.getParameter("descrizione"))) {
-            gruppo.setDescrizione(request.getParameter("descrizione").toUpperCase());
+            gruppo.setDescrizione(request.getParameter("descrizione"));
         }
 
         ((AuleWebDataLayer) request.getAttribute("datalayer")).getGruppoDAO().storeGruppo(gruppo);
@@ -437,7 +437,7 @@ public class Administration extends AuleWebBaseController {
         DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
         evento.setKey(null);
-        evento.setNome(request.getParameter("nome"));
+        evento.setNome(request.getParameter("nome").toUpperCase());
         evento.setDescrizione(request.getParameter("descrizione"));
         int scelta_tipologia = SecurityHelpers.checkNumeric(request.getParameter("tipologia"));
         switch (scelta_tipologia) {
@@ -508,7 +508,7 @@ public class Administration extends AuleWebBaseController {
         Evento evento = ((AuleWebDataLayer) request.getAttribute("datalayer")).getEventoDAO().getEvento(SecurityHelpers.checkNumeric(request.getParameter("IDevento")));
 
         if (!evento.getNome().equals(request.getParameter("nome"))) {
-            evento.setNome(request.getParameter("nome"));
+            evento.setNome(request.getParameter("nome").toUpperCase());
         }
 
         if (!evento.getDescrizione().equals(request.getParameter("descrizione"))) {
@@ -657,8 +657,8 @@ public class Administration extends AuleWebBaseController {
     private void action_insert_corso(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
         Corso corso = ((AuleWebDataLayer) request.getAttribute("datalayer")).getCorsoDAO().createCorso();
         corso.setKey(null);
-        corso.setNome(request.getParameter("nome"));
-        corso.setCorsoDiLaurea(request.getParameter("corso_laurea"));
+        corso.setNome(request.getParameter("nome").toUpperCase());
+        corso.setCorsoDiLaurea(request.getParameter("corso_laurea").toUpperCase());
         switch (SecurityHelpers.checkNumeric(request.getParameter("tipo_laurea"))) {
             case 1:
                 corso.setTipoLaurea(TipoLaurea.TRIENNALE);
@@ -687,9 +687,9 @@ public class Administration extends AuleWebBaseController {
     private void action_insert_responsabile(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataException {
         Responsabile responsabile = ((AuleWebDataLayer) request.getAttribute("datalayer")).getResponsabileDAO().createResponsabile();
         responsabile.setKey(null);
-        responsabile.setNome(request.getParameter("nome"));
-        responsabile.setCognome(request.getParameter("cognome"));
-        responsabile.setCodiceFiscale(request.getParameter("codice_fiscale"));
+        responsabile.setNome(request.getParameter("nome").toUpperCase());
+        responsabile.setCognome(request.getParameter("cognome").toUpperCase());
+        responsabile.setCodiceFiscale(request.getParameter("codice_fiscale").toUpperCase());
         responsabile.setEmail(request.getParameter("email"));
         ((AuleWebDataLayer) request.getAttribute("datalayer")).getResponsabileDAO().storeResponsabile(responsabile);
 

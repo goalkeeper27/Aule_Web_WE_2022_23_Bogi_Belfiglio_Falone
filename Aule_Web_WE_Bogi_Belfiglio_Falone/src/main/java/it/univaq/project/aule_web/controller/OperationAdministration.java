@@ -8,16 +8,13 @@ import it.univaq.f4i.iw.framework.result.TemplateManagerException;
 import it.univaq.project.aule_web.data.dao.impl.AuleWebDataLayer;
 import it.univaq.project.aule_web.data.model.Aula;
 import it.univaq.project.aule_web.data.model.Evento;
-import it.univaq.project.aule_web.data.model.Gruppo;
 import it.univaq.project.aule_web.framework.data.DataException;
 import it.univaq.project.aule_web.framework.result.TemplateResult;
 import it.univaq.project.aule_web.framework.security.SecurityHelpers;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

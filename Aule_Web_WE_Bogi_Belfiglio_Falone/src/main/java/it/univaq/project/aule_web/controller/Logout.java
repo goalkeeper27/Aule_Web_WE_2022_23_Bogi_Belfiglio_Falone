@@ -4,20 +4,9 @@
  */
 package it.univaq.project.aule_web.controller;
 
-import it.univaq.f4i.iw.framework.result.TemplateManagerException;
-import it.univaq.project.aule_web.data.dao.impl.AuleWebDataLayer;
-import it.univaq.project.aule_web.data.model.Amministratore;
-import it.univaq.project.aule_web.framework.data.DataException;
-import it.univaq.project.aule_web.framework.result.TemplateResult;
 import it.univaq.project.aule_web.framework.security.SecurityHelpers;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

@@ -15,32 +15,35 @@ INSERT INTO gruppo(nome, tipo, descrizione) VALUES("COPPITO", "POLO", "POLO DI C
 INSERT INTO gruppo(nome, tipo, descrizione) VALUES("DISIM", "DIPARTIMENTO", "DIPERTIMENTO DI INGEGNERIA");
 INSERT INTO gruppo(nome, tipo, descrizione) VALUES("ROIO", "POLO", "POLO DI ROIO UNIVAQ");
 
-INSERT INTO responsabile (nome, cognome, codice_fiscale, email) VALUES ("Antonio", "Verdi", "VRDNTN975S213K", "antonio.verdi@univaq.it");
-INSERT INTO responsabile (nome, cognome, codice_fiscale, email) VALUES("Mario", "Rossi", "MRSSI56BG876N", "mario.rossi@univaq.it");
-INSERT INTO responsabile (nome, cognome, codice_fiscale, email) VALUES("Giuseppe", "Francoantonio", "GSPFRT567L8M", "giuseppe.francantonio@univaq.it");
+INSERT INTO responsabile (nome, cognome, codice_fiscale, email) VALUES ("ANTONIO", "VERDI", "VRDNTN97W52A131K", "antonio.verdi@univaq.it");
+INSERT INTO responsabile (nome, cognome, codice_fiscale, email) VALUES("MARIO", "ROSSI", "MRORSS89W12E734T", "mario.rossi@univaq.it");
+INSERT INTO responsabile (nome, cognome, codice_fiscale, email) VALUES("GIUSEPPE", "FRANCANTONIO", "GSPFRC75G12S667Y", "giuseppe.francantonio@univaq.it");
 
-INSERT INTO aula (nome, luogo, edificio, piano, capienza, numero_prese_elettriche, numero_prese_di_rete, note_generiche, ID_responsabile) VALUES ("Rossa", "via vetoio,1", "coppito1", 1, 60, 10, 5, "Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", 1);
-INSERT INTO aula (nome, luogo, edificio, piano, capienza, numero_prese_elettriche, numero_prese_di_rete, note_generiche, ID_responsabile) VALUES ("A1.2", "via vetoio,3", "Alan Turing", 1, 40, 10, 5, "aula piatta", 2);
-INSERT INTO aula (nome, luogo, edificio, piano, capienza, numero_prese_elettriche, numero_prese_di_rete, note_generiche, ID_responsabile) VALUES ("A1.3", "via vetoio,5", "Alan Turing", 1, 20, 10, 5, "aula ristretta", 3);
+INSERT INTO aula (nome, luogo, edificio, piano, capienza, numero_prese_elettriche, numero_prese_di_rete, note_generiche, ID_responsabile) VALUES ("ROSSA", "VIA VETOIO,5", "RENATO RICAMO", 1, 60, 10, 5, "lorem ipsum ...", 1);
+INSERT INTO aula (nome, luogo, edificio, piano, capienza, numero_prese_elettriche, numero_prese_di_rete, note_generiche, ID_responsabile) VALUES ("A1.2", "VIA VETOIO,5", "ALAN TURING", 1, 40, 10, 5, "xyz xyz, lorem ipsum, prova descrizione", 2);
+INSERT INTO aula (nome, luogo, edificio, piano, capienza, numero_prese_elettriche, numero_prese_di_rete, note_generiche, ID_responsabile) VALUES ("A1.3", "VIA PROVA,10", "ALAN TURING", 1, 20, 10, 5, "....lorem ipsum....", 3);
 
 INSERT INTO associazione_aula_gruppo(ID_aula, ID_gruppo) VALUES (1, 2);
+INSERT INTO associazione_aula_gruppo(ID_aula, ID_gruppo) VALUES (1, 1);
 INSERT INTO associazione_aula_gruppo(ID_aula, ID_gruppo) VALUES (2, 1);
+INSERT INTO associazione_aula_gruppo(ID_aula, ID_gruppo) VALUES (2, 2);
+INSERT INTO associazione_aula_gruppo(ID_aula, ID_gruppo) VALUES (3, 1);
 INSERT INTO associazione_aula_gruppo(ID_aula, ID_gruppo) VALUES (3, 2);
 
-INSERT INTO corso(nome, corso_di_laurea, tipo_laurea, anno_di_frequentazione) VALUES ("Matematica", "Informatica", "Triennale", 2);
-INSERT INTO corso(nome, corso_di_laurea, tipo_laurea, anno_di_frequentazione) VALUES ("Fisica", "Informatica", "Triennale", 3);
-INSERT INTO corso(nome, corso_di_laurea, tipo_laurea, anno_di_frequentazione) VALUES ("Informatica", "Informatica", "Triennale", 1);
+INSERT INTO corso(nome, corso_di_laurea, tipo_laurea, anno_di_frequentazione) VALUES ("MATEMATICA DISCRETA", "INFORMATICA", "TRIENNALE", 2);
+INSERT INTO corso(nome, corso_di_laurea, tipo_laurea, anno_di_frequentazione) VALUES ("FISICA", "INFORMATICA", "TRIENNALE", 2);
+INSERT INTO corso(nome, corso_di_laurea, tipo_laurea, anno_di_frequentazione) VALUES ("INGLESE B2", "INFORMATICA", "Triennale", 3);
 
 
-INSERT INTO evento (nome, descrizione, tipologia, data_evento, ora_inizio, ora_fine, ricorrenza, data_fine_ricorrenza, ID_corso, ID_responsabile, ID_aula) VALUES ("LezMatematica", "Conti bbbbbbbbbbbbbbbbbbbbbbbb rrrrrrrrrrrrrrrrrrrrrrrrrrrr eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee wwwwwwwwwwwwwwwwwwwwwwwww aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbb tttttttttttttttttttt", "LEZIONE", CURDATE(), "11:30:00", "13:30:00", "SETTIMANALE", curdate() + interval 2 week, 1, 1, 1);
-INSERT INTO evento (nome, descrizione, tipologia, data_evento, ora_inizio, ora_fine, ricorrenza, data_fine_ricorrenza, ID_corso, ID_responsabile, ID_aula) VALUES ("LezFisica", " moto ddddddddddddddddddddddddddddddddddd ffffffffffffffffffffffffffffffffffffffffffff ggggggggggggggggggggggggggggggggggggggg hhhhhhhhhhhhhhhhhhhhhhhhhhhh moto ddddddddddddddddddddddddddddddddddd ffffffffffffffffffffffffffffffffffffffffffff ggggggggggggggggggggggggggggggggggggggg hhhhhhhhhhhhhhhhhhhhhhhhhhhh moto ddddddddddddddddddddddddddddddddddd ffffffffffffffffffffffffffffffffffffffffffff ggggggggggggggggggggggggggggggggggggggg hhhhhhhhhhhhhhhhhhhhhhhhhhhh", "LEZIONE", CURDATE(), "8:30:00", "10:30:00", "GIORNALIERA", curdate() + interval 12 day, 2, 2, 1);
-INSERT INTO evento (nome, descrizione, tipologia, data_evento, ora_inizio, ora_fine, ricorrenza, data_fine_ricorrenza, ID_corso, ID_responsabile, ID_aula) VALUES ("EsInformatica", "algoritmi", "ESAME", curdate(), "14:30:00", "16:30:00", "GIORNALIERA", curdate() + interval 4 day, 3, 3, 2);
+INSERT INTO evento (nome, descrizione, tipologia, data_evento, ora_inizio, ora_fine, ricorrenza, data_fine_ricorrenza, ID_corso, ID_responsabile, ID_aula) VALUES ("LEZIONE MATEMATICA", "lezione di matematica discreta, esercitazione per prove parziali", "LEZIONE", CURDATE(), "14:30:00", "17:30:00", "SETTIMANALE", curdate() + interval 1 month, 1, 1, 1);
+INSERT INTO evento (nome, descrizione, tipologia, data_evento, ora_inizio, ora_fine, ricorrenza, data_fine_ricorrenza, ID_corso, ID_responsabile, ID_aula) VALUES ("PROVA PARZIALE DI FISICA", "prima prova parziali di fisica", "PARZIALE", CURDATE() + INTERVAL 1 DAY, "09:30:00", "12:30:00", "NESSUNA", null, 2, 2, 1);
+INSERT INTO evento (nome, descrizione, tipologia, data_evento, ora_inizio, ora_fine, ricorrenza, data_fine_ricorrenza, ID_corso, ID_responsabile, ID_aula) VALUES ("ESERCITAZIONE INGLESE", "b2 english exam", "ESAME", curdate(), "14:30:00", "17:30:00", "NESSUNA", null, 3, 3, 2);
 
 
 INSERT INTO attrezzatura(nome, numero_di_serie, ID_aula) values ("PROIETTORE", "ABC111", 1);
 INSERT INTO attrezzatura(nome, numero_di_serie, ID_aula) values ("MONITOR", "ABC222", 1);
-INSERT INTO attrezzatura(nome, numero_di_serie, ID_aula) values ("LAVAGNA", "ABC333", 1);
-INSERT INTO attrezzatura(nome, numero_di_serie, ID_aula) values ("PROIETTORE", "ABC123", 2);
+INSERT INTO attrezzatura(nome, numero_di_serie, ID_aula) values ("LAVAGNA", "ABC333", 2);
+INSERT INTO attrezzatura(nome, numero_di_serie, ID_aula) values ("PROIETTORE", "ABC123", 3);
 INSERT INTO attrezzatura(nome, numero_di_serie, ID_aula) values ("MICROFONO", "ABC888", null);
 INSERT INTO attrezzatura(nome, numero_di_serie, ID_aula) values ("MONITOR", "ABC999", null);
 INSERT INTO attrezzatura(nome, numero_di_serie, ID_aula) values ("LAVAGNA", "ABC777", null);

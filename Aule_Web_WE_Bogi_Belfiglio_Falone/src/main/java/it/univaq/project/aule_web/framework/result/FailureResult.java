@@ -58,7 +58,6 @@ public class FailureResult {
             if (context.getInitParameter("view.error_template") != null) {
                 request.setAttribute("error", message);
                 request.setAttribute("outline_tpl", "");
-                request.setAttribute("referrer", request.getAttribute("thispageurl"));
                 template.activate(context.getInitParameter("view.error_template"), request, response);
             } else {
                 //altrimenti, inviamo un errore HTTP
